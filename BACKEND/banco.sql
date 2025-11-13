@@ -182,3 +182,99 @@ DROP TABLE IF EXISTS entregas;
 DROP TABLE IF EXISTS entregadores;
 
 
+-- ===========================
+-- PARTE 4 - UP (H7 - Avaliação)
+-- ===========================
+
+-- Avaliação de restaurantes
+CREATE TABLE avaliacoes_restaurantes (
+    id               BIGSERIAL PRIMARY KEY,
+    cliente_id       BIGINT          NOT NULL,
+    restaurante_id   BIGINT          NOT NULL,
+    pedido_id        BIGINT          NOT NULL,
+    nota             INT             NOT NULL,        -- 1 a 5, por exemplo
+    comentario       TEXT,
+    criado_em        TIMESTAMP       NOT NULL DEFAULT NOW(),
+
+    FOREIGN KEY (cliente_id)     REFERENCES clientes(id),
+    FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id),
+    FOREIGN KEY (pedido_id)      REFERENCES pedidos(id)
+);
+
+-- Evita o mesmo cliente avaliar o mesmo restaurante
+-- mais de uma vez para o mesmo pedido
+CREATE UNIQUE INDEX ux_avaliacao_restaurante_unica
+ON avaliacoes_restaurantes (cliente_id, restaurante_id, pedido_id);
+
+-- Avaliação de entregadores
+CREATE TABLE avaliacoes_entregadores (
+    id               BIGSERIAL PRIMARY KEY,
+    cliente_id       BIGINT          NOT NULL,
+    entregador_id    BIGINT          NOT NULL,
+    pedido_id        BIGINT          NOT NULL,
+    nota             INT             NOT NULL,
+    comentario       TEXT,
+    criado_em        TIMESTAMP       NOT NULL DEFAULT NOW(),
+
+    FOREIGN KEY (cliente_id)      REFERENCES clientes(id),
+    FOREIGN KEY (entregador_id)   REFERENCES entregadores(id),
+    FOREIGN KEY (pedido_id)       REFERENCES pedidos(id)
+);
+
+CREATE UNIQUE INDEX ux_avaliacao_entregador_unica
+ON avaliacoes_entregadores (cliente_id, entregador_id, pedido_id);
+
+
+-- ===========================
+-- PARTE 4 - UP (H8 - Promoções)
+-- ===========================
+
+-- Promoções cadastradas na plataforma
+CREATE TABLE promocoes (
+    id                  BIGSERIAL PRIMARY KEY,
+    restaurante_id      BIGINT,                   -- se NULL, pode ser promoção geral
+    titulo              VARCHAR(150)  NOT NULL,
+    descricao           TEXT,
+    tipo_desconto       VARCHAR(20)   NOT NULL,
+    -- Ex: 'percentual', 'valor', 'frete_gratis'
+
+    valor_desconto      NUMERIC(10, 2),           -- percentual ou valor, dependendo do tipo
+    data_inicio         TIMESTAMP      NOT NULL,
+    data_fim            TIMESTAMP      NOT NULL,
+    ativo               BOOLEAN        NOT NULL DEFAULT TRUE,
+
+    criado_em           TIMESTAMP      NOT NULL DEFAULT NOW(),
+
+    FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id)
+);
+
+-- Promoções direcionadas ou resgatadas pelos clientes
+CREATE TABLE promocoes_clientes (
+    id                  BIGSERIAL PRIMARY KEY,
+    promocao_id         BIGINT          NOT NULL,
+    cliente_id          BIGINT          NOT NULL,
+    resgatada           BOOLEAN         NOT NULL DEFAULT FALSE,
+    resgatada_em        TIMESTAMP,
+
+    FOREIGN KEY (promocao_id) REFERENCES promocoes(id),
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+);
+
+-- Evita duplicar “oferta” repetida para o mesmo cliente
+CREATE UNIQUE INDEX ux_promocao_cliente_unica
+ON promocoes_clientes (promocao_id, cliente_id);
+
+
+
+-- ===========================
+-- PARTE 4 - DOWN (rollback)
+-- ===========================
+
+DROP TABLE IF EXISTS promocoes_clientes;
+DROP TABLE IF EXISTS promocoes;
+
+DROP INDEX IF EXISTS ux_avaliacao_entregador_unica;
+DROP INDEX IF EXISTS ux_avaliacao_restaurante_unica;
+
+DROP TABLE IF EXISTS avaliacoes_entregadores;
+DROP TABLE IF EXISTS avaliacoes_restaurantes;
