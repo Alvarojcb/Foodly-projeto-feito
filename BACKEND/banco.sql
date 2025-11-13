@@ -278,3 +278,87 @@ DROP INDEX IF EXISTS ux_avaliacao_restaurante_unica;
 
 DROP TABLE IF EXISTS avaliacoes_entregadores;
 DROP TABLE IF EXISTS avaliacoes_restaurantes;
+
+
+-- ===========================
+-- PARTE 5 - UP (H9 - Usuário Premium)
+-- ===========================
+
+-- Planos premium disponíveis
+CREATE TABLE planos_premium (
+    id              BIGSERIAL PRIMARY KEY,
+    nome            VARCHAR(100)    NOT NULL,
+    descricao       TEXT,
+    valor_mensal    NUMERIC(10, 2)  NOT NULL,
+    duracao_dias    INT             NOT NULL DEFAULT 30,
+    ativo           BOOLEAN         NOT NULL DEFAULT TRUE,
+    criado_em       TIMESTAMP       NOT NULL DEFAULT NOW()
+);
+
+-- Assinaturas premium dos clientes
+CREATE TABLE assinaturas_premium (
+    id                      BIGSERIAL PRIMARY KEY,
+    cliente_id              BIGINT          NOT NULL,
+    plano_id                BIGINT          NOT NULL,
+    status                  VARCHAR(20)     NOT NULL,
+    -- 'ativa', 'cancelada', 'expirada', 'pendente'
+
+    data_inicio             TIMESTAMP       NOT NULL DEFAULT NOW(),
+    data_fim                TIMESTAMP,
+    renovacao_automatica    BOOLEAN         NOT NULL DEFAULT TRUE,
+    metodo_pagamento        VARCHAR(50),        -- ex: 'cartao_credito', 'pix', etc.
+    referencia_pagamento    VARCHAR(100),       -- ID da transação no gateway
+
+    criado_em               TIMESTAMP       NOT NULL DEFAULT NOW(),
+
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id),
+    FOREIGN KEY (plano_id)   REFERENCES planos_premium(id)
+);
+
+
+-- ===========================
+-- PARTE 5 - UP (H10 - Suporte Técnico)
+-- ===========================
+
+-- Atendimentos de suporte
+CREATE TABLE suporte_atendimentos (
+    id              BIGSERIAL PRIMARY KEY,
+    usuario_id      BIGINT          NOT NULL,        -- quem abriu (cliente, entregador, restaurante)
+    assunto         VARCHAR(150),
+    status          VARCHAR(20)     NOT NULL,
+    -- 'aberto', 'em_atendimento', 'encerrado'
+
+    criado_em       TIMESTAMP       NOT NULL DEFAULT NOW(),
+    encerrado_em    TIMESTAMP,
+
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+-- Mensagens trocadas no chat de suporte
+CREATE TABLE suporte_mensagens (
+    id                  BIGSERIAL PRIMARY KEY,
+    atendimento_id      BIGINT          NOT NULL,
+    remetente_tipo      VARCHAR(20)     NOT NULL,
+    -- 'usuario' ou 'atendente'
+
+    remetente_usuario_id BIGINT,
+    mensagem            TEXT            NOT NULL,
+    enviado_em          TIMESTAMP       NOT NULL DEFAULT NOW(),
+
+    FOREIGN KEY (atendimento_id)      REFERENCES suporte_atendimentos(id),
+    FOREIGN KEY (remetente_usuario_id) REFERENCES usuarios(id)
+);
+
+
+-- ===========================
+-- PARTE 5 - DOWN (rollback)
+-- ===========================
+
+-- H10 - Suporte
+DROP TABLE IF EXISTS suporte_mensagens;
+DROP TABLE IF EXISTS suporte_atendimentos;
+
+-- H9 - Premium
+DROP TABLE IF EXISTS assinaturas_premium;
+DROP TABLE IF EXISTS planos_premium;
+
