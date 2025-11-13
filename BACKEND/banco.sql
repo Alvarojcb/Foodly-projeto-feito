@@ -124,3 +124,59 @@ DROP TABLE IF EXISTS carrinhos;
 DROP TABLE IF EXISTS produtos;
 
 
+-- ===========================
+-- PARTE 3 - UP (H5 e H6)
+-- ===========================
+
+-- Dados específicos do entregador
+CREATE TABLE entregadores (
+    id              BIGSERIAL PRIMARY KEY,
+    usuario_id      BIGINT          NOT NULL UNIQUE,
+    veiculo_tipo    VARCHAR(50),            -- moto, bike, carro, etc. (opcional)
+    documento       VARCHAR(30),            -- CNH, CPF, etc. (opcional)
+    ativo           BOOLEAN         NOT NULL DEFAULT TRUE,
+    criado_em       TIMESTAMP       NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+-- Entrega associada a um pedido
+CREATE TABLE entregas (
+    id                  BIGSERIAL PRIMARY KEY,
+    pedido_id           BIGINT          NOT NULL UNIQUE,
+    entregador_id       BIGINT,
+    status              VARCHAR(20)     NOT NULL,
+    -- Ex: 'disponivel', 'atribuida', 'em_rota', 'entregue', 'cancelada'
+
+    rota_sugerida       TEXT,                   -- pode guardar JSON, polyline, etc.
+    tempo_estimado_min  INT,                    -- tempo estimado em minutos
+    distancia_km        NUMERIC(6, 2),          -- distância aproximada
+
+    criado_em           TIMESTAMP       NOT NULL DEFAULT NOW(),
+    atualizado_em       TIMESTAMP       NOT NULL DEFAULT NOW(),
+
+    FOREIGN KEY (pedido_id)     REFERENCES pedidos(id),
+    FOREIGN KEY (entregador_id) REFERENCES entregadores(id)
+);
+
+-- Registro de aceitação/recusa de ofertas de entrega
+CREATE TABLE entrega_respostas (
+    id              BIGSERIAL PRIMARY KEY,
+    entrega_id      BIGINT          NOT NULL,
+    entregador_id   BIGINT          NOT NULL,
+    resposta        VARCHAR(10)     NOT NULL,
+    -- 'aceito' ou 'recusado'
+
+    criado_em       TIMESTAMP       NOT NULL DEFAULT NOW(),
+
+    FOREIGN KEY (entrega_id)    REFERENCES entregas(id),
+    FOREIGN KEY (entregador_id) REFERENCES entregadores(id)
+);
+
+
+-- ===========================
+-- PARTE 3 - DOWN (rollback)
+-- ===========================
+
+DROP TABLE IF EXISTS entrega_respostas;
+DROP TABLE IF EXISTS entregas;
+DROP TABLE IF EXISTS entregadores;
