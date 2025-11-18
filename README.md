@@ -14,4 +14,9 @@ https://drive.google.com/drive/folders/182J01LpIFcFQ3QvIALAYNGNp9kcXe5v5?usp=dri
 
 
 
+#QUADRO SCRUM : 
+https://projeto-unicap-sistema-delivery.atlassian.net/jira/software/projects/SCRUM/boards/1
+
+
+
 
