@@ -41,6 +41,7 @@ Durante o desenvolvimento do projeto, realizamos sessões de *Pair Programming*,
 </details>
 
 
-
+### 🐞 BUG TRACKING
+[GitHub Issues](https://github.com/pedrosdutra/softwaredelivery/issues)
 
 
