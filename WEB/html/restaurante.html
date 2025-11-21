@@ -4,24 +4,24 @@
   <meta charset="UTF-8">
   <title>Foodly - Restaurantes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Caminho ajustado: HTML está em /WEB/html e CSS em /WEB/css -->
+  <!-- CSS da página de restaurantes -->
   <link rel="stylesheet" href="../css/restaurante.css">
 </head>
 <body>
 
-  <!-- NAVBAR (mesmo estilo da home) -->
+  <!-- NAVBAR -->
   <header class="navbar">
     <div class="navbar-left">
       <div class="logo-box">🍽</div>
       <span class="logo-text">Foodly</span>
     </div>
 
-    <nav class="nav-links">
+     <nav class="nav-links">
       <a href="index.html">Início</a>
-      <a href="restaurantes.html" class="active">Restaurantes</a>
-      <a href="#">Contato</a>
+      <a href="restaurante.html">Restaurantes</a>
+      <a href="menu.html">Menu</a>
       <a href="suporte.html">Suporte</a>
-      <a href="#">Sobre</a>
+      <a href="sobre.html">Sobre</a>
     </nav>
 
     <div class="navbar-right">
@@ -30,9 +30,65 @@
         <button class="search-btn">🔍</button>
       </div>
 
-      <button class="icon-btn" aria-label="Notificações">🔔</button>
+      <!-- Ícone do sininho + dropdown de promoções -->
+      <div class="notification-wrapper">
+        <button class="icon-btn notification-btn" aria-label="Promoções">
+          🔔
+          <span class="badge">2</span>
+        </button>
+
+        <!-- PROMO DROPDOWN -->
+        <div class="promo-dropdown">
+          <div class="promo-header">
+            <h3>Promoções Especiais</h3>
+            <p>Ofertas dos nossos restaurantes</p>
+          </div>
+
+          <div class="promo-list">
+            <!-- Promo 1 -->
+            <article class="promo-item">
+              <div class="promo-thumb">
+                <img src="https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg" alt="Burger Prime">
+              </div>
+              <div class="promo-info">
+                <h4>50% OFF na primeira compra</h4>
+                <p class="promo-restaurant">Burger Prime</p>
+              </div>
+              <span class="promo-badge">Novo</span>
+            </article>
+
+            <!-- Promo 2 -->
+            <article class="promo-item">
+              <div class="promo-thumb">
+                <img src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg" alt="Nonna Bella">
+              </div>
+              <div class="promo-info">
+                <h4>Pizza Família por R$ 39,90</h4>
+                <p class="promo-restaurant">Nonna Bella</p>
+              </div>
+              <span class="promo-badge">Novo</span>
+            </article>
+
+            <!-- Promo 3 -->
+            <article class="promo-item">
+              <div class="promo-thumb">
+                <img src="https://images.pexels.com/photos/1640770/pexels-photo-1640770.jpeg" alt="Green Life">
+              </div>
+              <div class="promo-info">
+                <h4>Combo Saudável + Suco</h4>
+                <p class="promo-restaurant">Green Life</p>
+              </div>
+            </article>
+          </div>
+
+          <button class="promo-see-all">
+            Ver todas as promoções
+          </button>
+        </div>
+      </div>
+
       <button class="icon-btn" aria-label="Carrinho">🛒</button>
-      <a href="perfil.html" class="icon-btn" aria-label="Perfil">👤</a>
+      <button class="icon-btn" aria-label="Perfil">👤</button>
     </div>
   </header>
 
@@ -46,11 +102,11 @@
       </div>
 
       <div class="filters">
-        <button class="filter-btn filter-btn-active">Todos</button>
-        <button class="filter-btn">Hambúrguer</button>
-        <button class="filter-btn">Pizza</button>
-        <button class="filter-btn">Saudável</button>
-        <button class="filter-btn">Sushi</button>
+        <button class="filter-btn filter-btn-active" data-category="todos">Todos</button>
+        <button class="filter-btn" data-category="hamburguer">Hambúrguer</button>
+        <button class="filter-btn" data-category="pizza">Pizza</button>
+        <button class="filter-btn" data-category="saudavel">Saudável</button>
+        <button class="filter-btn" data-category="sushi">Sushi</button>
       </div>
     </section>
 
@@ -63,7 +119,7 @@
     <section class="restaurants-grid">
 
       <!-- 1 -->
-      <article class="restaurant-card">
+      <article class="restaurant-card" data-category="hamburguer">
         <div class="restaurant-thumb">
           <img src="https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg" alt="Burger Prime">
         </div>
@@ -84,7 +140,7 @@
       </article>
 
       <!-- 2 -->
-      <article class="restaurant-card">
+      <article class="restaurant-card" data-category="pizza">
         <div class="restaurant-thumb">
           <img src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg" alt="Nonna Bella">
         </div>
@@ -105,7 +161,7 @@
       </article>
 
       <!-- 3 -->
-      <article class="restaurant-card">
+      <article class="restaurant-card" data-category="saudavel">
         <div class="restaurant-thumb">
           <img src="https://images.pexels.com/photos/1640770/pexels-photo-1640770.jpeg" alt="Green Life">
         </div>
@@ -126,7 +182,7 @@
       </article>
 
       <!-- 4 -->
-      <article class="restaurant-card">
+      <article class="restaurant-card" data-category="sushi">
         <div class="restaurant-thumb">
           <img src="https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg" alt="Tokyo Sushi">
         </div>
@@ -147,7 +203,7 @@
       </article>
 
       <!-- 5 -->
-      <article class="restaurant-card">
+      <article class="restaurant-card" data-category="saudavel">
         <div class="restaurant-thumb">
           <img src="https://images.pexels.com/photos/4109992/pexels-photo-4109992.jpeg" alt="Doce Encanto">
         </div>
@@ -170,7 +226,102 @@
     </section>
   </main>
 
-  <!-- JavaScript principal -->
+  <!-- SEÇÃO "POR QUE ESCOLHER A GENTE?" -->
+  <section class="why-choose">
+    <div class="why-container">
+      <h2 class="why-title">Por que escolher a gente?</h2>
+      <p class="why-subtitle">
+        Comprometidos em oferecer a melhor experiência gastronômica
+      </p>
+
+      <div class="why-grid">
+        <article class="why-card">
+          <div class="why-icon">⏱</div>
+          <h3>Entrega Rápida</h3>
+          <p>Seus pratos favoritos chegam em até 45 minutos.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-icon">🛡</div>
+          <h3>Qualidade Garantida</h3>
+          <p>Ingredientes frescos e preparo cuidadoso em cada pedido.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-icon">🚚</div>
+          <h3>Entrega Gratuita</h3>
+          <p>Frete grátis em pedidos acima de R$ 35,00.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-icon">⭐</div>
+          <h3>Avaliação 5 Estrelas</h3>
+          <p>Mais de 2.500 clientes satisfeitos com a plataforma.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER LARANJA -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-column footer-about">
+        <div class="footer-logo">
+          <span class="logo-box footer-logo-box">🍽</span>
+          <span class="logo-text footer-logo-text">Foodly</span>
+        </div>
+        <h4>Sobre Nós</h4>
+        <p>
+          Somos uma plataforma inovadora que conecta você aos melhores restaurantes
+          parceiros. Nossa missão é facilitar o acesso à gastronomia de qualidade
+          com entrega rápida e experiência excepcional.
+        </p>
+        <p class="footer-small">
+          Fundada em 2025 • Mais de 70 restaurantes parceiros
+        </p>
+        <div class="footer-social">
+          <span>📸</span>
+          <span>📘</span>
+          <span>🐦</span>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h4>Links Rápidos</h4>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="restaurante.html">Restaurantes</a></li>
+          <li><a href="cadastroRestaurante.html">Seja Parceiro</a></li>
+          <li><a href="suporte.html">Suporte</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Categorias</h4>
+        <ul>
+          <li><a href="#">Lanchonetes</a></li>
+          <li><a href="#">Pizzarias</a></li>
+          <li><a href="#">Comida Saudável</a></li>
+          <li><a href="#">Bares e Drinks</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Contato</h4>
+        <ul class="footer-contact">
+          <li>📞 (81) 99999-9999<br><span>Atendimento 24h</span></li>
+          <li>✉️ contato@foodly.com<br><span>Respostas em até 2h</span></li>
+          <li>📍 Recife, Pernambuco<br><span>Atendemos toda região metropolitana</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2024 Foodly. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- JS global -->
   <script src="../JS/main.js" defer></script>
 </body>
 </html>

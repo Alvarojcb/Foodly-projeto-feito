@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Foodly - Usuário Premium</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Caminho correto para o CSS (da pasta html para a pasta css) -->
+  <link rel="stylesheet" href="../css/usuarioPremium.css">
+</head>
+<body>
+
+  <!-- NAVBAR (mesma base das outras páginas) -->
+  <header class="navbar">
+    <div class="navbar-left">
+      <div class="logo-box">🍽</div>
+      <span class="logo-text">Foodly</span>
+    </div>
+
+    <nav class="nav-links">
+      <a href="index.html">Início</a>
+      <a href="restaurante.html">Restaurantes</a>
+      <a href="menu.html">Cardápio</a>
+      <a href="suporte.html">Suporte</a>
+      <a href="sobre.html">Sobre</a>
+    </nav>
+
+    <div class="navbar-right">
+      <button class="icon-btn" aria-label="Perfil">
+        👤
+      </button>
+    </div>
+  </header>
+
+  <main class="premium-page">
+
+    <!-- CABEÇALHO LARANJA -->
+    <section class="premium-header-card">
+      <div class="user-main">
+        <div class="avatar-circle">
+          JS
+        </div>
+        <div class="user-info">
+          <p class="member-label">João Silva</p>
+          <p class="member-subtitle">Membro Premium desde Janeiro 2024</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn-outline">Editar Perfil</button>
+        <span class="premium-chip">Premium</span>
+      </div>
+    </section>
+
+    <!-- PRIMEIRO BLOCO: ESTATÍSTICAS + AÇÕES RÁPIDAS -->
+    <section class="grid-two-columns">
+      <!-- Estatísticas pessoais -->
+      <section class="card stats-card">
+        <h2>Suas Estatísticas Pessoais</h2>
+
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-icon">📈</div>
+            <p class="stat-label">Pontos acumulados</p>
+            <p class="stat-value">234</p>
+          </div>
+
+          <div class="stat-item">
+            <div class="stat-icon">⏱</div>
+            <p class="stat-label">Tempo médio</p>
+            <p class="stat-value">30 min</p>
+          </div>
+
+          <div class="stat-item">
+            <div class="stat-icon">💰</div>
+            <p class="stat-label">Economia total</p>
+            <p class="stat-value">R$ 1.280</p>
+          </div>
+
+          <div class="stat-item">
+            <div class="stat-icon">⭐</div>
+            <p class="stat-label">Sua avaliação</p>
+            <p class="stat-value">4,9</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ações rápidas -->
+      <section class="card quick-actions-card">
+        <h2>Ações Rápidas</h2>
+
+        <div class="quick-actions-grid">
+          <button class="quick-card quick-green">
+            <span class="quick-icon">🎁</span>
+            <span class="quick-title">Recompensas</span>
+            <span class="quick-subtitle">Veja seus pontos e prêmios</span>
+          </button>
+
+          <button class="quick-card quick-red">
+            <span class="quick-icon">📊</span>
+            <span class="quick-title">Relatório</span>
+            <span class="quick-subtitle">Histórico de pedidos feitos</span>
+          </button>
+
+          <button class="quick-card quick-yellow">
+            <span class="quick-icon">🛒</span>
+            <span class="quick-title">Fazer Pedido</span>
+            <span class="quick-subtitle">Em até 30 minutos</span>
+          </button>
+
+          <button class="quick-card quick-blue">
+            <span class="quick-icon">👤</span>
+            <span class="quick-title">Meu Perfil</span>
+            <span class="quick-subtitle">Gerenciar informações</span>
+          </button>
+        </div>
+      </section>
+    </section>
+
+    <!-- SEGUNDO BLOCO: BENEFÍCIOS + PEDIDOS RECENTES -->
+    <section class="grid-two-columns bottom-grid">
+      <!-- Benefícios Premium -->
+      <section class="card benefits-card">
+        <h2>Benefícios Premium</h2>
+
+        <ul class="benefits-list">
+          <li class="benefit-item">
+            <div class="benefit-icon">⚡</div>
+            <div class="benefit-text">
+              <p class="benefit-title">Entrega Expressa</p>
+              <p class="benefit-subtitle">Seus produtos são entregues em até 30 minutos.</p>
+              <span class="benefit-tag active">Ativo</span>
+            </div>
+          </li>
+
+          <li class="benefit-item">
+            <div class="benefit-icon">🚚</div>
+            <div class="benefit-text">
+              <p class="benefit-title">Taxa de Entrega Grátis</p>
+              <p class="benefit-subtitle">Sem taxas em todos os pedidos.</p>
+              <span class="benefit-tag active">Ativo</span>
+            </div>
+          </li>
+
+          <li class="benefit-item">
+            <div class="benefit-icon">💬</div>
+            <div class="benefit-text">
+              <p class="benefit-title">Atendimento Prioritário</p>
+              <p class="benefit-subtitle">Suporte 24h via chat e WhatsApp.</p>
+              <span class="benefit-tag active">Ativo</span>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Pedidos Premium Recentes -->
+      <section class="card recent-orders-card">
+        <h2>Pedidos Premium Recentes</h2>
+
+        <ul class="orders-list">
+          <li class="order-item">
+            <div class="order-icon">🍕</div>
+            <div class="order-text">
+              <p class="order-title">Entrega Prime</p>
+              <p class="order-subtitle">21 Abril · 1x Entrega Prime 24h</p>
+            </div>
+            <span class="order-status">Pendente</span>
+            <span class="order-value">R$ 45,90</span>
+          </li>
+
+          <li class="order-item">
+            <div class="order-icon">🍔</div>
+            <div class="order-text">
+              <p class="order-title">Pizza do Casa</p>
+              <p class="order-subtitle">19 Abril · 1x Pizza Grande + 1x Refrigerante</p>
+            </div>
+            <span class="order-status delivered">Entregue</span>
+            <span class="order-value">R$ 89,90</span>
+          </li>
+
+          <li class="order-item">
+            <div class="order-icon">☕</div>
+            <div class="order-text">
+              <p class="order-title">Café da Manhã</p>
+              <p class="order-subtitle">18 Abril · 2x Croissant + Café</p>
+            </div>
+            <span class="order-status delivered">Entregue</span>
+            <span class="order-value">R$ 32,50</span>
+          </li>
+        </ul>
+      </section>
+    </section>
+  </main>
+
+  <!-- se tiver um main.js geral do projeto -->
+  <script src="../js/main.js" defer></script>
+</body>
+</html>
