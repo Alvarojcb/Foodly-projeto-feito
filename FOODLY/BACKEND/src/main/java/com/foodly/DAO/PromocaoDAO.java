@@ -1,6 +1,6 @@
-package dao;
+package com.foodly.DAO;
 
-import models.Promocao;
+import com.foodly.Models.Promocao;
 
 import java.sql.*;
 import java.time.LocalDateTime;

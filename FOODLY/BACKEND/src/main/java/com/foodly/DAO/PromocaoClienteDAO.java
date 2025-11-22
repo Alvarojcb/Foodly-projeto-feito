@@ -1,9 +1,9 @@
-package dao;
+package com.foodly.DAO;
 
-import models.PromocaoCliente;
+import com.foodly.Models.PromocaoCliente;
 
 import java.sql.*;
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 
 public class PromocaoClienteDAO {
 

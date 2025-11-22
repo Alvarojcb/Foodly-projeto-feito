@@ -1,9 +1,9 @@
-package controllers;
+package com.foodly.Controller;
 
-import dao.AssinaturaPremiumDAO;
-import dao.PlanoPremiumDAO;
-import models.AssinaturaPremium;
-import models.PlanoPremium;
+import com.foodly.DAO.AssinaturaPremiumDAO;
+import com.foodly.DAO.PlanoPremiumDAO;
+import com.foodly.Models.AssinaturaPremium;
+import com.foodly.Models.PlanoPremium;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;

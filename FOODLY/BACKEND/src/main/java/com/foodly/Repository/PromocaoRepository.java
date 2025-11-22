@@ -1,6 +1,6 @@
-package com.foodly.repository;
+package com.foodly.Repository;
 
-import com.foodly.models.Promocao;
+import com.foodly.Models.Promocao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

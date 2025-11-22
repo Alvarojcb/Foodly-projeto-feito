@@ -1,11 +1,11 @@
-package dao;
+package com.foodly.DAO;
 
-import models.Usuario;
+import com.foodly.Models.Usuario;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+//import java.time.LocalDateTime;
 
 public class UsuarioDAO {
 

@@ -1,9 +1,9 @@
-package controllers;
+package com.foodly.Controller;
 
-import dao.PromocaoClienteDAO;
-import dao.PromocaoDAO;
-import models.Promocao;
-import models.PromocaoCliente;
+import com.foodly.DAO.PromocaoClienteDAO;
+import com.foodly.DAO.PromocaoDAO;
+import com.foodly.Models.Promocao;
+import com.foodly.Models.PromocaoCliente;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
