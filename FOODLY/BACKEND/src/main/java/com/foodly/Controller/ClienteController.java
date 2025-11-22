@@ -1,9 +1,9 @@
-package controllers;
+package com.foodly.Controller;
 
-import dao.ClienteDAO;
-import dao.UsuarioDAO;
-import models.Cliente;
-import models.Usuario;
+import com.foodly.DAO.ClienteDAO;
+import com.foodly.DAO.UsuarioDAO;
+import com.foodly.Models.Cliente;
+import com.foodly.Models.Usuario;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -76,7 +76,4 @@ public class ClienteController {
         }
     }
 
-   
-
-   
 }

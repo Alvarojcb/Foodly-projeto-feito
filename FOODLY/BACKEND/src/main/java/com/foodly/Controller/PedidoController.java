@@ -1,12 +1,12 @@
-package controllers;
+package com.foodly.Controller;
 
-import dao.CarrinhoItemDAO;
-import dao.Conexao;
-import dao.PedidoDAO;
-import dao.PedidoItemDAO;
-import models.CarrinhoItem;
-import models.Pedido;
-import models.PedidoItem;
+import com.foodly.DAO.CarrinhoItemDAO;
+import com.foodly.DAO.Conexao;
+import com.foodly.DAO.PedidoDAO;
+import com.foodly.DAO.PedidoItemDAO;
+import com.foodly.Models.CarrinhoItem;
+import com.foodly.Models.Pedido;
+import com.foodly.Models.PedidoItem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

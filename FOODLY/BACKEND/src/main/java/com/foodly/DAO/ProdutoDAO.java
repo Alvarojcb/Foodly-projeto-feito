@@ -1,6 +1,6 @@
-package dao;
+package com.foodly.DAO;
 
-import models.Produto;
+import com.foodly.Models.Produto;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,12 +1,12 @@
-package controllers;
+package com.foodly.Controller;
 
-import dao.Conexao;
-import dao.EntregaDAO;
-import dao.EntregaRespostaDAO;
-import dao.EntregadorDAO;
-import models.Entrega;
-import models.EntregaResposta;
-import models.Entregador;
+import com.foodly.DAO.Conexao;
+import com.foodly.DAO.EntregaDAO;
+import com.foodly.DAO.EntregaRespostaDAO;
+import com.foodly.DAO.EntregadorDAO;
+import com.foodly.Models.Entrega;
+import com.foodly.Models.EntregaResposta;
+import com.foodly.Models.Entregador;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,9 +1,9 @@
-package controllers;
+package com.foodly.Controller;
 
-import dao.RestauranteDAO;
-import dao.UsuarioDAO;
-import models.Restaurante;
-import models.Usuario;
+import com.foodly.DAO.RestauranteDAO;
+import com.foodly.DAO.UsuarioDAO;
+import com.foodly.Models.Restaurante;
+import com.foodly.Models.Usuario;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
