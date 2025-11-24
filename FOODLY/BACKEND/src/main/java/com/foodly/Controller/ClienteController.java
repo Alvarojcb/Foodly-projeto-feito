@@ -1,14 +1,22 @@
-package controllers;
+package com.foodly.Controller;
 
-import dao.ClienteDAO;
-import dao.UsuarioDAO;
-import models.Cliente;
-import models.Usuario;
+import com.foodly.DAO.ClienteDAO;
+import com.foodly.DAO.UsuarioDAO;
+import com.foodly.Models.Cliente;
+import com.foodly.Models.Usuario;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
+@RestController
+@RequestMapping("/api/clientes")
+@CrossOrigin(origins = "*")
 public class ClienteController {
 
     private final UsuarioDAO usuarioDAO;
@@ -20,63 +28,367 @@ public class ClienteController {
     }
 
     /**
-     * H1 - Cadastro do Cliente
-     * Fluxo: cria um usuário do tipo "cliente" e depois o registro em clientes.
+     * POST /api/clientes/cadastrar
+     * DEVE vir ANTES de /{id}
      */
-    public Cliente cadastrarCliente(String nome,
-                                    String email,
-                                    String senhaHash,
-                                    String telefone,
-                                    String enderecoPadrao) {
-
+    @PostMapping("/cadastrar")
+    public ResponseEntity<?> cadastrarCliente(@RequestBody ClienteRequestDTO request) {
         try {
-            // 1) Cria o usuário
+            System.out.println("=== Cadastro Cliente ===");
+            System.out.println("Nome: " + request.getNome());
+            
+            if (request.getNome() == null || request.getNome().trim().isEmpty()) {
+                return ResponseEntity.badRequest().body(new ErrorResponse("Nome é obrigatório"));
+            }
+            
+            if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+                return ResponseEntity.badRequest().body(new ErrorResponse("Email é obrigatório"));
+            }
+            
+            if (request.getSenha() == null || request.getSenha().trim().isEmpty()) {
+                return ResponseEntity.badRequest().body(new ErrorResponse("Senha é obrigatória"));
+            }
+            
+            if (!request.getSenha().equals(request.getConfirmarSenha())) {
+                return ResponseEntity.badRequest().body(new ErrorResponse("As senhas não coincidem"));
+            }
+
             Usuario usuario = new Usuario();
-            usuario.setNome(nome);
-            usuario.setEmail(email);
-            usuario.setSenhaHash(senhaHash);
-            usuario.setTelefone(telefone);
+            usuario.setNome(request.getNome());
+            usuario.setEmail(request.getEmail());
+            usuario.setSenhaHash(request.getSenha()); 
+            usuario.setTelefone(request.getTelefone());
             usuario.setTipoUsuario("cliente");
             usuario.setCriadoEm(LocalDateTime.now());
 
             int usuarioId = usuarioDAO.salvar(usuario);
 
-            // 2) Cria o cliente associado ao usuário
             Cliente cliente = new Cliente();
             cliente.setUsuarioId(usuarioId);
-            cliente.setEnderecoPadrao(enderecoPadrao);
+            cliente.setEnderecoPadrao(request.getEnderecoPadrao() != null ? request.getEnderecoPadrao() : "");
 
             int clienteId = clienteDAO.salvar(cliente);
             cliente.setId(clienteId);
 
-            return cliente;
+            return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ClienteResponseDTO(clienteId, usuarioId, request.getNome(), request.getEmail()));
 
-        } catch (SQLException e) {
-            // Aqui é só esqueleto: você decide se loga, relança, ou trata de outra forma
-            System.err.println("Erro ao cadastrar cliente: " + e.getMessage());
-            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Erro: " + e.getMessage()));
         }
     }
 
-    public Cliente buscarClientePorId(int clienteId) {
+    @GetMapping
+    public ResponseEntity<?> listarClientes() {
         try {
-            return clienteDAO.buscarPorId(clienteId);
+            List<Cliente> clientes = clienteDAO.listarTodos();
+            return ResponseEntity.ok(clientes);
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar cliente: " + e.getMessage());
-            return null;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Erro ao listar clientes: " + e.getMessage()));
         }
     }
 
-    public List<Cliente> listarClientes() {
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscarClientePorId(@PathVariable int id) {
         try {
-            return clienteDAO.listarTodos();
+            Cliente cliente = clienteDAO.buscarPorId(id);
+            if (cliente == null) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(cliente);
         } catch (SQLException e) {
-            System.err.println("Erro ao listar clientes: " + e.getMessage());
-            return List.of();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Erro ao buscar cliente: " + e.getMessage()));
         }
     }
 
-   
+    @GetMapping("/visualizar")
+    public ResponseEntity<String> visualizarClientes() {
+        try {
+            List<Cliente> clientes = clienteDAO.listarTodos();
+            
+            StringBuilder html = new StringBuilder();
+            html.append("""
+                    <!DOCTYPE html>
+                    <html lang="pt-BR">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Clientes Cadastrados - Foodly</title>
+                        <link rel="icon" type="image/png" href="/assets/favicon2.png">
+                        <style>
+                            * { margin: 0; padding: 0; box-sizing: border-box; }
+                            body {
+                                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                background: #D3D3D3;
+                                padding: 20px;
+                            }
+                            .container {
+                                max-width: 1200px;
+                                margin: 0 auto;
+                                background: white;
+                                border-radius: 20px;
+                                padding: 40px;
+                                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                            }
+                            h1 {
+                                color: #667eea;
+                                text-align: center;
+                                margin-bottom: 30px;
+                            }
+                            .stats {
+                                background: #f8f9fa;
+                                padding: 20px;
+                                border-radius: 10px;
+                                margin-bottom: 30px;
+                                text-align: center;
+                            }
+                            .stats h2 {
+                                color: #28a745;
+                                font-size: 24px;
+                            }
+                            table {
+                            
+                                width: 100%;
+                                border-collapse: separate;
+                                border-spacing: 0;      
+                                margin-bottom: 20px;
+                            }
 
-   
+                            thead th {
+                                background: #667eea;
+                                color: white;
+                                padding: 15px;
+                                text-align: left;
+                                font-weight: 600;
+                            }
+
+                            thead th:first-child {
+                                border-top-left-radius: 10px;
+                            }
+
+                            thead th:last-child {
+                                border-top-right-radius: 10px;
+                            }
+
+                            td {
+                                padding: 12px 15px;
+                                border-bottom: 1px solid #dee2e6;
+                            }
+
+                            tr:hover {
+                                background: #f8f9fa;
+                            }
+                            .no-data {
+                                text-align: center;
+                                padding: 40px;
+                                color: #6c757d;
+                                font-size: 18px;
+                            }
+                            .back-btn {
+                                display: inline-block;
+                                background: #667eea;
+                                color: white;
+                                padding: 12px 30px;
+                                border-radius: 8px;
+                                text-decoration: none;
+                                margin-top: 20px;
+                                transition: all 0.3s ease;
+                            }
+                            .back-btn:hover {
+                                background: #1f44e7;
+                                transform: translateY(-2px);
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <h1>👥 Clientes Cadastrados</h1>
+                            <div class="stats">
+                                <h2>Total:&nbsp;""").append(clientes.size()).append("""
+                                 Cliente(s)</h2>
+                            </div>
+                    """);
+            
+            if (clientes.isEmpty()) {
+                html.append("""
+                            <div class="no-data">
+                                ❌ Nenhum cliente cadastrado ainda
+                            </div>
+                        """);
+            } else {
+                html.append("""
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Telefone</th>
+                                        <th>Endereço Padrão</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        """);
+                
+                for (Cliente cliente : clientes) {
+                    Usuario usuario = usuarioDAO.buscarPorId(cliente.getUsuarioId());
+                    html.append("<tr>")
+                        .append("<td>").append(cliente.getId()).append("</td>")
+                        .append("<td>").append(usuario != null ? usuario.getNome() : "N/A").append("</td>")
+                        .append("<td>").append(usuario != null ? usuario.getEmail() : "N/A").append("</td>")
+                        .append("<td>").append(usuario != null && usuario.getTelefone() != null ? usuario.getTelefone() : "-").append("</td>")
+                        .append("<td>").append(cliente.getEnderecoPadrao() != null && !cliente.getEnderecoPadrao().isEmpty() ? cliente.getEnderecoPadrao() : "-").append("</td>")
+                        .append("</tr>");
+                }
+                
+                html.append("""
+                                </tbody>
+                            </table>
+                        """);
+            }
+            
+            html.append("""
+                            <a href="/" class="back-btn">↩ Voltar para Home</a>
+                        </div>
+                    </body>
+                    </html>
+                    """);
+            
+            return ResponseEntity.ok()
+                    .contentType(Objects.requireNonNull(MediaType.TEXT_HTML))
+                    .body(html.toString());
+                    
+        } catch (SQLException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .contentType(Objects.requireNonNull(MediaType.TEXT_HTML))
+                    .body("<h1>Erro ao carregar clientes: " + e.getMessage() + "</h1>");
+        }
+    }
+
+    @PutMapping("/atualizar")
+    public ResponseEntity<?> atualizarCliente(@RequestBody AtualizarClienteDTO request) {
+        try {
+            if (request.getUsuarioId() <= 0) {
+                return ResponseEntity.badRequest().body(new ErrorResponse("ID do usuário inválido"));
+            }
+
+            // Atualizar dados do usuário
+            Usuario usuario = usuarioDAO.buscarPorId(request.getUsuarioId());
+            if (usuario == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            usuario.setNome(request.getNome());
+            usuario.setEmail(request.getEmail());
+            usuario.setTelefone(request.getTelefone());
+            
+            usuarioDAO.atualizar(usuario);
+
+            // Atualizar endereço do cliente
+            if (request.getClienteId() > 0) {
+                Cliente cliente = clienteDAO.buscarPorId(request.getClienteId());
+                if (cliente != null) {
+                    cliente.setEnderecoPadrao(request.getEnderecoPadrao());
+                    clienteDAO.atualizar(cliente);
+                }
+            }
+
+            return ResponseEntity.ok(new SuccessResponse("Perfil atualizado com sucesso"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Erro ao atualizar perfil: " + e.getMessage()));
+        }
+    }
+
+    // DTOs
+    static class ClienteRequestDTO {
+        private String nome;
+        private String email;
+        private String senha;
+        private String confirmarSenha;
+        private String telefone;
+        private String enderecoPadrao;
+
+        public ClienteRequestDTO() {}
+
+        public String getNome() { return nome; }
+        public void setNome(String nome) { this.nome = nome; }
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
+        public String getSenha() { return senha; }
+        public void setSenha(String senha) { this.senha = senha; }
+        public String getConfirmarSenha() { return confirmarSenha; }
+        public void setConfirmarSenha(String confirmarSenha) { this.confirmarSenha = confirmarSenha; }
+        public String getTelefone() { return telefone; }
+        public void setTelefone(String telefone) { this.telefone = telefone; }
+        public String getEnderecoPadrao() { return enderecoPadrao; }
+        public void setEnderecoPadrao(String enderecoPadrao) { this.enderecoPadrao = enderecoPadrao; }
+    }
+
+    static class ClienteResponseDTO {
+        private int clienteId;
+        private int usuarioId;
+        private String nome;
+        private String email;
+
+        public ClienteResponseDTO(int clienteId, int usuarioId, String nome, String email) {
+            this.clienteId = clienteId;
+            this.usuarioId = usuarioId;
+            this.nome = nome;
+            this.email = email;
+        }
+
+        public int getClienteId() { return clienteId; }
+        public int getUsuarioId() { return usuarioId; }
+        public String getNome() { return nome; }
+        public String getEmail() { return email; }
+    }
+
+    static class ErrorResponse {
+        private String message;
+
+        public ErrorResponse(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() { return message; }
+    }
+
+    static class AtualizarClienteDTO {
+        private int usuarioId;
+        private int clienteId;
+        private String nome;
+        private String email;
+        private String telefone;
+        private String enderecoPadrao;
+
+        public int getUsuarioId() { return usuarioId; }
+        public void setUsuarioId(int usuarioId) { this.usuarioId = usuarioId; }
+        public int getClienteId() { return clienteId; }
+        public void setClienteId(int clienteId) { this.clienteId = clienteId; }
+        public String getNome() { return nome; }
+        public void setNome(String nome) { this.nome = nome; }
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
+        public String getTelefone() { return telefone; }
+        public void setTelefone(String telefone) { this.telefone = telefone; }
+        public String getEnderecoPadrao() { return enderecoPadrao; }
+        public void setEnderecoPadrao(String enderecoPadrao) { this.enderecoPadrao = enderecoPadrao; }
+    }
+
+    static class SuccessResponse {
+        private String message;
+
+        public SuccessResponse(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() { return message; }
+    }
 }

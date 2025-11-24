@@ -1,4 +1,4 @@
-package models;
+package com.foodly.Models;
 
 import jakarta.persistence.*;
 

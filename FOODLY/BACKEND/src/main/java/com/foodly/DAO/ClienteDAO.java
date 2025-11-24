@@ -1,6 +1,6 @@
-package dao;
+package com.foodly.DAO;
 
-import models.Cliente;
+import com.foodly.Models.Cliente;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -49,6 +49,27 @@ public class ClienteDAO {
             }
         }
         return null;
+    }
+
+    public Cliente buscarPorUsuarioId(int usuarioId) throws SQLException {
+        String sql = "SELECT * FROM clientes WHERE usuario_id = ?";
+        
+        try (Connection conn = Conexao.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, usuarioId);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id"));
+                cliente.setUsuarioId(rs.getInt("usuario_id"));
+                cliente.setEnderecoPadrao(rs.getString("endereco_padrao"));
+                return cliente;
+            }
+            
+            return null;
+        }
     }
 
     public List<Cliente> listarTodos() throws SQLException {

@@ -1,7 +1,6 @@
-package dao;
+package com.foodly.DAO;
 
-import models.Usuario;
-
+import com.foodly.Models.Usuario;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,29 +9,27 @@ import java.util.List;
 public class UsuarioDAO {
 
     public int salvar(Usuario usuario) throws SQLException {
-        String sql = "INSERT INTO usuarios (nome, email, senha_hash, telefone, tipo_usuario) " +
-                     "VALUES (?, ?, ?, ?, ?)";
-
+        String sql = "INSERT INTO usuarios (nome, email, senha_hash, telefone, tipo_usuario, criado_em) VALUES (?, ?, ?, ?, ?, ?)";
+        
         try (Connection conn = Conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
+            
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getEmail());
             stmt.setString(3, usuario.getSenhaHash());
             stmt.setString(4, usuario.getTelefone());
             stmt.setString(5, usuario.getTipoUsuario());
-
+            stmt.setTimestamp(6, Timestamp.valueOf(usuario.getCriadoEm() != null ? usuario.getCriadoEm() : LocalDateTime.now()));
+            
             stmt.executeUpdate();
-
+            
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
-                    int idGerado = rs.getInt(1);
-                    usuario.setId(idGerado);
-                    return idGerado;
+                    return rs.getInt(1);
                 }
             }
         }
-        return -1;
+        throw new SQLException("Falha ao obter ID do usuário criado");
     }
 
     public Usuario buscarPorId(int id) throws SQLException {
@@ -64,6 +61,31 @@ public class UsuarioDAO {
             }
         }
         return null;
+    }
+
+    public Usuario buscarPorEmail(String email) throws SQLException {
+        String sql = "SELECT * FROM usuarios WHERE email = ?";
+        
+        try (Connection conn = Conexao.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setId(rs.getInt("id"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenhaHash(rs.getString("senha_hash"));
+                usuario.setTelefone(rs.getString("telefone"));
+                usuario.setTipoUsuario(rs.getString("tipo_usuario"));
+                usuario.setCriadoEm(rs.getTimestamp("criado_em").toLocalDateTime());
+                return usuario;
+            }
+            
+            return null;
+        }
     }
 
     public List<Usuario> listarTodos() throws SQLException {

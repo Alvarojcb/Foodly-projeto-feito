@@ -1,6 +1,7 @@
-package dao;
+package com.foodly.DAO;
 
-import models.AvaliacaoEntregador;
+import com.foodly.Models.AvaliacaoEntregador;
+import com.foodly.Config.Conexao;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 public class AvaliacaoEntregadorDAO {
 
     public int salvar(AvaliacaoEntregador a) throws SQLException {
-        String sql = "INSERT INTO avaliacoes_entregadores (cliente_id, entregador_id, pedido_id, nota, comentario, criado_em) " +
+        String sql = "INSERT INTO avaliacoes_entregador (cliente_id, entregador_id, pedido_id, nota, comentario, criado_em) " +
                      "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = Conexao.getConnection();

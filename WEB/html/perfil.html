@@ -1,90 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Foodly - Meu Perfil</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- caminho atualizado para a pasta css -->
-  <link rel="stylesheet" href="../css/perfil.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meu Perfil - Foodly</title>
+    <link rel="stylesheet" href="../css/perfil.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="navbar-left">
+        <div class="logo-box">🍽</div>
+        <span class="logo-text">Foodly</span>
+      </div>
 
-  <!-- NAVBAR (mesmo padrão das outras páginas) -->
-  <header class="navbar">
-    <div class="navbar-left">
-      <div class="logo-box">🍽</div>
-      <span class="logo-text">Foodly</span>
-    </div>
+      <nav class="nav-links">
+        <a href="index.html">Início</a>
+        <a href="restaurante.html">Restaurantes</a>
+        <a href="menu.html">Menu</a>
+        <a href="suporte.html">Suporte</a>
+        <a href="sobre.html">Sobre</a>
+      </nav>
 
-    <nav class="nav-links">
-      <a href="index.html">Início</a>
-      <a href="restaurante.html">Restaurantes</a>
-      <a href="menu.html">Menu</a>
-      <a href="suporte.html">Suporte</a>
-      <a href="sobre.html">Sobre</a>
-    </nav>
+      <div class="navbar-right">
+        <button class="icon-btn" aria-label="Notificações">🔔</button>
+        <button class="icon-btn" aria-label="Carrinho">🛒</button>
+        <button class="icon-btn active" aria-label="Perfil">👤</button>
+      </div>
+    </header>
 
-    <div class="navbar-right">
-      <button class="icon-btn" aria-label="Notificações">🔔</button>
-      <button class="icon-btn" aria-label="Carrinho">🛒</button>
-      <button class="icon-btn active" aria-label="Perfil">👤</button>
-    </div>
-  </header>
+    <div class="container">
+      <div class="header">
+        <div class="avatar" id="perfil-avatar">U</div>
+        <h1><strong>Meu Perfil</strong></h1>
+        <button class="btn-edit" id="btn-editar-perfil">
+          ✏️ Editar Perfil
+        </button>
+      </div>
 
-  <!-- CONTEÚDO PRINCIPAL -->
-  <main class="page">
-    <section class="profile-container">
-
-      <!-- CARD PRINCIPAL DO PERFIL -->
-      <article class="profile-card">
-        <header class="profile-header">
-          <div class="profile-info">
-            <div class="avatar">
-              <span>JS</span>
-            </div>
-            <div class="profile-text">
-              <h1>João Silva</h1>
-              <p>Membro desde 2024</p>
-            </div>
-          </div>
-
-          <button class="btn-outline">
-            ✏️ Editar Perfil
-          </button>
-        </header>
-
-        <div class="profile-fields">
-          <div class="field-row">
-            <div class="field-icon">📧</div>
-            <div class="field-text">
-              <span class="field-label">Email</span>
-              <span class="field-value">joao.silva@email.com</span>
-            </div>
-          </div>
-
-          <div class="field-row">
-            <div class="field-icon">📞</div>
-            <div class="field-text">
-              <span class="field-label">Telefone</span>
-              <span class="field-value">(11) 99999-9999</span>
-            </div>
-          </div>
-
-          <div class="field-row">
-            <div class="field-icon">📍</div>
-            <div class="field-text">
-              <span class="field-label">Endereço</span>
-              <span class="field-value">
-                Rua das Flores, 123 - São Paulo, SP
-              </span>
-            </div>
-          </div>
+      <div class="profile-info">
+        <div class="info-item">
+          <span class="label">Nome:</span>
+          <span class="value" id="perfil-nome">Carregando...</span>
         </div>
-      </article>
+        <div class="info-item">
+          <span class="label">Email:</span>
+          <span class="value" id="perfil-email">Carregando...</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Telefone:</span>
+          <span class="value" id="perfil-telefone">Carregando...</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Endereço Padrão:</span>
+          <span class="value" id="perfil-endereco">Carregando...</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Tipo de Usuário:</span>
+          <span class="value" id="perfil-tipo">Carregando...</span>
+        </div>
+      </div>
 
-      <!-- CARDS SECUNDÁRIOS (OPÇÕES) -->
+      <!-- CARDS DE OPÇÕES -->
       <section class="options-list">
-
         <article class="option-card">
           <div class="option-left">
             <div class="option-icon premium">⭐</div>
@@ -120,14 +98,55 @@
           </div>
           <div class="option-arrow">›</div>
         </article>
-
       </section>
-    </section>
-  </main>
 
-  <!-- FOOTER SIMPLES (OPCIONAL, MESMO TOM DO SISTEMA) -->
-  <footer class="footer">
-    <p>© 2024 Foodly. Todos os direitos reservados.</p>
-  </footer>
-</body>
+      <div class="actions">
+        <a href="menu.html" class="btn btn-primary">Voltar para Menu</a>
+        <button id="btn-logout" class="btn btn-danger">Sair</button>
+      </div>
+    </div>
+
+    <!-- MODAL DE EDIÇÃO -->
+    <div id="modal-editar" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Editar Perfil</h2>
+          <button class="modal-close" id="modal-close">&times;</button>
+        </div>
+        <form id="form-editar-perfil">
+          <div class="form-group">
+            <label for="edit-nome">Nome Completo</label>
+            <input type="text" id="edit-nome" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-email">Email</label>
+            <input type="email" id="edit-email" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-telefone">Telefone</label>
+            <input type="tel" id="edit-telefone" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-endereco">Endereço</label>
+            <input type="text" id="edit-endereco" required />
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="btn-cancelar">
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Salvar Alterações
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>© 2024 Foodly. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="../JS/perfil.js"></script>
+  </body>
 </html>

@@ -1,10 +1,10 @@
-package controllers;
+package com.foodly.Controller;
 
-import dao.Conexao;
-import dao.SuporteAtendimentoDAO;
-import dao.SuporteMensagemDAO;
-import models.SuporteAtendimento;
-import models.SuporteMensagem;
+import com.foodly.DAO.Conexao;
+import com.foodly.DAO.SuporteAtendimentoDAO;
+import com.foodly.DAO.SuporteMensagemDAO;
+import com.foodly.Models.SuporteAtendimento;
+import com.foodly.Models.SuporteMensagem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
