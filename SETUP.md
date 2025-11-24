@@ -92,13 +92,12 @@ spring:
 
 ### 1. **Baixar Dependências**
 ```powershell
-cd FOODLY/BACKEND
-mvn clean install
+cd FOODLY/BACKEND && mvn clean install
 ```
 
 ### 2. **Rodar o Servidor**
 ```powershell
-mvn spring-boot:run
+cd FOODLY/BACKEND && mvn spring-boot:run
 ```
 
 **Ou usar:**
