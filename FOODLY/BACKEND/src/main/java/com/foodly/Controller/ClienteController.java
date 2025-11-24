@@ -188,7 +188,7 @@ public class ClienteController {
                                 color: #6c757d;
                                 font-size: 18px;
                             }
-                            .back-btn {
+                            .back-btn, .delete-all-btn {
                                 display: inline-block;
                                 background: #667eea;
                                 color: white;
@@ -202,7 +202,48 @@ public class ClienteController {
                                 background: #1f44e7;
                                 transform: translateY(-2px);
                             }
+                            .delete-all-btn {
+                                display: inline-block;
+                                background: #dc3545;
+                                color: white;
+                                padding: 12px 30px;
+                                border-radius: 8px;
+                                text-decoration: none;
+                                margin-top: 20px;
+                                margin-left: 10px;
+                                transition: all 0.3s ease;
+                                border: none;
+                                cursor: pointer;
+                                font-size: 16px;
+                            }
+                            .delete-all-btn:hover {
+                                background: #c82333;
+                                transform: translateY(-2px);
+                            }
                         </style>
+                        <script>
+                            async function deletarTodos() {
+                                if (!confirm('⚠️ ATENÇÃO! Isso irá deletar TODOS os clientes do banco de dados. Deseja continuar?')) {
+                                    return;
+                                }
+                                
+                                if (!confirm('Tem certeza ABSOLUTA? Esta ação não pode ser desfeita!')) {
+                                    return;
+                                }
+
+                                try {
+                                    const response = await fetch('/api/clientes/deletar/todos', {
+                                        method: 'DELETE'
+                                    });
+                                    
+                                    const data = await response.json();
+                                    alert(data.message);
+                                    window.location.reload();
+                                } catch (error) {
+                                    alert('Erro ao deletar clientes: ' + error.message);
+                                }
+                            }
+                        </script>
                     </head>
                     <body>
                         <div class="container">
@@ -253,6 +294,7 @@ public class ClienteController {
             
             html.append("""
                             <a href="/" class="back-btn">↩ Voltar para Home</a>
+                            <button onclick="deletarTodos()" class="delete-all-btn">🗑️ Apagar Todos os Clientes</button>
                         </div>
                     </body>
                     </html>
@@ -303,6 +345,71 @@ public class ClienteController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse("Erro ao atualizar perfil: " + e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> removerCliente(@PathVariable int id) {
+        try {
+            // Buscar o cliente para obter o usuarioId
+            Cliente cliente = clienteDAO.buscarPorId(id);
+            if (cliente == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse("Cliente não encontrado"));
+            }
+
+            int usuarioId = cliente.getUsuarioId();
+
+            // Remover o cliente primeiro (devido à chave estrangeira)
+            clienteDAO.deletar(id);
+
+            // Remover o usuário
+            usuarioDAO.deletar(usuarioId);
+
+            return ResponseEntity.ok(new SuccessResponse("Cliente removido com sucesso"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Erro ao remover cliente: " + e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/deletar/todos")
+    public ResponseEntity<?> deletarTodosClientes() {
+        try {
+            List<Cliente> clientes = clienteDAO.listarTodos();
+            
+            if (clientes.isEmpty()) {
+                return ResponseEntity.ok(new SuccessResponse("Nenhum cliente para deletar"));
+            }
+
+            int deletados = 0;
+            for (Cliente cliente : clientes) {
+                try {
+                    int usuarioId = cliente.getUsuarioId();
+                    clienteDAO.deletar(cliente.getId());
+                    usuarioDAO.deletar(usuarioId);
+                    deletados++;
+                } catch (SQLException e) {
+                    System.err.println("Erro ao deletar cliente ID " + cliente.getId() + ": " + e.getMessage());
+                }
+            }
+
+            // Resetar AUTO_INCREMENT das tabelas
+            try {
+                clienteDAO.resetarAutoIncrement();
+                usuarioDAO.resetarAutoIncrement();
+            } catch (SQLException e) {
+                System.err.println("Erro ao resetar AUTO_INCREMENT: " + e.getMessage());
+            }
+
+            return ResponseEntity.ok(new SuccessResponse(deletados + " cliente(s) deletado(s) com sucesso. IDs resetados."));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Erro ao deletar clientes: " + e.getMessage()));
         }
     }
 

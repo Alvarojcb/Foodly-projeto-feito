@@ -115,4 +115,12 @@ public class ClienteDAO {
             stmt.executeUpdate();
         }
     }
+
+    public void resetarAutoIncrement() throws SQLException {
+        String sql = "ALTER TABLE clientes AUTO_INCREMENT = 1";
+        try (Connection conn = Conexao.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.executeUpdate();
+        }
+    }
 }

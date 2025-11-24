@@ -145,4 +145,12 @@ public class UsuarioDAO {
             stmt.executeUpdate();
         }
     }
+
+    public void resetarAutoIncrement() throws SQLException {
+        String sql = "ALTER TABLE usuarios AUTO_INCREMENT = 1";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.executeUpdate();
+        }
+    }
 }
