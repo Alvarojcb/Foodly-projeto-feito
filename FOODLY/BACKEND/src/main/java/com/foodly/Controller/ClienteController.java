@@ -8,11 +8,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/clientes")
@@ -21,10 +28,17 @@ public class ClienteController {
 
     private final UsuarioDAO usuarioDAO;
     private final ClienteDAO clienteDAO;
+    private static final String UPLOAD_DIR = "uploads/fotos-perfil/";
 
     public ClienteController() {
         this.usuarioDAO = new UsuarioDAO();
         this.clienteDAO = new ClienteDAO();
+        
+        // Criar diretório de uploads se não existir
+        File uploadDir = new File(UPLOAD_DIR);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
     }
 
     /**
@@ -360,6 +374,17 @@ public class ClienteController {
 
             int usuarioId = cliente.getUsuarioId();
 
+            // Buscar usuário e deletar foto se existir
+            Usuario usuario = usuarioDAO.buscarPorId(usuarioId);
+            if (usuario != null && usuario.getFotoPerfil() != null && !usuario.getFotoPerfil().isEmpty()) {
+                try {
+                    Files.deleteIfExists(Paths.get(UPLOAD_DIR + usuario.getFotoPerfil()));
+                    System.out.println("Foto deletada: " + usuario.getFotoPerfil());
+                } catch (IOException e) {
+                    System.err.println("Erro ao deletar foto: " + e.getMessage());
+                }
+            }
+
             // Remover o cliente primeiro (devido à chave estrangeira)
             clienteDAO.deletar(id);
 
@@ -385,9 +410,22 @@ public class ClienteController {
             }
 
             int deletados = 0;
+            
             for (Cliente cliente : clientes) {
                 try {
                     int usuarioId = cliente.getUsuarioId();
+                    
+                    // Buscar usuário e deletar foto se existir
+                    Usuario usuario = usuarioDAO.buscarPorId(usuarioId);
+                    if (usuario != null && usuario.getFotoPerfil() != null && !usuario.getFotoPerfil().isEmpty()) {
+                        try {
+                            Files.deleteIfExists(Paths.get(UPLOAD_DIR + usuario.getFotoPerfil()));
+                            System.out.println("Foto deletada: " + usuario.getFotoPerfil());
+                        } catch (IOException e) {
+                            System.err.println("Erro ao deletar foto do usuário " + usuarioId + ": " + e.getMessage());
+                        }
+                    }
+                    
                     clienteDAO.deletar(cliente.getId());
                     usuarioDAO.deletar(usuarioId);
                     deletados++;
@@ -410,6 +448,98 @@ public class ClienteController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse("Erro ao deletar clientes: " + e.getMessage()));
+        }
+    }
+
+    @PostMapping("/upload-foto/{usuarioId}")
+    public ResponseEntity<?> uploadFotoPerfil(
+            @PathVariable int usuarioId,
+            @RequestParam("foto") MultipartFile file) {
+        
+        try {
+            if (file.isEmpty()) {
+                return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Arquivo não enviado"));
+            }
+
+            // Validar tipo de arquivo
+            String contentType = file.getContentType();
+            if (contentType == null || !contentType.startsWith("image/")) {
+                return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Apenas imagens são permitidas"));
+            }
+
+            // Validar tamanho (max 5MB)
+            if (file.getSize() > 5 * 1024 * 1024) {
+                return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Imagem muito grande. Máximo 5MB"));
+            }
+
+            // Gerar nome único para o arquivo
+            String extensao = file.getOriginalFilename()
+                .substring(file.getOriginalFilename().lastIndexOf("."));
+            String nomeArquivo = usuarioId + "_" + UUID.randomUUID().toString() + extensao;
+            
+            // Salvar arquivo
+            Path path = Paths.get(UPLOAD_DIR + nomeArquivo);
+            Files.write(path, file.getBytes());
+
+            // Atualizar usuário no banco
+            Usuario usuario = usuarioDAO.buscarPorId(usuarioId);
+            if (usuario == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            // Deletar foto antiga se existir
+            if (usuario.getFotoPerfil() != null && !usuario.getFotoPerfil().isEmpty()) {
+                try {
+                    Files.deleteIfExists(Paths.get(UPLOAD_DIR + usuario.getFotoPerfil()));
+                } catch (IOException e) {
+                    System.err.println("Erro ao deletar foto antiga: " + e.getMessage());
+                }
+            }
+
+            usuario.setFotoPerfil(nomeArquivo);
+            usuarioDAO.atualizar(usuario);
+
+            return ResponseEntity.ok(new FotoResponse(nomeArquivo, "/uploads/fotos-perfil/" + nomeArquivo));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Erro ao fazer upload: " + e.getMessage()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Erro ao atualizar banco de dados: " + e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/remover-foto/{usuarioId}")
+    public ResponseEntity<?> removerFotoPerfil(@PathVariable int usuarioId) {
+        try {
+            Usuario usuario = usuarioDAO.buscarPorId(usuarioId);
+            if (usuario == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            if (usuario.getFotoPerfil() != null && !usuario.getFotoPerfil().isEmpty()) {
+                try {
+                    Files.deleteIfExists(Paths.get(UPLOAD_DIR + usuario.getFotoPerfil()));
+                } catch (IOException e) {
+                    System.err.println("Erro ao deletar arquivo: " + e.getMessage());
+                }
+            }
+
+            usuario.setFotoPerfil(null);
+            usuarioDAO.atualizar(usuario);
+
+            return ResponseEntity.ok(new SuccessResponse("Foto removida com sucesso"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Erro ao remover foto: " + e.getMessage()));
         }
     }
 
@@ -487,6 +617,19 @@ public class ClienteController {
         public void setTelefone(String telefone) { this.telefone = telefone; }
         public String getEnderecoPadrao() { return enderecoPadrao; }
         public void setEnderecoPadrao(String enderecoPadrao) { this.enderecoPadrao = enderecoPadrao; }
+    }
+
+    static class FotoResponse {
+        private String nomeArquivo;
+        private String url;
+
+        public FotoResponse(String nomeArquivo, String url) {
+            this.nomeArquivo = nomeArquivo;
+            this.url = url;
+        }
+
+        public String getNomeArquivo() { return nomeArquivo; }
+        public String getUrl() { return url; }
     }
 
     static class SuccessResponse {

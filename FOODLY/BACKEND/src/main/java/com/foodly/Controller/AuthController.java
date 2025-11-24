@@ -57,7 +57,8 @@ public class AuthController {
                 usuario.getEmail(),
                 usuario.getTelefone(),
                 cliente != null ? cliente.getEnderecoPadrao() : "",
-                usuario.getTipoUsuario()
+                usuario.getTipoUsuario(),
+                usuario.getFotoPerfil()
             );
 
             return ResponseEntity.ok(response);
@@ -87,7 +88,8 @@ public class AuthController {
                 usuario.getEmail(),
                 usuario.getTelefone(),
                 cliente != null ? cliente.getEnderecoPadrao() : "",
-                usuario.getTipoUsuario()
+                usuario.getTipoUsuario(),
+                usuario.getFotoPerfil()
             );
 
             return ResponseEntity.ok(response);
@@ -117,9 +119,10 @@ public class AuthController {
         private String telefone;
         private String enderecoPadrao;
         private String tipoUsuario;
+        private String fotoPerfil;
 
         public LoginResponseDTO(int usuarioId, int clienteId, String nome, String email, 
-                               String telefone, String enderecoPadrao, String tipoUsuario) {
+                               String telefone, String enderecoPadrao, String tipoUsuario, String fotoPerfil) {
             this.usuarioId = usuarioId;
             this.clienteId = clienteId;
             this.nome = nome;
@@ -127,6 +130,7 @@ public class AuthController {
             this.telefone = telefone;
             this.enderecoPadrao = enderecoPadrao;
             this.tipoUsuario = tipoUsuario;
+            this.fotoPerfil = fotoPerfil;
         }
 
         public int getUsuarioId() { return usuarioId; }
@@ -136,12 +140,23 @@ public class AuthController {
         public String getTelefone() { return telefone; }
         public String getEnderecoPadrao() { return enderecoPadrao; }
         public String getTipoUsuario() { return tipoUsuario; }
+        public String getFotoPerfil() { return fotoPerfil; }
     }
 
     static class ErrorResponse {
         private String message;
 
         public ErrorResponse(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() { return message; }
+    }
+
+    static class SuccessResponse {
+        private String message;
+
+        public SuccessResponse(String message) {
             this.message = message;
         }
 

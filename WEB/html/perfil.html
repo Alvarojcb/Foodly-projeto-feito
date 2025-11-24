@@ -31,7 +31,46 @@
 
     <div class="container">
       <div class="header">
-        <div class="avatar" id="perfil-avatar">U</div>
+        <div class="avatar-container">
+          <img
+            id="perfil-avatar"
+            class="avatar-img"
+            src=""
+            alt="Foto de perfil"
+            style="display: none"
+          />
+          <div class="avatar" id="perfil-avatar-inicial">U</div>
+          <label
+            for="input-foto"
+            class="avatar-edit"
+            title="Formatos aceitos:&#10;JPG/JPEG (.jpg, .jpeg)&#10;PNG (.png)&#10;GIF (.gif)&#10;WebP (.webp)&#10;BMP (.bmp)&#10;SVG (.svg)&#10;&#10;Tamanho máximo: 5MB"
+            >📷
+            <span class="tooltip">
+              <strong>Formatos aceitos:</strong><br />
+              • JPG/JPEG<br />
+              • PNG<br />
+              • GIF<br />
+              • WebP<br />
+              • BMP<br />
+              • SVG<br />
+              <strong>Tamanho máximo: 5MB</strong>
+            </span>
+          </label>
+          <button
+            class="avatar-remove"
+            id="btn-remover-foto"
+            style="display: none"
+            title="Remover foto"
+          >
+            ❌
+          </button>
+          <input
+            type="file"
+            id="input-foto"
+            accept="image/*"
+            style="display: none"
+          />
+        </div>
         <h1><strong>Meu Perfil</strong></h1>
         <button class="btn-edit" id="btn-editar-perfil">
           ✏️ Editar Perfil

@@ -9,7 +9,7 @@ import java.util.List;
 public class UsuarioDAO {
 
     public int salvar(Usuario usuario) throws SQLException {
-        String sql = "INSERT INTO usuarios (nome, email, senha_hash, telefone, tipo_usuario, criado_em) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuarios (nome, email, senha_hash, telefone, tipo_usuario, criado_em, foto_perfil) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = Conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -20,6 +20,7 @@ public class UsuarioDAO {
             stmt.setString(4, usuario.getTelefone());
             stmt.setString(5, usuario.getTipoUsuario());
             stmt.setTimestamp(6, Timestamp.valueOf(usuario.getCriadoEm() != null ? usuario.getCriadoEm() : LocalDateTime.now()));
+            stmt.setString(7, usuario.getFotoPerfil());
             
             stmt.executeUpdate();
             
@@ -33,7 +34,7 @@ public class UsuarioDAO {
     }
 
     public Usuario buscarPorId(int id) throws SQLException {
-        String sql = "SELECT id, nome, email, senha_hash, telefone, tipo_usuario, criado_em " +
+        String sql = "SELECT id, nome, email, senha_hash, telefone, tipo_usuario, criado_em, foto_perfil " +
                      "FROM usuarios WHERE id = ?";
 
         try (Connection conn = Conexao.getConnection();
@@ -50,6 +51,7 @@ public class UsuarioDAO {
                     u.setSenhaHash(rs.getString("senha_hash"));
                     u.setTelefone(rs.getString("telefone"));
                     u.setTipoUsuario(rs.getString("tipo_usuario"));
+                    u.setFotoPerfil(rs.getString("foto_perfil"));
 
                     Timestamp criadoEmTs = rs.getTimestamp("criado_em");
                     if (criadoEmTs != null) {
@@ -80,7 +82,13 @@ public class UsuarioDAO {
                 usuario.setSenhaHash(rs.getString("senha_hash"));
                 usuario.setTelefone(rs.getString("telefone"));
                 usuario.setTipoUsuario(rs.getString("tipo_usuario"));
-                usuario.setCriadoEm(rs.getTimestamp("criado_em").toLocalDateTime());
+                usuario.setFotoPerfil(rs.getString("foto_perfil"));
+                
+                Timestamp criadoEmTs = rs.getTimestamp("criado_em");
+                if (criadoEmTs != null) {
+                    usuario.setCriadoEm(criadoEmTs.toLocalDateTime());
+                }
+                
                 return usuario;
             }
             
@@ -89,7 +97,7 @@ public class UsuarioDAO {
     }
 
     public List<Usuario> listarTodos() throws SQLException {
-        String sql = "SELECT id, nome, email, senha_hash, telefone, tipo_usuario, criado_em FROM usuarios";
+        String sql = "SELECT id, nome, email, senha_hash, telefone, tipo_usuario, criado_em, foto_perfil FROM usuarios";
         List<Usuario> lista = new ArrayList<>();
 
         try (Connection conn = Conexao.getConnection();
@@ -104,6 +112,7 @@ public class UsuarioDAO {
                 u.setSenhaHash(rs.getString("senha_hash"));
                 u.setTelefone(rs.getString("telefone"));
                 u.setTipoUsuario(rs.getString("tipo_usuario"));
+                u.setFotoPerfil(rs.getString("foto_perfil"));
 
                 Timestamp criadoEmTs = rs.getTimestamp("criado_em");
                 if (criadoEmTs != null) {
@@ -118,7 +127,7 @@ public class UsuarioDAO {
 
     public void atualizar(Usuario usuario) throws SQLException {
         String sql = "UPDATE usuarios " +
-                     "SET nome = ?, email = ?, senha_hash = ?, telefone = ?, tipo_usuario = ? " +
+                     "SET nome = ?, email = ?, senha_hash = ?, telefone = ?, tipo_usuario = ?, foto_perfil = ? " +
                      "WHERE id = ?";
 
         try (Connection conn = Conexao.getConnection();
@@ -129,7 +138,8 @@ public class UsuarioDAO {
             stmt.setString(3, usuario.getSenhaHash());
             stmt.setString(4, usuario.getTelefone());
             stmt.setString(5, usuario.getTipoUsuario());
-            stmt.setInt(6, usuario.getId());
+            stmt.setString(6, usuario.getFotoPerfil());
+            stmt.setInt(7, usuario.getId());
 
             stmt.executeUpdate();
         }
@@ -148,7 +158,7 @@ public class UsuarioDAO {
 
     public void resetarAutoIncrement() throws SQLException {
         String sql = "ALTER TABLE usuarios AUTO_INCREMENT = 1";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = Conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.executeUpdate();
         }

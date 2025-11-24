@@ -27,6 +27,8 @@ public class Usuario {
     
     @Column(nullable = false, updatable = false)
     private LocalDateTime criadoEm;
+    
+    private String fotoPerfil;
 
     public Usuario() {
     }
@@ -104,4 +106,7 @@ public class Usuario {
     public void setCriadoEm(LocalDateTime criadoEm) {
         this.criadoEm = criadoEm;
     }
+
+    public String getFotoPerfil() { return fotoPerfil; }
+    public void setFotoPerfil(String fotoPerfil) { this.fotoPerfil = fotoPerfil; }
 }
