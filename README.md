@@ -62,6 +62,7 @@ Durante o desenvolvimento do projeto, realizamos sessões de *Pair Programming*,
 
 
 
+<img width="1280" height="832" alt="image" src="https://github.com/user-attachments/assets/0fb245ff-9d2c-4f97-b4a9-6d7db47d2588" />
 
 
 
