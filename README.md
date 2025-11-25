@@ -31,6 +31,44 @@ Durante o desenvolvimento do projeto, realizamos sessões de *Pair Programming*,
 
 
 
+<img width="959" height="775" alt="image" src="https://github.com/user-attachments/assets/00edf782-c090-4e32-b87b-7184e3bbab51" />
+
+
+
+
+<img width="1280" height="960" alt="image" src="https://github.com/user-attachments/assets/4f0fb778-00aa-4f37-9314-c876913d72cb" />
+
+
+
+
+<img width="1280" height="1035" alt="image" src="https://github.com/user-attachments/assets/97b81503-80a7-44d9-857b-84f52c649b0c" />
+
+
+
+
+<img width="1280" height="889" alt="image" src="https://github.com/user-attachments/assets/da75c92b-977a-4413-bd6a-558a38dbe7b5" />
+
+
+
+
+<img width="1280" height="889" alt="image" src="https://github.com/user-attachments/assets/208f2f6a-671a-4043-93f6-10fa2a1e6938" />
+
+
+
+
+<img width="1280" height="889" alt="image" src="https://github.com/user-attachments/assets/76dd151a-af51-4525-a5a9-fd811a697f7c" />
+
+
+
+
+
+
+
+
+
+
+
+
 
 > 💬 Tiveram sessões em diferentes etapas do projeto
 
