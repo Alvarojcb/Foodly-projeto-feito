@@ -1,44 +1,32 @@
 package com.foodly.Models;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "produtos")
 public class Produto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column(nullable = false)
     private Integer restauranteId;
-    
-    @Column(nullable = false)
     private String nome;
-    
     private String descricao;
-    
-    @Column(nullable = false)
     private double preco;
-    
-    @Column(nullable = false)
+    private String categoria;
+    private String imagem;
     private boolean ativo;
 
     public Produto() {
         this.ativo = true;
     }
 
-    public Produto(Integer id, Integer restauranteId, String nome, String descricao, double preco, boolean ativo) {
+    public Produto(Integer id, Integer restauranteId, String nome, String descricao, double preco, String categoria, String imagem, boolean ativo) {
         this.id = id;
         this.restauranteId = restauranteId;
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
+        this.categoria = categoria;
+        this.imagem = imagem;
         this.ativo = ativo;
     }
 
     // Getters e Setters
-
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
@@ -53,6 +41,12 @@ public class Produto {
 
     public double getPreco() { return preco; }
     public void setPreco(double preco) { this.preco = preco; }
+
+    public String getCategoria() { return categoria; }
+    public void setCategoria(String categoria) { this.categoria = categoria; }
+
+    public String getImagem() { return imagem; }
+    public void setImagem(String imagem) { this.imagem = imagem; }
 
     public boolean isAtivo() { return ativo; }
     public void setAtivo(boolean ativo) { this.ativo = ativo; }

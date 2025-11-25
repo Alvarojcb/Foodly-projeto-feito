@@ -1,30 +1,13 @@
 package com.foodly.Models;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "restaurantes")
 public class Restaurante {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column(nullable = false)
     private Integer usuarioId;
-    
-    @Column(nullable = false)
     private String nomeFantasia;
-    
-    @Column(nullable = false, unique = true)
     private String cnpj;
-    
-    @Column(nullable = false)
     private String endereco;
-    
     private String dadosBancarios;
-    
-    @Column(nullable = false)
     private boolean ativo;
 
     public Restaurante() {
@@ -48,7 +31,6 @@ public class Restaurante {
     }
 
     // Getters e Setters
-
     public Integer getId() {
         return id;
     }

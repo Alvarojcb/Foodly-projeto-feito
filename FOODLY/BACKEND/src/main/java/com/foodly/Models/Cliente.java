@@ -1,18 +1,9 @@
 package com.foodly.Models;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "clientes")
 public class Cliente {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column(nullable = false)
     private Integer usuarioId;
-    
     private String enderecoPadrao;
 
     public Cliente() {
@@ -25,7 +16,6 @@ public class Cliente {
     }
 
     // Getters e Setters
-
     public Integer getId() {
         return id;
     }

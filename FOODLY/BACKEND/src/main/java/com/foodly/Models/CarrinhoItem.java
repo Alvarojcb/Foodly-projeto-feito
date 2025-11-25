@@ -1,25 +1,11 @@
 package com.foodly.Models;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "carrinho_itens")
 public class CarrinhoItem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column(nullable = false)
     private Integer carrinhoId;
-    
-    @Column(nullable = false)
     private Integer produtoId;
-    
-    @Column(nullable = false)
     private int quantidade;
-    
-    @Column(nullable = false)
     private double precoUnitario;
 
     public CarrinhoItem() {
@@ -34,7 +20,6 @@ public class CarrinhoItem {
     }
 
     // Getters e Setters
-
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 

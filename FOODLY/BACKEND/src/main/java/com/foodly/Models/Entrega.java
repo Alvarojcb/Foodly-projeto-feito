@@ -1,34 +1,17 @@
 package com.foodly.Models;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "entregas")
 public class Entrega {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column(nullable = false)
     private Integer pedidoId;
-    
     private Integer entregadorId;
-    
-    @Column(nullable = false)
     private String status;
-    
-    @Column(columnDefinition = "TEXT")
     private String rotaSugerida;
-    
     private Integer tempoEstimadoMin;
-    
     private Double distanciaKm;
-    
-    @Column(nullable = false, updatable = false)
     private LocalDateTime criadoEm;
-    
     private LocalDateTime atualizadoEm;
 
     public Entrega() {
@@ -55,7 +38,6 @@ public class Entrega {
     }
 
     // Getters e Setters
-
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 

@@ -1,29 +1,14 @@
 package com.foodly.Models;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "suporte_mensagens")
 public class SuporteMensagem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column(nullable = false)
     private Integer atendimentoId;
-    
-    @Column(nullable = false)
     private String remetenteTipo;
-    
-    @Column(nullable = false)
     private Integer remetenteUsuarioId;
-    
-    @Column(columnDefinition = "TEXT", nullable = false)
     private String mensagem;
-    
-    @Column(nullable = false, updatable = false)
     private LocalDateTime enviadoEm;
 
     public SuporteMensagem() {
@@ -44,7 +29,6 @@ public class SuporteMensagem {
     }
 
     // Getters e Setters
-
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 

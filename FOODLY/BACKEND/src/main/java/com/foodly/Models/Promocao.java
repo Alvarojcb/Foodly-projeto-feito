@@ -1,54 +1,25 @@
 package com.foodly.Models;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "promocoes")
 public class Promocao {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    
-    private Integer restauranteId;
-    
-    @Column(nullable = false)
+    private int id;
+    private int restauranteId;
     private String titulo;
-    
     private String descricao;
-    
-    @Column(nullable = false)
     private String tipoDesconto;
-    
-    private Double valorDesconto;
-    
-    @Column(nullable = false)
+    private double valorDesconto;
     private LocalDateTime dataInicio;
-    
-    @Column(nullable = false)
     private LocalDateTime dataFim;
-    
-    @Column(nullable = false)
     private boolean ativo;
-    
-    @Column(nullable = false, updatable = false)
     private LocalDateTime criadoEm;
 
-    public Promocao() {
-        this.ativo = true;
-    }
+    // Construtores
+    public Promocao() {}
 
-    public Promocao(Integer id,
-                    Integer restauranteId,
-                    String titulo,
-                    String descricao,
-                    String tipoDesconto,
-                    Double valorDesconto,
-                    LocalDateTime dataInicio,
-                    LocalDateTime dataFim,
-                    boolean ativo,
-                    LocalDateTime criadoEm) {
+    public Promocao(int id, int restauranteId, String titulo, String descricao, String tipoDesconto,
+                   double valorDesconto, LocalDateTime dataInicio, LocalDateTime dataFim, 
+                   boolean ativo, LocalDateTime criadoEm) {
         this.id = id;
         this.restauranteId = restauranteId;
         this.titulo = titulo;
@@ -62,12 +33,11 @@ public class Promocao {
     }
 
     // Getters e Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
-
-    public Integer getRestauranteId() { return restauranteId; }
-    public void setRestauranteId(Integer restauranteId) { this.restauranteId = restauranteId; }
+    public int getRestauranteId() { return restauranteId; }
+    public void setRestauranteId(int restauranteId) { this.restauranteId = restauranteId; }
 
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
@@ -78,8 +48,8 @@ public class Promocao {
     public String getTipoDesconto() { return tipoDesconto; }
     public void setTipoDesconto(String tipoDesconto) { this.tipoDesconto = tipoDesconto; }
 
-    public Double getValorDesconto() { return valorDesconto; }
-    public void setValorDesconto(Double valorDesconto) { this.valorDesconto = valorDesconto; }
+    public double getValorDesconto() { return valorDesconto; }
+    public void setValorDesconto(double valorDesconto) { this.valorDesconto = valorDesconto; }
 
     public LocalDateTime getDataInicio() { return dataInicio; }
     public void setDataInicio(LocalDateTime dataInicio) { this.dataInicio = dataInicio; }

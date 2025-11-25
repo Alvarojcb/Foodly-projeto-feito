@@ -1,33 +1,16 @@
 package com.foodly.Models;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "usuarios")
 public class Usuario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column(nullable = false)
     private String nome;
-    
-    @Column(nullable = false, unique = true)
     private String email;
-    
-    @Column(nullable = false)
     private String senhaHash;
-    
     private String telefone;
-    
-    @Column(nullable = false)
     private String tipoUsuario;
-    
-    @Column(nullable = false, updatable = false)
     private LocalDateTime criadoEm;
-    
     private String fotoPerfil;
 
     public Usuario() {
@@ -50,7 +33,6 @@ public class Usuario {
     }
 
     // Getters e Setters
-
     public Integer getId() {
         return id;
     }
@@ -107,6 +89,11 @@ public class Usuario {
         this.criadoEm = criadoEm;
     }
 
-    public String getFotoPerfil() { return fotoPerfil; }
-    public void setFotoPerfil(String fotoPerfil) { this.fotoPerfil = fotoPerfil; }
+    public String getFotoPerfil() { 
+        return fotoPerfil; 
+    }
+    
+    public void setFotoPerfil(String fotoPerfil) { 
+        this.fotoPerfil = fotoPerfil; 
+    }
 }
