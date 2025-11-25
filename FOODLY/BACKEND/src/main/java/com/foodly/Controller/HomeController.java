@@ -139,6 +139,7 @@ public class HomeController {
                             <a href="/api" class="endpoint">⚠️ GET /api - Informações (JSON)</a>
                             <a href="/health" class="endpoint">❗️ GET /health - Checar SQL</a>
                             <a href="/api/clientes/visualizar" class="endpoint">👥 GET /api/clientes/visualizar - Ver Clientes</a>
+                            <a href="/api/restaurantes/visualizar" class="endpoint">🍽 GET /api/restaurantes/visualizar - Ver Restaurantes</a>
                         </div>
                     </div>
                 </body>

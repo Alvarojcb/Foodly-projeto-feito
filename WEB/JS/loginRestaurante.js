@@ -1,7 +1,7 @@
 const API_URL = "http://localhost:8080/api";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const formLogin = document.getElementById("form-login");
+  const formLogin = document.getElementById("form-login-restaurante");
 
   if (formLogin) {
     formLogin.addEventListener("submit", async (e) => {
@@ -28,9 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
           const usuario = await response.json();
           console.log("Login bem-sucedido:", usuario);
 
-          // Verificar se é cliente
-          if (usuario.tipoUsuario === "restaurante") {
-            alert("Use o login de restaurante para acessar como restaurante.");
+          // Verificar se é realmente um restaurante
+          if (usuario.tipoUsuario !== "restaurante") {
+            alert(
+              "Este login é apenas para restaurantes. Use o login de cliente."
+            );
             return;
           }
 
@@ -40,8 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
           alert(`Bem-vindo, ${usuario.nome}!`);
 
-          // Redirecionar para menu
-          window.location.href = "menu.html";
+          // Redirecionar para painel do restaurante
+          window.location.href = "painelRestaurante.html";
         } else {
           const erro = await response.json();
           alert(erro.message || "Email ou senha incorretos");

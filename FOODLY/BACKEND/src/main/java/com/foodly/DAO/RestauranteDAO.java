@@ -81,4 +81,42 @@ public class RestauranteDAO {
         }
         return lista;
     }
+
+    public void atualizar(Restaurante restaurante) throws SQLException {
+        String sql = "UPDATE restaurantes SET nome_fantasia = ?, cnpj = ?, endereco = ?, dados_bancarios = ?, ativo = ? WHERE id = ?";
+        
+        try (Connection conn = Conexao.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setString(1, restaurante.getNomeFantasia());
+            stmt.setString(2, restaurante.getCnpj());
+            stmt.setString(3, restaurante.getEndereco());
+            stmt.setString(4, restaurante.getDadosBancarios());
+            stmt.setBoolean(5, restaurante.isAtivo());
+            stmt.setInt(6, restaurante.getId());
+            
+            stmt.executeUpdate();
+        }
+    }
+
+    public void deletar(int id) throws SQLException {
+        String sql = "DELETE FROM restaurantes WHERE id = ?";
+        
+        try (Connection conn = Conexao.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
+    }
+
+    public void resetarAutoIncrement() throws SQLException {
+        String sql = "ALTER TABLE restaurantes AUTO_INCREMENT = 1";
+        
+        try (Connection conn = Conexao.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.executeUpdate();
+        }
+    }
 }

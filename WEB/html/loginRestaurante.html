@@ -2,9 +2,8 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>FoodCart - Login</title>
+    <title>Foodly - Login Restaurante</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- caminho atualizado para a pasta css -->
     <link rel="stylesheet" href="../css/loginCliente.css" />
   </head>
   <body>
@@ -14,18 +13,16 @@
         <div class="brand">
           <div class="brand-logo">🍽</div>
           <h1 class="brand-title">Bem-vindo de volta!</h1>
-          <p class="brand-subtitle">
-            Faça login e continue aproveitando nossos sabores
-          </p>
+          <p class="brand-subtitle">Acesse o painel do seu restaurante</p>
         </div>
 
         <!-- Card de login -->
         <div class="card">
-          <h2 class="card-title">Entrar</h2>
-          <p class="card-subtitle">Faça login para acessar sua conta</p>
+          <h2 class="card-title">Entrar como Restaurante</h2>
+          <p class="card-subtitle">Faça login para gerenciar seu restaurante</p>
 
           <!-- ID adicionado para o JavaScript -->
-          <form class="form" id="form-login">
+          <form class="form" id="form-login-restaurante">
             <!-- Email -->
             <div class="form-group">
               <label for="email">Email</label>
@@ -56,14 +53,14 @@
               </div>
             </div>
 
-            <!-- Botão de login (sem <a> dentro) -->
+            <!-- Botão de login -->
             <button type="submit" class="btn-primary">ENTRAR</button>
           </form>
 
           <!-- Link para cadastro -->
           <p class="bottom-text">
             Novo na plataforma?
-            <a href="cadastroCliente.html">Cadastre-se</a>
+            <a href="cadastroRestaurante.html">Cadastre-se</a>
           </p>
         </div>
 
@@ -73,6 +70,6 @@
     </div>
 
     <!-- JavaScript principal -->
-    <script src="../JS/login.js"></script>
+    <script src="../JS/loginRestaurante.js"></script>
   </body>
 </html>
