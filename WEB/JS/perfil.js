@@ -1,5 +1,8 @@
-// Verificar se estamos na página de perfil
-if (window.location.pathname.includes("perfil.html")) {
+// Verificar se estamos na página de perfil (aceita perfil.html OU perfilCliente.html)
+if (
+  window.location.pathname.includes("perfil.html") ||
+  window.location.pathname.includes("perfilCliente.html")
+) {
   const API_URL = "http://localhost:8080/api";
 
   // Elementos do DOM
@@ -40,7 +43,7 @@ if (window.location.pathname.includes("perfil.html")) {
       if (!usuarioJson) {
         console.error("Nenhum usuário encontrado no localStorage");
         alert("Sessão expirada. Faça login novamente.");
-        window.location.href = "index.html";
+        window.location.href = "escolhaPerfil.html";
         return;
       }
 
@@ -185,7 +188,7 @@ if (window.location.pathname.includes("perfil.html")) {
     localStorage.removeItem("token");
     localStorage.removeItem("usuario");
     localStorage.removeItem("usuarioLogado");
-    window.location.href = "index.html";
+    window.location.href = "escolhaPerfil.html";
   }
 
   // Upload de foto de perfil

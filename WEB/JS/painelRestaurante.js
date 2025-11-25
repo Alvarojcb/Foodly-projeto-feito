@@ -43,7 +43,7 @@ if (window.location.pathname.includes("painelRestaurante.html")) {
       if (!usuarioJson) {
         console.error("Nenhum usuário encontrado no localStorage");
         alert("Sessão expirada. Faça login novamente.");
-        window.location.href = "index.html";
+        window.location.href = "escolhaPerfil.html";
         return;
       }
 
@@ -53,7 +53,7 @@ if (window.location.pathname.includes("painelRestaurante.html")) {
       // Verificar se é restaurante
       if (usuarioAtual.tipoUsuario !== "restaurante") {
         alert("Acesso negado. Este painel é apenas para restaurantes.");
-        window.location.href = "index.html";
+        window.location.href = "escolhaPerfil.html";
         return;
       }
 
@@ -370,7 +370,7 @@ if (window.location.pathname.includes("painelRestaurante.html")) {
     localStorage.removeItem("token");
     localStorage.removeItem("usuario");
     localStorage.removeItem("usuarioLogado");
-    window.location.href = "index.html";
+    window.location.href = "escolhaPerfil.html";
   }
 
   // Event Listeners

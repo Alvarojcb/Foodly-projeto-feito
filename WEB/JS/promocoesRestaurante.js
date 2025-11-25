@@ -24,14 +24,14 @@ if (window.location.pathname.includes("promocoesRestaurante.html")) {
       const usuarioJson = localStorage.getItem("usuario");
       if (!usuarioJson) {
         alert("Sessão expirada. Faça login novamente.");
-        window.location.href = "index.html";
+        window.location.href = "escolhaPerfil.html";
         return;
       }
 
       const usuario = JSON.parse(usuarioJson);
       if (usuario.tipoUsuario !== "restaurante") {
         alert("Acesso negado. Esta página é apenas para restaurantes.");
-        window.location.href = "index.html";
+        window.location.href = "escolhaPerfil.html";
         return;
       }
 
@@ -134,7 +134,7 @@ if (window.location.pathname.includes("promocoesRestaurante.html")) {
           : "inativo";
 
         return `
-        <div class="produto-card ${expirou ? "card-expirado" : ""}">
+        <div class="produto-card ${expirado ? "card-expirado" : ""}">
           <div class="produto-header">
             <div class="produto-info">
               <h3>${promocao.titulo}</h3>

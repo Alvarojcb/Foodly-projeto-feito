@@ -17,7 +17,7 @@ function logout() {
   localStorage.removeItem("usuarioLogado");
   localStorage.removeItem("token");
   localStorage.removeItem("usuario");
-  window.location.href = "index.html";
+  window.location.href = "escolhaPerfil.html";
 }
 
 function verificarAutenticacao() {
@@ -26,6 +26,10 @@ function verificarAutenticacao() {
     "index.html",
     "cadastro.html",
     "cadastroCliente.html",
+    "cadastroRestaurante.html",
+    "escolhaPerfil.html",
+    "loginCliente.html",
+    "loginRestaurante.html",
   ];
   const paginaAtual = window.location.pathname.split("/").pop();
 
@@ -35,6 +39,6 @@ function verificarAutenticacao() {
 
   if (!isLogado()) {
     alert("Você precisa estar logado para acessar esta página");
-    window.location.href = "index.html";
+    window.location.href = "escolhaPerfil.html";
   }
 }

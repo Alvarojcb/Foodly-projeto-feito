@@ -12,6 +12,11 @@ body {
   color: #1f2933;
 }
 
+a {
+  color: black;
+  text-decoration: none;
+}
+
 /* ===== NAVBAR ===== */
 .navbar {
   position: sticky;

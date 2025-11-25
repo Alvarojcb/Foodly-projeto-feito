@@ -22,14 +22,14 @@ if (window.location.pathname.includes("gerenciarCardapio.html")) {
       const usuarioJson = localStorage.getItem("usuario");
       if (!usuarioJson) {
         alert("Sessão expirada. Faça login novamente.");
-        window.location.href = "index.html";
+        window.location.href = "escolhaPerfil.html";
         return;
       }
 
       const usuario = JSON.parse(usuarioJson);
       if (usuario.tipoUsuario !== "restaurante") {
         alert("Acesso negado. Esta página é apenas para restaurantes.");
-        window.location.href = "index.html";
+        window.location.href = "escolhaPerfil.html";
         return;
       }
 
