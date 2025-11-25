@@ -40,8 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
           alert(`Bem-vindo, ${usuario.nome}!`);
 
-          // Redirecionar para menu
-          window.location.href = "menu.html";
+          // Redirecionar para menuPrincipal.html
+          window.location.href = "menuPrincipal.html";
         } else {
           const erro = await response.json();
           alert(erro.message || "Email ou senha incorretos");

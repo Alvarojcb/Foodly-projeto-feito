@@ -44,6 +44,8 @@ CREATE TABLE produtos (
     nome            VARCHAR(150)    NOT NULL,
     descricao       TEXT,
     preco           DECIMAL(10, 2)  NOT NULL,
+    categoria       VARCHAR(50),
+    imagem          VARCHAR(255),
     ativo           BOOLEAN         NOT NULL DEFAULT TRUE,
     FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

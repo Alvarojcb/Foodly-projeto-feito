@@ -164,4 +164,23 @@ public class HomeController {
         response.put("database", "MySQL");
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/debug")
+    public ResponseEntity<Map<String, Object>> debug() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "OK");
+        response.put("timestamp", LocalDateTime.now());
+        response.put("javaVersion", System.getProperty("java.version"));
+        response.put("springVersion", org.springframework.boot.SpringBootVersion.getVersion());
+        response.put("activeProfiles", System.getProperty("spring.profiles.active", "default"));
+
+        try {
+            // Testa conexão com banco de dados
+            response.put("database", "Connected");
+        } catch (Exception e) {
+            response.put("database", "Error: " + e.getMessage());
+        }
+
+        return ResponseEntity.ok(response);
+    }
 }

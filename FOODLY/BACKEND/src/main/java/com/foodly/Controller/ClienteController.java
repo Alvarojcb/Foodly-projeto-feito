@@ -475,9 +475,15 @@ public class ClienteController {
                     .body(new ErrorResponse("Imagem muito grande. Máximo 5MB"));
             }
 
+            // Validar nome do arquivo
+            String originalFilename = file.getOriginalFilename();
+            if (originalFilename == null || originalFilename.isEmpty()) {
+                return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Nome do arquivo inválido"));
+            }
+
             // Gerar nome único para o arquivo
-            String extensao = file.getOriginalFilename()
-                .substring(file.getOriginalFilename().lastIndexOf("."));
+            String extensao = originalFilename.substring(originalFilename.lastIndexOf("."));
             String nomeArquivo = usuarioId + "_" + UUID.randomUUID().toString() + extensao;
             
             // Salvar arquivo

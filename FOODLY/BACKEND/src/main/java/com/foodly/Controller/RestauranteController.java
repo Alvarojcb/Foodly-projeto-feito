@@ -211,7 +211,7 @@ public class RestauranteController {
                                 color: #6c757d;
                                 font-size: 18px;
                             }
-                            .back-btn {
+                            .back-btn, .delete-all-btn {
                                 display: inline-block;
                                 background: #ff8a1f;
                                 color: white;
@@ -225,7 +225,41 @@ public class RestauranteController {
                                 background: #ff4b2b;
                                 transform: translateY(-2px);
                             }
+                            .delete-all-btn {
+                                background: #dc3545;
+                                margin-left: 10px;
+                                border: none;
+                                cursor: pointer;
+                                font-size: 16px;
+                            }
+                            .delete-all-btn:hover {
+                                background: #c82333;
+                                transform: translateY(-2px);
+                            }
                         </style>
+                        <script>
+                            async function deletarTodos() {
+                                if (!confirm('⚠️ ATENÇÃO! Isso irá deletar TODOS os restaurantes do banco de dados. Deseja continuar?')) {
+                                    return;
+                                }
+                                
+                                if (!confirm('Tem certeza ABSOLUTA? Esta ação não pode ser desfeita!')) {
+                                    return;
+                                }
+
+                                try {
+                                    const response = await fetch('/api/restaurantes/deletar/todos', {
+                                        method: 'DELETE'
+                                    });
+                                    
+                                    const data = await response.json();
+                                    alert(data.message);
+                                    window.location.reload();
+                                } catch (error) {
+                                    alert('Erro ao deletar restaurantes: ' + error.message);
+                                }
+                            }
+                        </script>
                     </head>
                     <body>
                         <div class="container">
@@ -285,6 +319,7 @@ public class RestauranteController {
             
             html.append("""
                             <a href="/" class="back-btn">↩ Voltar para Home</a>
+                            <button onclick="deletarTodos()" class="delete-all-btn">🗑️ Apagar Todos os Restaurantes</button>
                         </div>
                     </body>
                     </html>
@@ -321,6 +356,46 @@ public class RestauranteController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse("Erro ao remover restaurante: " + e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/deletar/todos")
+    public ResponseEntity<?> deletarTodosRestaurantes() {
+        try {
+            List<Restaurante> restaurantes = restauranteDAO.listarTodos();
+            
+            if (restaurantes.isEmpty()) {
+                return ResponseEntity.ok(new SuccessResponse("Nenhum restaurante para deletar"));
+            }
+
+            int deletados = 0;
+            
+            for (Restaurante restaurante : restaurantes) {
+                try {
+                    int usuarioId = restaurante.getUsuarioId();
+                    
+                    restauranteDAO.deletar(restaurante.getId());
+                    usuarioDAO.deletar(usuarioId);
+                    deletados++;
+                } catch (SQLException e) {
+                    System.err.println("Erro ao deletar restaurante ID " + restaurante.getId() + ": " + e.getMessage());
+                }
+            }
+
+            // Resetar AUTO_INCREMENT das tabelas
+            try {
+                restauranteDAO.resetarAutoIncrement();
+                usuarioDAO.resetarAutoIncrement();
+            } catch (SQLException e) {
+                System.err.println("Erro ao resetar AUTO_INCREMENT: " + e.getMessage());
+            }
+
+            return ResponseEntity.ok(new SuccessResponse(deletados + " restaurante(s) deletado(s) com sucesso. IDs resetados."));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Erro ao deletar restaurantes: " + e.getMessage()));
         }
     }
 
