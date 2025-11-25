@@ -32,6 +32,10 @@ if (
   const avatarInicial = document.getElementById("perfil-avatar-inicial");
   const btnRemoverFoto = document.getElementById("btn-remover-foto");
 
+  // Elementos específicos de Premium (apenas em perfilCliente.html)
+  const cardUsuarioPremium = document.getElementById("card-usuario-premium");
+  const badgePremium = document.getElementById("badge-premium");
+
   let usuarioAtual = null;
 
   // Carregar dados do usuário
@@ -77,6 +81,11 @@ if (
       if (usuarioAtual.usuarioId) {
         await carregarFotoPerfil(usuarioAtual.usuarioId);
       }
+
+      // Verificar status premium (apenas para clientes)
+      if (usuarioAtual.tipoUsuario === "cliente" && usuarioAtual.clienteId) {
+        await verificarStatusPremium();
+      }
     } catch (error) {
       console.error("Erro ao carregar perfil:", error);
       alert("Erro ao carregar perfil. Faça login novamente.");
@@ -118,6 +127,109 @@ if (
       }
     }
   }
+
+  // ==========================================
+  // FUNCIONALIDADES PREMIUM (apenas clientes)
+  // ==========================================
+
+  // Verificar status premium do usuário
+  async function verificarStatusPremium() {
+    if (!cardUsuarioPremium || !badgePremium) return; // Se não existem elementos premium, retorna
+
+    try {
+      const response = await fetch(
+        `${API_URL}/premium/cliente/${usuarioAtual.clienteId}`
+      );
+
+      if (response.ok) {
+        const assinatura = await response.json();
+
+        if (assinatura && assinatura.status === "ativa") {
+          mostrarBadgePremium();
+        }
+      }
+    } catch (error) {
+      console.log("Usuário não possui assinatura premium");
+    }
+  }
+
+  // Mostrar badge premium
+  function mostrarBadgePremium() {
+    if (badgePremium) {
+      badgePremium.style.display = "inline-block";
+    }
+  }
+
+  // Ativar usuário premium
+  async function ativarUsuarioPremium() {
+    const confirmar = confirm(
+      "⭐️ USUÁRIO PREMIUM\n\n" +
+        "Ative agora e aproveite benefícios esses exclusivos:\n\n" +
+        "- Entregas grátis ilimitadas\n" +
+        "- Descontos exclusivos em restaurantes\n\n" +
+        "💰 Valor: R$ 29,90/mês\n\n" +
+        "Deseja ativar sua assinatura Premium agora?"
+    );
+
+    if (!confirmar) {
+      return;
+    }
+
+    try {
+      // Primeiro, buscar o plano premium disponível
+      const planosResponse = await fetch(`${API_URL}/premium/planos`);
+
+      if (!planosResponse.ok) {
+        alert("❌ Nenhum plano premium disponível no momento.");
+        return;
+      }
+
+      const planos = await planosResponse.json();
+      const planoAtivo = planos.find((p) => p.ativo);
+
+      if (!planoAtivo) {
+        alert("❌ Nenhum plano premium disponível no momento.");
+        return;
+      }
+
+      // Criar assinatura premium
+      const response = await fetch(`${API_URL}/premium/criar`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          clienteId: usuarioAtual.clienteId,
+          planoId: planoAtivo.id,
+          metodoPagamento: "cartao_credito",
+        }),
+      });
+
+      if (response.ok) {
+        alert(
+          "✅ Parabéns! Sua assinatura Premium foi ativada com sucesso!\n\nVocê já pode aproveitar todos os benefícios exclusivos."
+        );
+
+        mostrarBadgePremium();
+        await carregarPerfil();
+      } else {
+        const error = await response.json();
+        alert(
+          "❌ Erro ao ativar Premium: " +
+            (error.message || "Tente novamente mais tarde.")
+        );
+      }
+    } catch (error) {
+      console.error("Erro ao ativar premium:", error);
+      alert(
+        "❌ Erro ao processar sua solicitação. Tente novamente mais tarde."
+      );
+    }
+  }
+
+  // ==========================================
+  // FUNCIONALIDADES GERAIS DE PERFIL
+  // ==========================================
 
   // Abrir modal de edição
   function abrirModal() {
@@ -168,7 +280,6 @@ if (
         throw new Error(error.message || "Erro ao atualizar perfil");
       }
 
-      // Atualizar dados locais
       usuarioAtual = { ...usuarioAtual, ...dadosAtualizados };
       localStorage.setItem("usuario", JSON.stringify(usuarioAtual));
       localStorage.setItem("usuarioLogado", JSON.stringify(usuarioAtual));
@@ -202,13 +313,11 @@ if (
         return;
       }
 
-      // Validar tipo
       if (!file.type.startsWith("image/")) {
         alert("Por favor, selecione uma imagem válida");
         return;
       }
 
-      // Validar tamanho (5MB)
       if (file.size > 5 * 1024 * 1024) {
         alert("Imagem muito grande. Máximo 5MB");
         return;
@@ -230,7 +339,6 @@ if (
           const data = await response.json();
           console.log("Upload bem-sucedido:", data);
 
-          // Atualizar a imagem imediatamente
           if (avatarImg) {
             avatarImg.src = `http://localhost:8080${
               data.url
@@ -241,7 +349,6 @@ if (
             avatarInicial.style.display = "none";
           }
 
-          // Buscar dados atualizados do servidor
           const perfilResponse = await fetch(
             `${API_URL}/auth/perfil/${usuarioAtual.usuarioId}`
           );
@@ -255,7 +362,6 @@ if (
               JSON.stringify(perfilAtualizado)
             );
 
-            // Mostrar botão de remover
             if (btnRemoverFoto) {
               btnRemoverFoto.style.display = "flex";
             }
@@ -336,7 +442,6 @@ if (
       );
 
       if (response.ok) {
-        // Esconder imagem e mostrar inicial
         if (avatarImg) {
           avatarImg.style.display = "none";
           avatarImg.src = "";
@@ -348,7 +453,6 @@ if (
           btnRemoverFoto.style.display = "none";
         }
 
-        // Atualizar dados no localStorage
         const perfilResponse = await fetch(
           `${API_URL}/auth/perfil/${usuarioAtual.usuarioId}`
         );
@@ -373,7 +477,11 @@ if (
     }
   }
 
-  // Event Listeners
+  // ==========================================
+  // EVENT LISTENERS
+  // ==========================================
+
+  // Listeners gerais
   if (btnEditarPerfil) btnEditarPerfil.addEventListener("click", abrirModal);
   if (modalClose) modalClose.addEventListener("click", fecharModal);
   if (btnCancelar) btnCancelar.addEventListener("click", fecharModal);
@@ -382,6 +490,11 @@ if (
   if (btnLogout) btnLogout.addEventListener("click", logout);
   if (btnRemoverFoto)
     btnRemoverFoto.addEventListener("click", removerFotoPerfil);
+
+  // Listener específico de Premium (apenas se o elemento existir)
+  if (cardUsuarioPremium) {
+    cardUsuarioPremium.addEventListener("click", ativarUsuarioPremium);
+  }
 
   // Fechar modal ao clicar fora
   if (modal) {

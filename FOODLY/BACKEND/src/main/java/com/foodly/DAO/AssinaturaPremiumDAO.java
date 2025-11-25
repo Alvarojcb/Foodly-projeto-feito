@@ -1,9 +1,9 @@
 package com.foodly.DAO;
 
 import com.foodly.Models.AssinaturaPremium;
+import com.foodly.config.Conexao;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 
 public class AssinaturaPremiumDAO {
 
@@ -19,28 +19,62 @@ public class AssinaturaPremiumDAO {
             stmt.setInt(2, a.getPlanoId());
             stmt.setString(3, a.getStatus());
             stmt.setTimestamp(4, Timestamp.valueOf(a.getDataInicio()));
-
-            if (a.getDataFim() != null) {
-                stmt.setTimestamp(5, Timestamp.valueOf(a.getDataFim()));
-            } else {
-                stmt.setNull(5, Types.TIMESTAMP);
-            }
-
+            stmt.setTimestamp(5, a.getDataFim() != null ? Timestamp.valueOf(a.getDataFim()) : null);
             stmt.setBoolean(6, a.isRenovacaoAutomatica());
             stmt.setString(7, a.getMetodoPagamento());
             stmt.setString(8, a.getReferenciaPagamento());
-            stmt.setTimestamp(9, Timestamp.valueOf(
-                    a.getCriadoEm() != null ? a.getCriadoEm() : LocalDateTime.now()));
+            stmt.setTimestamp(9, Timestamp.valueOf(a.getCriadoEm()));
 
             stmt.executeUpdate();
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
-                    int id = rs.getInt(1);
-                    a.setId(id);
-                    return id;
+                    return rs.getInt(1);
                 }
             }
         }
         return -1;
+    }
+
+    public AssinaturaPremium buscarPorClienteId(int clienteId) throws SQLException {
+        String sql = "SELECT * FROM assinaturas_premium WHERE cliente_id = ? AND status = 'ativa' " +
+                     "ORDER BY criado_em DESC LIMIT 1";
+
+        try (Connection conn = Conexao.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, clienteId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    AssinaturaPremium a = new AssinaturaPremium();
+                    a.setId(rs.getInt("id"));
+                    a.setClienteId(rs.getInt("cliente_id"));
+                    a.setPlanoId(rs.getInt("plano_id"));
+                    a.setStatus(rs.getString("status"));
+                    
+                    Timestamp dataInicio = rs.getTimestamp("data_inicio");
+                    if (dataInicio != null) {
+                        a.setDataInicio(dataInicio.toLocalDateTime());
+                    }
+                    
+                    Timestamp dataFim = rs.getTimestamp("data_fim");
+                    if (dataFim != null) {
+                        a.setDataFim(dataFim.toLocalDateTime());
+                    }
+                    
+                    a.setRenovacaoAutomatica(rs.getBoolean("renovacao_automatica"));
+                    a.setMetodoPagamento(rs.getString("metodo_pagamento"));
+                    a.setReferenciaPagamento(rs.getString("referencia_pagamento"));
+                    
+                    Timestamp criadoEm = rs.getTimestamp("criado_em");
+                    if (criadoEm != null) {
+                        a.setCriadoEm(criadoEm.toLocalDateTime());
+                    }
+                    
+                    return a;
+                }
+            }
+        }
+        return null;
     }
 }

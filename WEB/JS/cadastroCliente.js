@@ -48,7 +48,7 @@ async function handleCadastro(event) {
         `Cadastro realizado com sucesso! ID do cliente: ${result.clienteId}`
       );
       // Redirecionar para login
-      window.location.href = "menuPrincipal.html";
+      window.location.href = "loginCliente.html";
     } else {
       alert(result.message || "Erro ao realizar cadastro");
     }

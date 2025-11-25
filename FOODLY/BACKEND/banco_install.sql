@@ -10,6 +10,7 @@ CREATE TABLE usuarios (
     senha_hash      VARCHAR(255)        NOT NULL,
     telefone        VARCHAR(20),
     tipo_usuario    VARCHAR(20)         NOT NULL, -- 'cliente', 'restaurante', 'entregador', 'suporte'
+    foto_perfil     VARCHAR(255),
     criado_em       TIMESTAMP           NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -268,3 +269,17 @@ CREATE TABLE suporte_mensagens (
     FOREIGN KEY (atendimento_id)      REFERENCES suporte_atendimentos(id) ON DELETE CASCADE,
     FOREIGN KEY (remetente_usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ===========================
+-- DADOS INICIAIS (SEED DATA)
+-- ===========================
+
+-- Inserir plano premium padrão
+INSERT INTO planos_premium (nome, descricao, valor_mensal, duracao_dias, ativo) 
+VALUES (
+    'Foodly Premium',
+    'Entregas grátis ilimitadas e descontos exclusivos em restaurantes parceiros',
+    29.90,
+    30,
+    TRUE
+);

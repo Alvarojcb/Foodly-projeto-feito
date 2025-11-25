@@ -339,6 +339,31 @@ h1 {
   letter-spacing: 0.06em;
 }
 
+.badge-premium {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #8b4513;
+  padding: 4px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-left: 12px;
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 18px rgba(255, 215, 0, 0.7);
+  }
+}
+
 .option-arrow {
   font-size: 20px;
   color: #d1d5db;
