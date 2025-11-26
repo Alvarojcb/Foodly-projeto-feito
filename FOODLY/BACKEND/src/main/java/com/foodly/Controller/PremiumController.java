@@ -81,6 +81,32 @@ public class PremiumController {
         }
     }
 
+    @DeleteMapping("/cancelar/{clienteId}")
+    public ResponseEntity<?> cancelarAssinatura(@PathVariable int clienteId) {
+        try {
+            AssinaturaPremium assinatura = assinaturaDAO.buscarPorClienteId(clienteId);
+            
+            if (assinatura == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            // Atualizar status para 'cancelada'
+            boolean sucesso = assinaturaDAO.cancelarAssinatura(clienteId);
+            
+            if (sucesso) {
+                return ResponseEntity.ok(new SuccessResponse("Assinatura cancelada com sucesso"));
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ErrorResponse("Erro ao cancelar assinatura"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Erro ao cancelar assinatura: " + e.getMessage()));
+        }
+    }
+
     // DTOs
     static class CriarAssinaturaDTO {
         private int clienteId;
@@ -99,6 +125,16 @@ public class PremiumController {
         private String message;
 
         public ErrorResponse(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() { return message; }
+    }
+
+    static class SuccessResponse {
+        private String message;
+
+        public SuccessResponse(String message) {
             this.message = message;
         }
 

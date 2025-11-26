@@ -282,7 +282,7 @@ public class RestauranteController {
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Nome Fantasia</th>
+                                        <th>Estabelecimento</th>
                                         <th>Proprietário</th>
                                         <th>CNPJ</th>
                                         <th>Email</th>

@@ -12,7 +12,7 @@ if (loginForm) {
 
     // Aqui no futuro você pode validar email/senha.
     // Por enquanto, só redireciona para o menu.
-    window.location.href = "menu.html";
+    window.location.href = "menuPrincipal.html";
   });
 }
 
@@ -26,7 +26,7 @@ if (botoesCardapio.length > 0) {
     botao.addEventListener("click", () => {
       // No futuro você pode passar o ID do restaurante, etc.
       // Por enquanto, leva para o menu principal.
-      window.location.href = "menu.html";
+      window.location.href = "menuPrincipal.html";
     });
   });
 }
@@ -118,14 +118,14 @@ function isLogado() {
 function logout() {
   if (confirm("Deseja realmente sair?")) {
     localStorage.removeItem("usuarioLogado");
-    window.location.href = "index.html";
+    window.location.href = "loginCliente.html";
   }
 }
 
 function verificarAutenticacao() {
   if (!isLogado()) {
     alert("Você precisa estar logado para acessar esta página");
-    window.location.href = "index.html";
+    window.location.href = "loginCliente.html";
   }
 }
 

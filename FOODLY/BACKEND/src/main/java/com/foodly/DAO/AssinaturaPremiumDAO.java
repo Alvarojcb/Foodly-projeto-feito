@@ -1,7 +1,7 @@
 package com.foodly.DAO;
 
 import com.foodly.Models.AssinaturaPremium;
-import com.foodly.config.Conexao;
+import com.foodly.Config.Conexao;
 
 import java.sql.*;
 
@@ -76,5 +76,18 @@ public class AssinaturaPremiumDAO {
             }
         }
         return null;
+    }
+
+    public boolean cancelarAssinatura(int clienteId) throws SQLException {
+        String sql = "UPDATE assinaturas_premium SET status = 'cancelada' WHERE cliente_id = ? AND status = 'ativa'";
+
+        try (Connection conn = Conexao.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, clienteId);
+            
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        }
     }
 }

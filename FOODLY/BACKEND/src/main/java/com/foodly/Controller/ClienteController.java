@@ -2,8 +2,10 @@ package com.foodly.Controller;
 
 import com.foodly.DAO.ClienteDAO;
 import com.foodly.DAO.UsuarioDAO;
+import com.foodly.DAO.AssinaturaPremiumDAO;
 import com.foodly.Models.Cliente;
 import com.foodly.Models.Usuario;
+import com.foodly.Models.AssinaturaPremium;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
@@ -28,11 +30,13 @@ public class ClienteController {
 
     private final UsuarioDAO usuarioDAO;
     private final ClienteDAO clienteDAO;
+    private final AssinaturaPremiumDAO assinaturaPremiumDAO;
     private static final String UPLOAD_DIR = "uploads/fotos-perfil/";
 
     public ClienteController() {
         this.usuarioDAO = new UsuarioDAO();
         this.clienteDAO = new ClienteDAO();
+        this.assinaturaPremiumDAO = new AssinaturaPremiumDAO();
         
         // Criar diretório de uploads se não existir
         File uploadDir = new File(UPLOAD_DIR);
@@ -165,7 +169,6 @@ public class ClienteController {
                                 font-size: 24px;
                             }
                             table {
-                            
                                 width: 100%;
                                 border-collapse: separate;
                                 border-spacing: 0;      
@@ -196,6 +199,34 @@ public class ClienteController {
                             tr:hover {
                                 background: #f8f9fa;
                             }
+                            
+                            .premium-badge {
+                                background: linear-gradient(135deg, #ffd700, #ffed4e);
+                                color: #333;
+                                padding: 4px 8px;
+                                border-radius: 12px;
+                                font-size: 0.75em;
+                                font-weight: bold;
+                                text-transform: uppercase;
+                                box-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+                            }
+                            
+                            .basico-badge {
+                                background: linear-gradient(135deg, #6c757d, #adb5bd);
+                                color: white;
+                                padding: 4px 8px;
+                                border-radius: 12px;
+                                font-size: 0.75em;
+                                font-weight: bold;
+                                text-transform: uppercase;
+                                box-shadow: 0 2px 4px rgba(108, 117, 125, 0.3);
+                            }
+                            
+                            .no-premium {
+                                color: #6c757d;
+                                font-style: italic;
+                            }
+                            
                             .no-data {
                                 text-align: center;
                                 padding: 40px;
@@ -283,7 +314,8 @@ public class ClienteController {
                                         <th>Nome</th>
                                         <th>Email</th>
                                         <th>Telefone</th>
-                                        <th>Endereço Padrão</th>
+                                        <th>Endereço</th>
+                                        <th>Plano</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -291,12 +323,26 @@ public class ClienteController {
                 
                 for (Cliente cliente : clientes) {
                     Usuario usuario = usuarioDAO.buscarPorId(cliente.getUsuarioId());
+                    
+                    // Verificar se é premium
+                    String statusPremium = "<span class='basico-badge'>BÁSICO</span>";
+                    try {
+                        AssinaturaPremium assinatura = assinaturaPremiumDAO.buscarPorClienteId(cliente.getId());
+                        if (assinatura != null && "ativa".equals(assinatura.getStatus())) {
+                            statusPremium = "<span class='premium-badge'>⭐ PREMIUM</span>";
+                        }
+                    } catch (SQLException e) {
+                        // Se der erro, assume que não é premium
+                        statusPremium = "<span class='no-premium'>Erro</span>";
+                    }
+                    
                     html.append("<tr>")
                         .append("<td>").append(cliente.getId()).append("</td>")
                         .append("<td>").append(usuario != null ? usuario.getNome() : "N/A").append("</td>")
                         .append("<td>").append(usuario != null ? usuario.getEmail() : "N/A").append("</td>")
                         .append("<td>").append(usuario != null && usuario.getTelefone() != null ? usuario.getTelefone() : "-").append("</td>")
                         .append("<td>").append(cliente.getEnderecoPadrao() != null && !cliente.getEnderecoPadrao().isEmpty() ? cliente.getEnderecoPadrao() : "-").append("</td>")
+                        .append("<td>").append(statusPremium).append("</td>")
                         .append("</tr>");
                 }
                 

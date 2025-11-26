@@ -44,9 +44,13 @@ cd Foodly-projeto-feito/FOODLY/BACKEND
 ```
 
 ### Passo 2: Configurar Banco de Dados
-1. **Abrir MySQL:**
+1. **Você pode logar como root**
    ```powershell
    mysql -u root -p
+
+2. **Ou como user**
+   ```powershell
+   mysql -u user
    ```
 
 2. **Criar banco de dados:**
@@ -58,9 +62,19 @@ cd Foodly-projeto-feito/FOODLY/BACKEND
 3. **Importar script SQL:**
    ```sql
    SOURCE banco.sql;
+
+   ```
+4. **Ou faça:**
+   ```sql
+   mysql -u user -p -e "CREATE DATABASE IF NOT EXISTS foodly CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
    ```
 
-4. **Verificar tabelas:**
+5. **E execute o script:**
+   ```sql
+   mysql -u user -p foodly < /home/sal/Code/Foodly-projeto-feito/FOODLY/BACKEND/banco_install.sql
+   ```
+	
+6. **Verificar tabelas:**
    ```sql
    SHOW TABLES;
    ```
@@ -73,7 +87,7 @@ Editar `src/main/resources/application.yml`:
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/foodly
-    username: root
+    username: root #ou com o "user" e configure sem uma senha não dá erros
     password: sua_senha_mysql
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:

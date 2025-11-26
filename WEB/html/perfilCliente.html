@@ -22,8 +22,6 @@
       </nav>
 
       <div class="navbar-right">
-        <button class="icon-btn" aria-label="Notificações">🔔</button>
-        <button class="icon-btn" aria-label="Carrinho">🛒</button>
         <button class="icon-btn active" aria-label="Perfil">👤</button>
       </div>
     </header>
@@ -113,31 +111,45 @@
         >
           <div class="option-left">
             <div class="option-icon premium">⭐</div>
-            <div class="option-text">
-              <div class="option-title">
-                Usuário Premium
-                <span class="badge-upgrade">UPGRADE</span>
+            <div class="option-text-1">
+              <div class="mid-div">
+                <div class="option-title">
+                  Usuário Premium
+                  <span class="badge-upgrade">UPGRADE</span>
+                </div>
+                <p>Desbloqueie benefícios exclusivos e entregas grátis.</p>
               </div>
-              <p>Desbloqueie benefícios exclusivos e entregas grátis.</p>
             </div>
+            <button
+              id="btn-cancelar-premium"
+              class="btn-cancel-premium"
+              style="display: none"
+              onclick="event.stopPropagation(); cancelarPremium();"
+            >
+              ❌ Cancelar
+            </button>
           </div>
-          <div class="option-arrow">›</div>
         </article>
 
-        <article class="option-card">
+        <a href="historicoPedidos.html">
+          <article class="option-card">
           <div class="option-left">
-            <div class="option-icon report">📊</div>
-            <div class="option-text">
-              <div class="option-title">Relatório de Pedidos</div>
-              <p>Visualize seu histórico de pedidos e estatísticas.</p>
+            <div class="option-icon report">⏱️</div>
+            <div class="option-text-2">
+              <div class="option-title">
+                Histórico de Pedidos
+              </div>
+              <p>Visualize o que você mais gosta de pedir</p>
             </div>
           </div>
-          <div class="option-arrow">›</div>
         </article>
+      </a>
       </section>
 
       <div class="actions">
-        <a href="menu.html" class="btn btn-primary">Voltar para Menu</a>
+        <a href="menuPrincipal.html" class="btn btn-primary"
+          >Voltar para Menu</a
+        >
         <button id="btn-logout" class="btn btn-danger">Sair</button>
       </div>
     </div>

@@ -15,7 +15,8 @@ body {
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   background: #fff7f2;
   color: #1f2933;
 }
@@ -151,6 +152,7 @@ a {
   cursor: pointer;
   font-size: 18px;
   transition: background 0.2s ease, transform 0.1s ease;
+  flex-shrink: 0; /* Prevent buttons from shrinking */
 }
 
 .icon-btn:hover {
@@ -163,6 +165,9 @@ a {
 =========================== */
 .notification-wrapper {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .notification-btn {

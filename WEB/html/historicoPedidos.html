@@ -2,10 +2,10 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Foodly - Restaurantes</title>
+    <title>Foodly - Histórico de Pedidos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- CSS da página de restaurantes -->
-    <link rel="stylesheet" href="../css/restaurantes.css" />
+    <!-- CSS da página de histórico -->
+    <link rel="stylesheet" href="../css/historicoPedidos.css" />
   </head>
   <body>
     <!-- NAVBAR -->
@@ -17,20 +17,13 @@
 
       <nav class="nav-links">
         <a href="menuPrincipal.html">Início</a>
-        <a href="restaurantes.html" class="active">Restaurantes</a>
-        <a href="geradorComidas.html">FoodRandom</a>
+        <a href="restaurantes.html">Restaurantes</a>
+        <a href="gerador.html">Pedidos</a>
         <a href="suporte.html">Suporte</a>
         <a href="sobre.html">Sobre</a>
-        
-
       </nav>
 
       <div class="navbar-right">
-        <div class="search-wrapper">
-          <input type="text" placeholder="Buscar restaurantes..." />
-          <button class="search-btn">🔍</button>
-        </div>
-
         <!-- Ícone do sininho + dropdown de promoções -->
         <div class="notification-wrapper">
           <button class="icon-btn notification-btn" aria-label="Promoções">
@@ -130,208 +123,136 @@
           </div>
         </div>
 
-        <button class="icon-btn" aria-label="Perfil">👤</button>
+        <a href="perfilCliente.html" class="icon-btn" aria-label="Perfil">👤</a>
       </div>
     </header>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="page">
-      <!-- Título + filtros -->
+      <!-- Cabeçalho da página -->
       <section class="header-section">
-        <div>
-          <h1>Restaurantes perto de você</h1>
+        <div class="header-content">
+          <h1>📋 Histórico de Pedidos</h1>
           <p>
-            Escolha entre opções selecionadas com entrega rápida, boa avaliação
-            e comida de qualidade.
+            Veja todos os seus pedidos anteriores e acompanhe o que você mais
+            gosta de pedir.
           </p>
-        </div>
-
-        <div class="filters">
-          <button class="filter-btn filter-btn-active" data-category="todos">
-            Todos
-          </button>
-          <button class="filter-btn" data-category="hamburguer">
-            Hambúrguer
-          </button>
-          <button class="filter-btn" data-category="pizza">Pizza</button>
-          <button class="filter-btn" data-category="saudavel">Saudável</button>
-          <button class="filter-btn" data-category="sushi">Sushi</button>
         </div>
       </section>
 
-      <!-- LISTA DE RESTAURANTES -->
-      <section class="restaurants-grid">
-        <!-- 1 -->
-        <article class="restaurant-card" data-category="hamburguer">
-          <div class="restaurant-thumb">
-            <img
-              src="https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg"
-              alt="Burger Prime"
-            />
-          </div>
-          <div class="restaurant-info">
-            <h2>Burger Prime</h2>
-            <p class="restaurant-type">
-              Hambúrguer • Smash • Fritas artesanais
-            </p>
-
-            <div class="restaurant-meta">
-              <span>⭐ 4,8</span>
-              <span>⏱ 30–40 min</span>
-              <span>📍 2,3 km</span>
+      <!-- Estatísticas rápidas -->
+      <section class="stats-section">
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-info">
+              <h3 id="total-pedidos">0</h3>
+              <p>Total de Pedidos</p>
             </div>
-
-            <p class="restaurant-fee">
-              Taxa de entrega: <strong>R$ 5,90</strong>
-            </p>
-
-            <button class="btn-cardapio" type="button">Ver cardápio</button>
           </div>
-        </article>
-
-        <!-- 2 -->
-        <article class="restaurant-card" data-category="pizza">
-          <div class="restaurant-thumb">
-            <img
-              src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg"
-              alt="Nonna Bella"
-            />
-          </div>
-          <div class="restaurant-info">
-            <h2>Nonna Bella</h2>
-            <p class="restaurant-type">Pizzas • Massas • Forno a lenha</p>
-
-            <div class="restaurant-meta">
-              <span>⭐ 4,7</span>
-              <span>⏱ 35–50 min</span>
-              <span>📍 3,1 km</span>
+          <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-info">
+              <h3 id="total-gasto">R$ 0,00</h3>
+              <p>Total Gasto</p>
             </div>
-
-            <p class="restaurant-fee">
-              Taxa de entrega: <strong>Grátis acima de R$ 60</strong>
-            </p>
-
-            <button class="btn-cardapio" type="button">Ver cardápio</button>
           </div>
-        </article>
-
-        <!-- 3 -->
-        <article class="restaurant-card" data-category="saudavel">
-          <div class="restaurant-thumb">
-            <img
-              src="https://images.pexels.com/photos/1640770/pexels-photo-1640770.jpeg"
-              alt="Green Life"
-            />
-          </div>
-          <div class="restaurant-info">
-            <h2>Green Life</h2>
-            <p class="restaurant-type">Saladas • Bowls • Comida saudável</p>
-
-            <div class="restaurant-meta">
-              <span>⭐ 4,9</span>
-              <span>⏱ 25–35 min</span>
-              <span>📍 1,4 km</span>
+          <div class="stat-card">
+            <div class="stat-icon">🍕</div>
+            <div class="stat-info">
+              <h3 id="restaurante-favorito">-</h3>
+              <p>Restaurante Favorito</p>
             </div>
-
-            <p class="restaurant-fee">
-              Taxa de entrega: <strong>R$ 4,50</strong>
-            </p>
-
-            <button class="btn-cardapio" type="button">Ver cardápio</button>
           </div>
-        </article>
-
-        <!-- 4 -->
-        <article class="restaurant-card" data-category="sushi">
-          <div class="restaurant-thumb">
-            <img
-              src="https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg"
-              alt="Tokyo Sushi"
-            />
-          </div>
-          <div class="restaurant-info">
-            <h2>Tokyo Sushi</h2>
-            <p class="restaurant-type">Sushi • Temaki • Combinados especiais</p>
-
-            <div class="restaurant-meta">
-              <span>⭐ 4,6</span>
-              <span>⏱ 40–55 min</span>
-              <span>📍 4,0 km</span>
+          <div class="stat-card">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-info">
+              <h3 id="item-favorito">-</h3>
+              <p>Prato Favorito</p>
             </div>
-
-            <p class="restaurant-fee">
-              Taxa de entrega: <strong>R$ 7,90</strong>
-            </p>
-
-            <button class="btn-cardapio" type="button">Ver cardápio</button>
           </div>
-        </article>
+        </div>
+      </section>
 
-        <!-- 5 -->
-        <article class="restaurant-card" data-category="saudavel">
-          <div class="restaurant-thumb">
-            <img
-              src="https://images.pexels.com/photos/4109992/pexels-photo-4109992.jpeg"
-              alt="Doce Encanto"
-            />
-          </div>
-          <div class="restaurant-info">
-            <h2>Doce Encanto</h2>
-            <p class="restaurant-type">Sobremesas • Brownies • Milkshakes</p>
-
-            <div class="restaurant-meta">
-              <span>⭐ 4,9</span>
-              <span>⏱ 20–30 min</span>
-              <span>📍 1,0 km</span>
+      <!-- Lista de pedidos -->
+      <section class="orders-section">
+        <div class="orders-container">
+          <div class="orders-header">
+            <h2>Seus Pedidos</h2>
+            <div class="orders-actions">
+              <div class="sort-options">
+                <select id="sort-select">
+                  <option value="data-desc">Mais Recentes</option>
+                  <option value="data-asc">Mais Antigos</option>
+                  <option value="valor-desc">Maior Valor</option>
+                  <option value="valor-asc">Menor Valor</option>
+                </select>
+              </div>
+              <button class="btn-clear-history" id="clearHistoryBtn">
+                🗑️ Limpar Histórico
+              </button>
             </div>
-
-            <p class="restaurant-fee">
-              Taxa de entrega: <strong>R$ 3,90</strong>
-            </p>
-
-            <button class="btn-cardapio" type="button">Ver cardápio</button>
           </div>
-        </article>
+
+          <div class="orders-list" id="ordersList">
+            <!-- Pedidos serão inseridos aqui dinamicamente -->
+          </div>
+
+          <!-- Estado vazio -->
+          <div class="empty-state" id="emptyState" style="display: none">
+            <div class="empty-content">
+              <div class="empty-icon">📦</div>
+              <h3>Nenhum pedido encontrado</h3>
+              <p>
+                Você ainda não fez nenhum pedido ou não há pedidos que
+                correspondam aos filtros selecionados.
+              </p>
+              <a href="restaurantes.html" class="btn-primary">
+                🍽️ Explorar Restaurantes
+              </a>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
 
     <!-- SEÇÃO "POR QUE ESCOLHER A GENTE?" -->
     <section class="why-choose">
       <div class="why-container">
-        <h2 class="why-title">Por que escolher a gente?</h2>
+        <h2 class="why-title">Acompanhe seus pedidos facilmente</h2>
         <p class="why-subtitle">
-          Comprometidos em oferecer a melhor experiência gastronômica
+          Mantenha controle total sobre seus hábitos alimentares
         </p>
 
         <div class="why-grid">
           <article class="why-card">
-            <div class="why-icon">⏱</div>
-            <h3>Entrega Rápida</h3>
-            <p>Seus pratos favoritos chegam em até 45 minutos.</p>
+            <div class="why-icon">📊</div>
+            <h3>Estatísticas Detalhadas</h3>
+            <p>Veja quanto você gasta e quais são seus pratos favoritos.</p>
           </article>
 
           <article class="why-card">
-            <div class="why-icon">🛡</div>
-            <h3>Qualidade Garantida</h3>
-            <p>Ingredientes frescos e preparo cuidadoso em cada pedido.</p>
+            <div class="why-icon">🔍</div>
+            <h3>Filtros Avançados</h3>
+            <p>Encontre rapidamente o pedido que você está procurando.</p>
           </article>
 
           <article class="why-card">
-            <div class="why-icon">🚚</div>
-            <h3>Entrega Gratuita</h3>
-            <p>Frete grátis em pedidos acima de R$ 35,00.</p>
+            <div class="why-icon">📱</div>
+            <h3>Acesso Fácil</h3>
+            <p>Visualize seu histórico completo em qualquer dispositivo.</p>
           </article>
 
           <article class="why-card">
-            <div class="why-icon">⭐</div>
-            <h3>Avaliação 5 Estrelas</h3>
-            <p>Mais de 2.500 clientes satisfeitos com a plataforma.</p>
+            <div class="why-icon">🔄</div>
+            <h3>Recomprar Fácil</h3>
+            <p>Repita seus pedidos favoritos com apenas um clique.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- FOOTER LARANJA -->
+    <!-- FOOTER -->
     <footer class="footer">
       <div class="footer-inner">
         <div class="footer-column footer-about">
@@ -359,9 +280,9 @@
         <div class="footer-column">
           <h4>Links Rápidos</h4>
           <ul>
-            <li><a href="index.html">Início</a></li>
-            <li><a href="restaurante.html">Restaurantes</a></li>
-            <li><a href="cadastroRestaurante.html">Seja Parceiro</a></li>
+            <li><a href="menuPrincipal.html">Início</a></li>
+            <li><a href="restaurantes.html">Restaurantes</a></li>
+            <li><a href="historicoPedidos.html">Histórico</a></li>
             <li><a href="suporte.html">Suporte</a></li>
           </ul>
         </div>
@@ -395,7 +316,7 @@
       </div>
     </footer>
 
-    <!-- JS global -->
-    <script src="../JS/restaurantes.js" defer></script>
+    <!-- JS do histórico -->
+    <script src="../JS/historicoPedidos.js" defer></script>
   </body>
 </html>

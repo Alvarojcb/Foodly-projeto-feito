@@ -134,7 +134,7 @@ if (
 
   // Verificar status premium do usuário
   async function verificarStatusPremium() {
-    if (!cardUsuarioPremium || !badgePremium) return; // Se não existem elementos premium, retorna
+    if (!cardUsuarioPremium || !badgePremium) return false;
 
     try {
       const response = await fetch(
@@ -146,10 +146,59 @@ if (
 
         if (assinatura && assinatura.status === "ativa") {
           mostrarBadgePremium();
+          atualizarCardPremium(true);
+          return true;
         }
       }
+
+      atualizarCardPremium(false);
+      return false;
     } catch (error) {
       console.log("Usuário não possui assinatura premium");
+      atualizarCardPremium(false);
+      return false;
+    }
+  }
+
+  // Atualizar o card premium baseado no status
+  function atualizarCardPremium(temPremium) {
+    if (!cardUsuarioPremium) return;
+
+    const optionTitle = cardUsuarioPremium.querySelector(".option-title");
+    const optionText = cardUsuarioPremium.querySelector("p");
+    const badgeUpgrade = cardUsuarioPremium.querySelector(".badge-upgrade");
+    const btnCancelarPremium = document.getElementById("btn-cancelar-premium");
+
+    if (temPremium) {
+      if (optionTitle) {
+        optionTitle.innerHTML =
+          'Usuário Premium <span class="badge-active">ATIVO</span>';
+      }
+      if (optionText) {
+        optionText.textContent =
+          "Você já possui o plano premium ativo. Aproveite seus benefícios!";
+      }
+      if (badgeUpgrade) {
+        badgeUpgrade.style.display = "none";
+      }
+      if (btnCancelarPremium) {
+        btnCancelarPremium.style.display = "block";
+      }
+    } else {
+      if (optionTitle) {
+        optionTitle.innerHTML =
+          'Usuário Premium <span class="badge-upgrade">UPGRADE</span>';
+      }
+      if (optionText) {
+        optionText.textContent =
+          "Desbloqueie benefícios exclusivos e entregas grátis.";
+      }
+      if (badgeUpgrade) {
+        badgeUpgrade.style.display = "inline";
+      }
+      if (btnCancelarPremium) {
+        btnCancelarPremium.style.display = "none";
+      }
     }
   }
 
@@ -162,6 +211,18 @@ if (
 
   // Ativar usuário premium
   async function ativarUsuarioPremium() {
+    // Verificar se já tem premium ativo
+    const temPremium = await verificarStatusPremium();
+
+    if (temPremium) {
+      alert(
+        "⭐️ USUÁRIO PREMIUM ATIVO\n\n" +
+          "- Você já possui uma assinatura Premium ativa!\n\n" +
+          "✅ Sua assinatura está funcionando normalmente."
+      );
+      return;
+    }
+
     const confirmar = confirm(
       "⭐️ USUÁRIO PREMIUM\n\n" +
         "Ative agora e aproveite benefícios esses exclusivos:\n\n" +
@@ -211,7 +272,7 @@ if (
         );
 
         mostrarBadgePremium();
-        await carregarPerfil();
+        await verificarStatusPremium();
       } else {
         const error = await response.json();
         alert(
@@ -226,6 +287,58 @@ if (
       );
     }
   }
+
+  // Cancelar usuário premium
+  async function cancelarPremium() {
+    const confirmar = confirm(
+      "⚠️ CANCELAR ASSINATURA PREMIUM\n\n" +
+        "Tem certeza que deseja cancelar sua assinatura Premium?\n\n" +
+        "Você perderá todos os benefícios a partir de agora\n"
+    );
+
+    if (!confirmar) {
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `${API_URL}/premium/cancelar/${usuarioAtual.clienteId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        alert(
+          "✅ Assinatura Premium cancelada com sucesso!\n\n" +
+            "Você pode reativar a qualquer momento."
+        );
+
+        // Atualizar interface
+        const badgePremium = document.getElementById("badge-premium");
+        if (badgePremium) {
+          badgePremium.style.display = "none";
+        }
+
+        atualizarCardPremium(false);
+      } else {
+        const error = await response.json();
+        alert(
+          "❌ Erro ao cancelar Premium: " +
+            (error.message || "Tente novamente mais tarde.")
+        );
+      }
+    } catch (error) {
+      console.error("Erro ao cancelar premium:", error);
+      alert("❌ Erro ao processar cancelamento. Tente novamente mais tarde.");
+    }
+  }
+
+  // Tornar função global para ser chamada pelo HTML
+  window.cancelarPremium = cancelarPremium;
 
   // ==========================================
   // FUNCIONALIDADES GERAIS DE PERFIL
