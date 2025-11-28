@@ -5,6 +5,7 @@ https://drive.google.com/drive/folders/182J01LpIFcFQ3QvIALAYNGNp9kcXe5v5?usp=dri
 
 ## VIDEO DO APP RODANDO
 https://drive.google.com/file/d/1N4pGwFl8_FoaEeF1HTuFfJXjYVCbHyBK/view?usp=drive_link
+
 https://drive.google.com/file/d/1uNkbyW8NU9-CrmM7-8fdLw-63NRHfi1G/view?usp=sharing
 
 ## DIAGRAMAS :
@@ -31,6 +32,7 @@ https://drive.google.com/drive/folders/1bdJ10jnyrNCqiKJ5cNUV7JpFyC1cDNqz?usp=dri
 ### 💻 PAIR PROGRAMMING
 
 <details>
+  
 Durante o desenvolvimento do projeto, realizamos sessões de *Pair Programming*, alternando os papéis de **Driver** (quem codifica) e **Navigator** (quem orienta e revisa). Essa prática ajudou a melhorar a qualidade do código, promover o aprendizado conjunto e facilitar a resolução de problemas.
 
 
@@ -84,7 +86,9 @@ Durante o desenvolvimento do projeto, realizamos sessões de *Pair Programming*,
 
 
 ### 🐞 BUG TRACKING
+
 <details>
+  
   #### Últimos commits:
 
   - Sem integração Api-Frontend
@@ -112,6 +116,7 @@ Durante o desenvolvimento do projeto, realizamos sessões de *Pair Programming*,
   - Bug mover dentro do cart-wrapper desaparece o carrinho
   - Usuário premium não consegue adicionar itens com desconto
   - Usuário premium não é reconhecido após alterações na página
+
 </details>
 
 ## BOARD ATUALIZADO
