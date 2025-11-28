@@ -116,6 +116,7 @@ Durante o desenvolvimento do projeto, realizamos sessões de *Pair Programming*,
   - Bug mover dentro do cart-wrapper desaparece o carrinho
   - Usuário premium não consegue adicionar itens com desconto
   - Usuário premium não é reconhecido após alterações na página
+  - Cliente apagado, mas mantém ainda o histórico de pedidos do cliente passado no novo
 
 </details>
 
