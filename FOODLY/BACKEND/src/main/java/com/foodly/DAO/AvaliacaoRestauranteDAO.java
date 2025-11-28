@@ -1,6 +1,10 @@
+/**
+ *  Não usado, mas deixar para implementações futuras
+ */
 package com.foodly.DAO;
 
 import com.foodly.Models.AvaliacaoRestaurante;
+import com.foodly.Config.Conexao;
 
 import java.sql.*;
 import java.time.LocalDateTime;

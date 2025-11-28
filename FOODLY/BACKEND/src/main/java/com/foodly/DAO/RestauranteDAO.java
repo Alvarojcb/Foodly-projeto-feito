@@ -5,6 +5,7 @@ import com.foodly.Models.Restaurante;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import com.foodly.Config.Conexao;
 
 public class RestauranteDAO {
 

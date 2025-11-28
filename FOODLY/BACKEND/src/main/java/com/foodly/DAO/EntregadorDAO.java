@@ -1,9 +1,13 @@
+/**
+ *  Não usado, mas deixar para implementações futuras
+ */
 package com.foodly.DAO;
 
 import com.foodly.Models.Entregador;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import com.foodly.Config.Conexao;
 
 public class EntregadorDAO {
 

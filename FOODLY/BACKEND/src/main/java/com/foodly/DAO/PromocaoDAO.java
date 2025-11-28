@@ -1,7 +1,10 @@
+/**
+ *  Não usado, mas deixar para implementações futuras
+ */
 package com.foodly.DAO;
 
-import com.foodly.Models.Promocao;
 import com.foodly.Config.Conexao;
+import com.foodly.Models.Promocao;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -23,7 +23,7 @@ public class ClienteService {
 
     public Cliente cadastrarCliente(String nome, String email, String senhaHash, 
                                    String telefone, String enderecoPadrao) throws SQLException {
-        // 1) Cria o usuário
+        // Cria o usuário
         Usuario usuario = new Usuario();
         usuario.setNome(nome);
         usuario.setEmail(email);
@@ -34,7 +34,7 @@ public class ClienteService {
 
         int usuarioId = usuarioDAO.salvar(usuario);
 
-        // 2) Cria o cliente associado ao usuário
+        // Cria o cliente associado ao usuário
         Cliente cliente = new Cliente();
         cliente.setUsuarioId(usuarioId);
         cliente.setEnderecoPadrao(enderecoPadrao);

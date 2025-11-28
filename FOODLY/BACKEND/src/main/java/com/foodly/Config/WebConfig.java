@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
+    //Para armazenar Imagens
     @Override
     public void addResourceHandlers(@NonNull ResourceHandlerRegistry registry) {
         registry

@@ -1,8 +1,11 @@
+/**
+ *  Não usado, mas usar para implmentações futuras
+ */
 package com.foodly.Controller;
 
 import com.foodly.DAO.CarrinhoDAO;
 import com.foodly.DAO.CarrinhoItemDAO;
-import com.foodly.DAO.Conexao;
+import com.foodly.Config.Conexao;
 import com.foodly.DAO.ProdutoDAO;
 import com.foodly.Models.Carrinho;
 import com.foodly.Models.CarrinhoItem;
@@ -29,7 +32,7 @@ public class CarrinhoController {
 
     /**
      * Cria um novo carrinho "aberto" para o cliente.
-     * H4 - início do fluxo de carrinho.
+     * Início do fluxo de carrinho.
      */
     public Carrinho criarCarrinho(int clienteId) {
         Carrinho c = new Carrinho();

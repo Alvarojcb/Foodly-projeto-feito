@@ -41,7 +41,7 @@ public class AuthController {
                     .body(new ErrorResponse("Email ou senha incorretos"));
             }
 
-            // Verificar senha (assumindo que está armazenada em texto plano - MUDAR PARA HASH EM PRODUÇÃO)
+            // Verificar senha 
             if (!usuario.getSenhaHash().equals(request.getSenha())) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorResponse("Email ou senha incorretos"));

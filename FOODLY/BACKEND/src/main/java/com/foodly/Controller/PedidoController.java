@@ -1,7 +1,10 @@
+/**
+ *  Não usado, mas usar para implmentações futuras
+ */
 package com.foodly.Controller;
 
 import com.foodly.DAO.CarrinhoItemDAO;
-import com.foodly.DAO.Conexao;
+import com.foodly.Config.Conexao;
 import com.foodly.DAO.PedidoDAO;
 import com.foodly.DAO.PedidoItemDAO;
 import com.foodly.Models.CarrinhoItem;
@@ -28,12 +31,8 @@ public class PedidoController {
     }
 
     /**
-     * Cria um pedido a partir de um carrinho já fechado.
-     * - Copia itens do carrinho para pedido_itens
-     * - Calcula valor total
-     * - Define status inicial como "novo"
      *
-     * H4 -> checkout / H3 -> cria pedido para o restaurante gerenciar.
+     * Checkout + Cria pedido para o restaurante gerenciar.
      */
     public Pedido criarPedidoAPartirDoCarrinho(int clienteId,
                                                int restauranteId,
@@ -41,26 +40,26 @@ public class PedidoController {
                                                String enderecoEntrega) {
 
         try {
-            // 1) Busca itens do carrinho
+            // Busca itens do carrinho
             List<CarrinhoItem> itensCarrinho = carrinhoItemDAO.listarPorCarrinho(carrinhoId);
             if (itensCarrinho.isEmpty()) {
                 System.err.println("Carrinho vazio, não é possível criar pedido.");
                 return null;
             }
 
-            // 2) Calcula valor total
+            // Calcula valor total
             double total = 0.0;
             for (CarrinhoItem ci : itensCarrinho) {
                 total += ci.getQuantidade() * ci.getPrecoUnitario();
             }
 
-            // 3) Cria o pedido
+            // Cria o pedido
             Pedido pedido = new Pedido();
             pedido.setClienteId(clienteId);
             pedido.setRestauranteId(restauranteId);
             pedido.setCarrinhoId(carrinhoId);
             pedido.setValorTotal(total);
-            pedido.setStatus("novo");  // status inicial
+            pedido.setStatus("novo");  // Status inicial
             pedido.setEnderecoEntrega(enderecoEntrega);
             pedido.setCriadoEm(LocalDateTime.now());
             pedido.setAtualizadoEm(LocalDateTime.now());
@@ -68,7 +67,7 @@ public class PedidoController {
             int pedidoId = pedidoDAO.salvar(pedido);
             pedido.setId(pedidoId);
 
-            // 4) Cria os itens do pedido com base nos itens do carrinho
+            // Cria os itens do pedido com base nos itens do carrinho
             for (CarrinhoItem ci : itensCarrinho) {
                 PedidoItem pi = new PedidoItem();
                 pi.setPedidoId(pedidoId);
@@ -79,7 +78,7 @@ public class PedidoController {
                 pedidoItemDAO.salvar(pi);
             }
 
-            // 5) (Simulação) Notificação para o cliente
+            // Notificação para o cliente
             System.out.println("📲 Notificação: seu pedido #" + pedidoId + " foi criado com sucesso!");
 
             return pedido;
@@ -91,8 +90,7 @@ public class PedidoController {
     }
 
     /**
-     * Atualiza o status do pedido (usado pelo restaurante para H3).
-     * Ex: 'preparando', 'pronto para entrega', 'entregue'
+     * Atualiza o status do pedido (Usado pelo restaurante).
      */
     public void atualizarStatusPedido(int pedidoId, String novoStatus) {
         String sql = "UPDATE pedidos SET status = ?, atualizado_em = ? WHERE id = ?";
@@ -107,7 +105,7 @@ public class PedidoController {
             int rows = stmt.executeUpdate();
 
             if (rows > 0) {
-                // (Simulação) Notificação para o cliente
+                // Notificação para o cliente
                 System.out.println("📲 Notificação: seu pedido #" + pedidoId +
                                    " agora está com status: " + novoStatus);
             }

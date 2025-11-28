@@ -1,3 +1,6 @@
+/**
+ *  Não usado, mas deixar para implementações futuras
+ */
 package com.foodly.DAO;
 
 import com.foodly.Models.PedidoItem;
@@ -5,6 +8,7 @@ import com.foodly.Models.PedidoItem;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import com.foodly.Config.Conexao;
 
 public class PedidoItemDAO {
 

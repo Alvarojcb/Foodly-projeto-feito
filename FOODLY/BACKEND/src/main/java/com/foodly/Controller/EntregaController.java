@@ -1,6 +1,9 @@
+/**
+ *  Não usado, mas usar para implmentações futuras
+ */
 package com.foodly.Controller;
 
-import com.foodly.DAO.Conexao;
+import com.foodly.Config.Conexao;
 import com.foodly.DAO.EntregaDAO;
 import com.foodly.DAO.EntregaRespostaDAO;
 import com.foodly.DAO.EntregadorDAO;
@@ -27,7 +30,7 @@ public class EntregaController {
     }
 
     /**
-     * H5 - Cria uma entrega com rota sugerida (economia de tempo/rotas).
+     * Cria uma entrega com rota sugerida
      */
     public Entrega criarEntregaComRota(int pedidoId,
                                        Double distanciaKm,
@@ -36,7 +39,7 @@ public class EntregaController {
 
         Entrega e = new Entrega();
         e.setPedidoId(pedidoId);
-        e.setEntregadorId(null);              // ainda não atribuído
+        e.setEntregadorId(null);              // Ainda não atribuído
         e.setStatus("disponivel");
         e.setRotaSugerida(rotaSugerida);
         e.setDistanciaKm(distanciaKm);
@@ -57,7 +60,7 @@ public class EntregaController {
     }
 
     /**
-     * H6 - Entregador aceita uma entrega disponível.
+     * Entregador aceita uma entrega disponível.
      */
     public void aceitarEntrega(int entregaId, int entregadorId) {
         try {
@@ -67,7 +70,7 @@ public class EntregaController {
                 return;
             }
 
-            // registra resposta
+            // Registra resposta
             EntregaResposta resp = new EntregaResposta();
             resp.setEntregaId(entregaId);
             resp.setEntregadorId(entregadorId);
@@ -75,7 +78,7 @@ public class EntregaController {
             resp.setCriadoEm(LocalDateTime.now());
             entregaRespostaDAO.salvar(resp);
 
-            // vincula entregador na entrega e atualiza status
+            // Vincula entregador na entrega e atualiza status
             String sql = "UPDATE entregas SET entregador_id = ?, status = ?, atualizado_em = ? WHERE id = ?";
 
             try (Connection conn = Conexao.getConnection();
@@ -97,11 +100,11 @@ public class EntregaController {
     }
 
     /**
-     * H6 - Entregador recusa uma entrega.
+     * Entregador recusa uma entrega.
      */
     public void recusarEntrega(int entregaId, int entregadorId) {
         try {
-            // registra resposta
+            // Registra resposta
             EntregaResposta resp = new EntregaResposta();
             resp.setEntregaId(entregaId);
             resp.setEntregadorId(entregadorId);

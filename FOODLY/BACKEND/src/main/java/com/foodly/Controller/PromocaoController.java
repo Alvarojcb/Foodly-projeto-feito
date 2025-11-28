@@ -50,7 +50,7 @@ public class PromocaoController {
                 return ResponseEntity.badRequest().body(new ErrorResponse("Data de início deve ser anterior à data de fim"));
             }
 
-            // Verificar se restaurante existe
+            // Verificar se o restaurante existe
             Restaurante restaurante = restauranteDAO.buscarPorId(request.getRestauranteId());
             if (restaurante == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -269,6 +269,7 @@ public class PromocaoController {
         public boolean isAtivo() { return ativo; }
     }
 
+    //DTOS
     public static class ErrorResponse {
         private String message;
 

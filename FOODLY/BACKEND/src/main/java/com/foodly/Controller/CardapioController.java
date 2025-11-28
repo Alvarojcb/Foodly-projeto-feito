@@ -31,7 +31,7 @@ public class CardapioController {
         this.produtoDAO = new ProdutoDAO();
         this.restauranteDAO = new RestauranteDAO();
         
-        // Criar diretório de uploads se não existir
+        // Se não existir a pasta uploads, criar
         File uploadDir = new File(UPLOAD_DIR);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
@@ -144,14 +144,14 @@ public class CardapioController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletarProduto(@PathVariable int id) {
         try {
-            // Buscar produto para obter o nome da imagem
+            // Buscar produto para obter o nome correto da imagem
             Produto produto = produtoDAO.buscarPorId(id);
             if (produto == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ErrorResponse("Produto não encontrado"));
             }
 
-            // Deletar imagem do sistema de arquivos se existir
+            // Deletar imagem nos arquivos, isso se ela existir
             if (produto.getImagem() != null && !produto.getImagem().isEmpty()) {
                 try {
                     Files.deleteIfExists(Paths.get(UPLOAD_DIR + produto.getImagem()));
@@ -184,31 +184,31 @@ public class CardapioController {
                     .body(new ErrorResponse("Arquivo não enviado"));
             }
 
-            // Validar tipo de arquivo
+            // Validar tipo de arquivo de imagem
             String contentType = file.getContentType();
             if (contentType == null || !contentType.startsWith("image/")) {
                 return ResponseEntity.badRequest()
                     .body(new ErrorResponse("Apenas imagens são permitidas"));
             }
 
-            // Validar tamanho (max 5MB)
+            // Validar tamanho (máximo 5MB para imagens, para não ficar tão pesado)
             if (file.getSize() > 5 * 1024 * 1024) {
                 return ResponseEntity.badRequest()
                     .body(new ErrorResponse("Imagem muito grande. Máximo 5MB"));
             }
 
-            // Validar nome do arquivo
+            // Validar o nome do arquivo
             String originalFilename = file.getOriginalFilename();
             if (originalFilename == null || originalFilename.isEmpty()) {
                 return ResponseEntity.badRequest()
                     .body(new ErrorResponse("Nome do arquivo inválido"));
             }
 
-            // Gerar nome único para o arquivo
+            // Gerar um nome único para o arquivo
             String extensao = originalFilename.substring(originalFilename.lastIndexOf("."));
             String nomeArquivo = produtoId + "_" + UUID.randomUUID().toString() + extensao;
             
-            // Salvar arquivo
+            // Salvar o arquivo
             Path path = Paths.get(UPLOAD_DIR + nomeArquivo);
             Files.write(path, file.getBytes());
 
@@ -218,7 +218,7 @@ public class CardapioController {
                 return ResponseEntity.notFound().build();
             }
 
-            // Deletar imagem antiga se existir
+            // Deletar imagem antiga, isso se existir
             if (produto.getImagem() != null && !produto.getImagem().isEmpty()) {
                 try {
                     Files.deleteIfExists(Paths.get(UPLOAD_DIR + produto.getImagem()));

@@ -17,7 +17,7 @@ function logout() {
   localStorage.removeItem("usuarioLogado");
   localStorage.removeItem("token");
   localStorage.removeItem("usuario");
-  window.location.href = "escolhaPerfil.html";
+  window.location.href = "../escolhaPerfil.html";
 }
 
 function verificarAutenticacao() {
@@ -39,6 +39,6 @@ function verificarAutenticacao() {
 
   if (!isLogado()) {
     alert("Você precisa estar logado para acessar esta página");
-    window.location.href = "escolhaPerfil.html";
+    window.location.href = "../escolhaPerfil.html";
   }
 }

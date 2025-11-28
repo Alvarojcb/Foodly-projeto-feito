@@ -38,7 +38,7 @@ public class ClienteController {
         this.clienteDAO = new ClienteDAO();
         this.assinaturaPremiumDAO = new AssinaturaPremiumDAO();
         
-        // Criar diretório de uploads se não existir
+        // Criar diretório de uploads, isso se não existir
         File uploadDir = new File(UPLOAD_DIR);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
@@ -411,7 +411,7 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removerCliente(@PathVariable int id) {
         try {
-            // Buscar o cliente para obter o usuarioId
+            // Buscar o cliente para obter a Id do Usuário
             Cliente cliente = clienteDAO.buscarPorId(id);
             if (cliente == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -420,7 +420,7 @@ public class ClienteController {
 
             int usuarioId = cliente.getUsuarioId();
 
-            // Buscar usuário e deletar foto se existir
+            // Buscar usuário e deletar a foto se existir
             Usuario usuario = usuarioDAO.buscarPorId(usuarioId);
             if (usuario != null && usuario.getFotoPerfil() != null && !usuario.getFotoPerfil().isEmpty()) {
                 try {
@@ -431,10 +431,10 @@ public class ClienteController {
                 }
             }
 
-            // Remover o cliente primeiro (devido à chave estrangeira)
+            // Remover o cliente no DAO
             clienteDAO.deletar(id);
 
-            // Remover o usuário
+            // Remover o usuário no DAO
             usuarioDAO.deletar(usuarioId);
 
             return ResponseEntity.ok(new SuccessResponse("Cliente removido com sucesso"));
@@ -461,7 +461,7 @@ public class ClienteController {
                 try {
                     int usuarioId = cliente.getUsuarioId();
                     
-                    // Buscar usuário e deletar foto se existir
+                    // Buscar usuário e deletar foto, isso se existir
                     Usuario usuario = usuarioDAO.buscarPorId(usuarioId);
                     if (usuario != null && usuario.getFotoPerfil() != null && !usuario.getFotoPerfil().isEmpty()) {
                         try {
@@ -480,7 +480,7 @@ public class ClienteController {
                 }
             }
 
-            // Resetar AUTO_INCREMENT das tabelas
+            // Resetar Incremento de ID nas tabelas, se deletarmos um cliente
             try {
                 clienteDAO.resetarAutoIncrement();
                 usuarioDAO.resetarAutoIncrement();
@@ -508,31 +508,31 @@ public class ClienteController {
                     .body(new ErrorResponse("Arquivo não enviado"));
             }
 
-            // Validar tipo de arquivo
+            // Validar o tipo de arquivo
             String contentType = file.getContentType();
             if (contentType == null || !contentType.startsWith("image/")) {
                 return ResponseEntity.badRequest()
                     .body(new ErrorResponse("Apenas imagens são permitidas"));
             }
 
-            // Validar tamanho (max 5MB)
+            // Validar tamanho (máximo 5MB, para não ficar pesado o site)
             if (file.getSize() > 5 * 1024 * 1024) {
                 return ResponseEntity.badRequest()
                     .body(new ErrorResponse("Imagem muito grande. Máximo 5MB"));
             }
 
-            // Validar nome do arquivo
+            // Validar o nome do arquivo
             String originalFilename = file.getOriginalFilename();
             if (originalFilename == null || originalFilename.isEmpty()) {
                 return ResponseEntity.badRequest()
                     .body(new ErrorResponse("Nome do arquivo inválido"));
             }
 
-            // Gerar nome único para o arquivo
+            // Gerar um nome único para o arquivo
             String extensao = originalFilename.substring(originalFilename.lastIndexOf("."));
             String nomeArquivo = usuarioId + "_" + UUID.randomUUID().toString() + extensao;
             
-            // Salvar arquivo
+            // Salvar o arquivo de imagem
             Path path = Paths.get(UPLOAD_DIR + nomeArquivo);
             Files.write(path, file.getBytes());
 
@@ -542,7 +542,7 @@ public class ClienteController {
                 return ResponseEntity.notFound().build();
             }
 
-            // Deletar foto antiga se existir
+            // Deletar foto antiga, depois de adicionar a nova, isso se a antiga existir
             if (usuario.getFotoPerfil() != null && !usuario.getFotoPerfil().isEmpty()) {
                 try {
                     Files.deleteIfExists(Paths.get(UPLOAD_DIR + usuario.getFotoPerfil()));

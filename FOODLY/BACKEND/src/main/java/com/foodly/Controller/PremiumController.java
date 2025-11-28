@@ -2,8 +2,10 @@ package com.foodly.Controller;
 
 import com.foodly.DAO.AssinaturaPremiumDAO;
 import com.foodly.DAO.PlanoPremiumDAO;
+import com.foodly.DAO.ClienteDAO;
 import com.foodly.Models.AssinaturaPremium;
 import com.foodly.Models.PlanoPremium;
+import com.foodly.Models.Cliente;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +21,15 @@ public class PremiumController {
 
     private final AssinaturaPremiumDAO assinaturaDAO;
     private final PlanoPremiumDAO planoDAO;
+    private final ClienteDAO clienteDAO;
 
     public PremiumController() {
         this.assinaturaDAO = new AssinaturaPremiumDAO();
         this.planoDAO = new PlanoPremiumDAO();
+        this.clienteDAO = new ClienteDAO();
     }
 
-    // Novo endpoint para listar planos
+    // Endpoint para listar planos
     @GetMapping("/planos")
     public ResponseEntity<?> listarPlanos() {
         try {
@@ -41,6 +45,26 @@ public class PremiumController {
     @PostMapping("/criar")
     public ResponseEntity<?> criarAssinatura(@RequestBody CriarAssinaturaDTO request) {
         try {
+            // Validar cliente_id
+            if (request.getClienteId() <= 0) {
+                return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("ID do cliente inválido"));
+            }
+
+            // Verificar se o cliente existe
+            Cliente cliente = clienteDAO.buscarPorId(request.getClienteId());
+            if (cliente == null) {
+                return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Cliente não encontrado no sistema. ID: " + request.getClienteId()));
+            }
+
+            // Verificar se já existe assinatura ativa
+            AssinaturaPremium assinaturaExistente = assinaturaDAO.buscarPorClienteId(request.getClienteId());
+            if (assinaturaExistente != null && "ativa".equals(assinaturaExistente.getStatus())) {
+                return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("Cliente já possui uma assinatura ativa"));
+            }
+
             AssinaturaPremium assinatura = new AssinaturaPremium();
             assinatura.setClienteId(request.getClienteId());
             assinatura.setPlanoId(request.getPlanoId());
@@ -90,7 +114,7 @@ public class PremiumController {
                 return ResponseEntity.notFound().build();
             }
 
-            // Atualizar status para 'cancelada'
+            // Atualizar status para 'Cancelada'
             boolean sucesso = assinaturaDAO.cancelarAssinatura(clienteId);
             
             if (sucesso) {

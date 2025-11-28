@@ -1,3 +1,6 @@
+/**
+ *  Não usado, mas deixar para implementações futuras
+ */
 package com.foodly.Controller;
 
 import com.foodly.DAO.AvaliacaoEntregadorDAO;
@@ -19,7 +22,7 @@ public class AvaliacaoController {
     }
 
     /**
-     * H7 - Cliente avalia restaurante.
+     * Cliente avalia restaurante.
      */
     public void avaliarRestaurante(int clienteId,
                                    int restauranteId,
@@ -44,7 +47,7 @@ public class AvaliacaoController {
     }
 
     /**
-     * H7 - Cliente avalia entregador.
+     * Cliente avalia entregador.
      */
     public void avaliarEntregador(int clienteId,
                                   int entregadorId,

@@ -1,3 +1,6 @@
+/**
+ *  Não usado, mas deixar para implementações futuras
+ */
 package com.foodly.DAO;
 
 import com.foodly.Models.AvaliacaoEntregador;

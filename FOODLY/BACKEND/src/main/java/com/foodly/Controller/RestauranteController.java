@@ -382,7 +382,7 @@ public class RestauranteController {
                 }
             }
 
-            // Resetar AUTO_INCREMENT das tabelas
+            // Resetar o ID do Restaurante das tabelas, caso tenha sido deletado
             try {
                 restauranteDAO.resetarAutoIncrement();
                 usuarioDAO.resetarAutoIncrement();

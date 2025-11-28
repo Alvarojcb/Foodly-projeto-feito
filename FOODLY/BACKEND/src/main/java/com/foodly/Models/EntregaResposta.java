@@ -1,3 +1,6 @@
+/**
+ *  Não usado, mas deixar para implementações futuras
+ */
 package com.foodly.Models;
 
 import java.time.LocalDateTime;

@@ -1,6 +1,9 @@
+/**
+ *  Não usado, mas deixar para implementações futuras
+ */
 package com.foodly.Controller;
 
-import com.foodly.DAO.Conexao;
+import com.foodly.Config.Conexao;
 import com.foodly.DAO.SuporteAtendimentoDAO;
 import com.foodly.DAO.SuporteMensagemDAO;
 import com.foodly.Models.SuporteAtendimento;
@@ -23,14 +26,14 @@ public class SuporteController {
     }
 
     /**
-     * H10 - Abre um atendimento de suporte com mensagem inicial.
+     * Abre um atendimento de suporte com mensagem inicial.
      */
     public SuporteAtendimento abrirAtendimento(int usuarioId,
                                                String assunto,
                                                String mensagemInicial) {
 
         try {
-            // 1) Cria o atendimento
+            // Cria o atendimento
             SuporteAtendimento at = new SuporteAtendimento();
             at.setUsuarioId(usuarioId);
             at.setAssunto(assunto);
@@ -41,7 +44,7 @@ public class SuporteController {
             int atendimentoId = suporteAtendimentoDAO.salvar(at);
             at.setId(atendimentoId);
 
-            // 2) Registra a primeira mensagem do usuário
+            // Registra a primeira mensagem do usuário
             SuporteMensagem msg = new SuporteMensagem();
             msg.setAtendimentoId(atendimentoId);
             msg.setRemetenteTipo("usuario");
