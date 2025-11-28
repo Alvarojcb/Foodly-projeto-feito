@@ -84,9 +84,35 @@ Durante o desenvolvimento do projeto, realizamos sessões de *Pair Programming*,
 
 
 ### 🐞 BUG TRACKING
-[GitHub Issues](https://github.com/pedrosdutra/softwaredelivery/issues)
+<details>
+  #### Últimos commits:
 
-
+  - Sem integração Api-Frontend
+  - Banco incompatível com MYSQL
+  - Falta Autoincrement no ID
+  - Página de login fazendo login sem autenticação
+  - Ícones genéricos
+  - Imagens genéricas
+  - Sem Sistema de Gerenciamento pelas rotas HTTP, uma rota pai para abranger todas suas filhas  (faltou o HomeController.java)
+  - Erro de Imports no Backend
+  - Não verificava inputs vazios não obrigatórios
+  - Dados não eram armazenados ao logar na página de perfil
+  - Falta de uma rota pai para abranger todas suas filhas
+  - Não aprece os dados do banco
+  - Categoria no gerenciarCardapio não aparecendo
+  - Erro de compilação do spring ao adicionar
+  - Erro nas notações JPA, remover Repository que não era usado e dava problemas de performace
+  - Redirecionamento errado
+  - Sem padrão de design
+  - Sem login no restaurante redireciona para index.html
+  - banner flutuante não aparece
+  - Página de início design ruim
+  - Favicon pequeno
+  - Página restaurantes pedindo usuário premium toda hora
+  - Bug mover dentro do cart-wrapper desaparece o carrinho
+  - Usuário premium não consegue adicionar itens com desconto
+  - Usuário premium não é reconhecido após alterações na página
+</details>
 
 ## BOARD ATUALIZADO
 
