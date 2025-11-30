@@ -1,8 +1,8 @@
 package com.foodly.Service;
 
-import com.foodly.DAO.ClienteDAO;
+import com.foodly.DAO.Cliente.ClienteDAO;
 import com.foodly.DAO.UsuarioDAO;
-import com.foodly.Models.Cliente;
+import com.foodly.Models.Cliente.Cliente;
 import com.foodly.Models.Usuario;
 import org.springframework.stereotype.Service;
 

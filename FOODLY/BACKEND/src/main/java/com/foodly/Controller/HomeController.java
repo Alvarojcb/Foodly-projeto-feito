@@ -34,44 +34,47 @@ public class HomeController {
                             display: flex;
                             justify-content: center;
                             align-items: center;
-                            padding: 20px;
+                            padding: 10px;
                         }
                         .container {
                             background: white;
                             border-radius: 20px;
-                            padding: 40px;
+                            padding: 18px 40px;
                             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
                             max-width: 600px;
                             width: 100%%;
                             animation: fadeIn 0.5s ease-in;
                         }
                         @keyframes fadeIn {
-                            from { opacity: 0; transform: translateY(-20px); }
-                            to { opacity: 1; transform: translateY(0); }
+                            from { 
+                                opacity: 0; transform: translateY(-20px); 
+                                }
+                            to { 
+                                opacity: 1; transform: translateY(0); 
+                                }
                         }
                         .logo {
                             text-align: center;
-                            font-size: 48px;
+                            font-size: 44px;
                             margin-bottom: 10px;
                         }
                         h1 {
                             color: #667eea;
                             text-align: center;
                             margin-bottom: 10px;
-                            font-size: 32px;
+                            font-size: 28px;
                         }
                         .status {
                             text-align: center;
                             color: #28a745;
                             font-weight: bold;
-                            font-size: 18px;
-                            margin-bottom: 30px;
+                            font-size: 16px;
+                            margin-bottom: 20px;
                         }
                         .info {
                             background: #f8f9fa;
                             border-radius: 10px;
-                            padding: 20px;
-                            margin-bottom: 20px;
+                            padding: 10px;
                         }
                         .info-item {
                             display: flex;
@@ -79,34 +82,45 @@ public class HomeController {
                             padding: 10px 0;
                             border-bottom: 1px solid #dee2e6;
                         }
-                        .info-item:last-child { border-bottom: none; }
-                        .label { font-weight: 600; color: #495057; }
-                        .value { color: #6c757d; }
+                        .info-item:last-child { 
+                            border-bottom: none; 
+                        }
+                        .label { 
+                            font-weight: 600; color: #495057; 
+                        }
+                        .value { 
+                            color: #6c757d; 
+                        }
                         .endpoints {
-                            margin-top: 20px;
+                            margin-top: 10px;
                         }
                         .endpoint {
                             background: #667eea;
                             color: white;
-                            padding: 12px 20px;
+                            padding: 10px 20px;
                             border-radius: 8px;
                             margin: 10px 0;
                             text-decoration: none;
-                            display: block;
+                            display: flex;
                             transition: all 0.3s ease;
                             text-align: center;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 5px;
                         }
                         .endpoint:hover {
-                            background: #1f44e7;
+                            background: #2644ccff;
                             transform: translateY(-2px);
-                            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                            box-shadow: 0 5px 30px rgba(0,0,0,0.4);
                         }
-                        .footer {
-                            text-align: center;
-                            margin-top: 20px;
-                            color: #6c757d;
-                            font-size: 14px;
+                        .endpoint img {
+                            width: 20px;    
                         }
+                        .endpoint p {
+                            align-self: flex-end;
+                        }
+                        
+                        
                     </style>
                 </head>
                 <body>
@@ -125,21 +139,30 @@ public class HomeController {
                                 <span class="value">OK</span>
                             </div>
                             <div class="info-item">
-                                <span class="label">Feito com:</span>
-                                <span class="value">SpringBoot + MySQL</span>
-                            </div>
-                            <div class="info-item">
                                 <span class="label">Horário da execução:</span>
                                 <span class="value">%s</span>
                             </div>
                         </div>
 
                         <div class="endpoints">
-                            <h3 style="color: #495057; margin-bottom: 15px;">Endpoints Disponíveis:</h3>
-                            <a href="/api" class="endpoint">⚠️ GET /api - Informações (JSON)</a>
-                            <a href="/health" class="endpoint">❗️ GET /health - Checar SQL</a>
-                            <a href="/api/clientes/visualizar" class="endpoint">👥 GET /api/clientes/visualizar - Ver Clientes</a>
-                            <a href="/api/restaurantes/visualizar" class="endpoint">🍽 GET /api/restaurantes/visualizar - Ver Restaurantes</a>
+                            <h4 style="color: #495057; margin-bottom: 5px;">Endpoints Disponíveis:</h4>
+                            <a href="/api/clientes/visualizar" class="endpoint">
+                            <img src="assets/clients.svg" alt="Clients-Icon">
+                            <p>Ver Todos os Clientes</p>
+                            </a>
+                            <a href="/api/restaurantes/visualizar" class="endpoint">
+                            <img src="assets/restaurants.svg" alt="Restaurants-Icon">
+                             <p>Ver Todos os Restaurantes</p>
+                             </a>
+                            <a href="/api" class="endpoint">
+                            <img src="assets/api.svg" alt="Api-Icon">
+                             <p>Verificar Informações da API</p>
+                             </a>
+                            <a href="/health" class="endpoint">
+                            <img src="assets/database.svg" alt="Database-Icon">
+                             <p>Verificar Banco de Dados</p>
+                             </a>
+                            
                         </div>
                     </div>
                 </body>
