@@ -96,7 +96,7 @@ public class HomeController {
                         }
                         .endpoint {
                             background: #667eea;
-                            color: white;
+                            color: whitesmoke;
                             padding: 10px 20px;
                             border-radius: 8px;
                             margin: 10px 0;

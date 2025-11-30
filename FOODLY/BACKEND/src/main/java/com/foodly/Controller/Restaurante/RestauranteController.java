@@ -206,10 +206,13 @@ public class RestauranteController {
                                 color: #721c24;
                             }
                             .no-data {
-                                text-align: center;
                                 padding: 40px;
+                            }
+
+                            .no-data p {
+                                text-align: center;
                                 color: #6c757d;
-                                font-size: 18px;
+                                font-size: 24px;
                             }
                             .back-btn, .delete-all-btn {
                                 display: inline-block;
@@ -272,8 +275,15 @@ public class RestauranteController {
             
             if (restaurantes.isEmpty()) {
                 html.append("""
-                            <div class="no-data">
-                                ❌ Nenhum restaurante cadastrado ainda
+                            <div class="no-data" 
+                            style="
+                            display: flex; 
+                            justify-content: center;
+                            align-items: center;
+                            gap: 5px;">
+
+                            <img src="/assets/close.svg" alt="Close-Icon" style="width:30px;">
+                            <p style="align-self:flex-end;">Nenhum cliente cadastrado ainda<p>
                             </div>
                         """);
             } else {
@@ -318,8 +328,24 @@ public class RestauranteController {
             }
             
             html.append("""
-                            <a href="/" class="back-btn">↩ Voltar para Home</a>
-                            <button onclick="deletarTodos()" class="delete-all-btn">🗑️ Apagar Todos os Restaurantes</button>
+                            <div style="display: flex; 
+                            justify-content: flex-start;">
+                            <a href="/" class="back-btn" style="
+                            display: flex; 
+                            justify-content: center;
+                            align-items: center;
+                            gap: 5px;">
+                            <img src="/assets/return.svg" alt="Return-Icon" style="width:20px;">
+                            <p style="align-self:flex-end;"> Voltar para Home</p></a>
+                            <button onclick="deletarTodos()" class="delete-all-btn" 
+                            style="
+                            display: flex; 
+                            justify-content: center;
+                            align-items: center;
+                            gap: 5px;">
+                            <img src="/assets/delete.svg" alt="Delete-Icon" style="width:20px;">
+                            <p style="align-self:flex-end;">Apagar Todos os Restaurantes<p></button>
+                            </div>
                         </div>
                     </body>
                     </html>
