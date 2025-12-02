@@ -134,7 +134,7 @@ function mostrarBadgePremium() {
   if (navbar && !document.querySelector(".premium-indicator")) {
     const premiumIndicator = document.createElement("div");
     premiumIndicator.className = "premium-indicator";
-    premiumIndicator.innerHTML = "⭐ PREMIUM";
+    premiumIndicator.innerHTML = "PREMIUM";
     navbar.insertBefore(premiumIndicator, navbar.firstChild);
   }
 }
@@ -154,7 +154,7 @@ function aplicarDescontosPremium() {
     if (!card.querySelector(".premium-discount-badge")) {
       const badge = document.createElement("div");
       badge.className = "premium-discount-badge";
-      badge.innerHTML = "⭐ DESCONTO PREMIUM";
+      badge.innerHTML = "DESCONTO PREMIUM";
       card.appendChild(badge);
       console.log("✅ Badge premium adicionado ao card", index + 1);
     }
@@ -165,7 +165,7 @@ function aplicarDescontosPremium() {
       const originalText = feeElement.innerHTML;
 
       if (originalText.includes("R$")) {
-        feeElement.innerHTML = `<span class="original-price">${originalText}</span><br><strong class="premium-price">ENTREGA GRÁTIS PREMIUM ⭐</strong>`;
+        feeElement.innerHTML = `<span class="original-price">${originalText}</span><br><strong class="premium-price">ENTREGA GRÁTIS PREMIUM</strong>`;
         console.log(
           "✅ Taxa de entrega atualizada para grátis premium",
           index + 1
@@ -184,7 +184,7 @@ function aplicarDescontosPremium() {
     if (metaDiv && !metaDiv.querySelector(".premium-price-indicator")) {
       const priceIndicator = document.createElement("span");
       priceIndicator.className = "premium-price-indicator";
-      priceIndicator.innerHTML = "💰 Preços -20%";
+      priceIndicator.innerHTML = "Preço à -20%";
       metaDiv.appendChild(priceIndicator);
       console.log("✅ Indicador de preços premium adicionado", index + 1);
     }
@@ -270,7 +270,7 @@ const cardapios = {
     {
       nome: "Milk Shake",
       preco: "R$ 8,90",
-      img: "https://images.pexels.com/photos/2067371/pexels-photo-2067371.jpeg",
+      img: "http://blog.atacadao.com.br/wp-content/uploads/2024/01/Milk-shake-caseiro-aprenda-tres-receitas-deliciosas-Foto-de-tres-copos-de-milk-shakes-de-diferentes-sabores-Atacadao.jpg",
       descricao: "Milk shake cremoso sabores variados",
     },
   ],
@@ -316,7 +316,7 @@ const cardapios = {
     {
       nome: "Smoothie Detox",
       preco: "R$ 12,90",
-      img: "https://images.pexels.com/photos/616836/pexels-photo-616836.jpeg",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToW_iSrpSO8LiVaqpzxkw1sTlHIhhkRaCVEQ&s",
       descricao: "Couve, maçã, gengibre, limão",
     },
     {
@@ -356,7 +356,7 @@ const cardapios = {
     {
       nome: "Brownie Premium",
       preco: "R$ 14,90",
-      img: "https://images.pexels.com/photos/4109992/pexels-photo-4109992.jpeg",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBsLqmXU_WztkBGMnmz0fjeexHUKHPkUSy5w&s",
       descricao: "Brownie artesanal com calda e sorvete",
     },
     {
@@ -368,7 +368,7 @@ const cardapios = {
     {
       nome: "Milk Shake Oreo",
       preco: "R$ 12,90",
-      img: "https://images.pexels.com/photos/2067371/pexels-photo-2067371.jpeg",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoO-Sa3oXjmOAq2jptEqJ3RfOhMGKkYaWmNA&s",
       descricao: "Milk shake cremoso sabor oreo com chantilly",
     },
     {
