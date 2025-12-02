@@ -28,7 +28,7 @@ a {
   justify-content: space-between;
   padding: 12px 40px;
   background: #ffffff;
-  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+  box-shadow: 0 18px 20px rgba(15, 23, 42, 0.03);
 }
 
 .navbar-left {
@@ -45,41 +45,67 @@ a {
   align-items: center;
   justify-content: center;
   font-size: 20px;
+  overflow: hidden;
 }
 
 .logo-box img {
   width: 100%;
   height: 100%;
-  display: block;
   object-fit: contain;
+  display: block;
 }
 
 .logo-text {
   font-weight: 700;
   font-size: 20px;
+  color: #1f2933;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 38px;
   font-size: 14px;
+  margin-right: 4rem;
 }
 
 .nav-links a {
   text-decoration: none;
   color: #4b5563;
-  transition: 0.2s ease;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff8a1f, #ff4b2b);
+  transition: width 0.2s ease;
 }
 
 .nav-links a:hover {
   color: #ff4b2b;
 }
 
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+.nav-links a.active {
+  color: #ff4b2b;
+  font-weight: 600;
+}
+
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .icon-btn {
@@ -99,19 +125,19 @@ a {
 }
 
 .icon-btn img {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   display: block;
 }
 
 .icon-btn:hover {
-  background: #ffe4d4;
-  transform: translateY(-1px);
+  background: #fdd1b8;
+  transform: translateY(-1.5px);
 }
 
 .icon-btn.active {
-  background: #ffe4d4;
-  border: 2px solid #ff8a1f;
+  background: #ff8a1f;
+
 }
 
 /* ===== CONTAINER PRINCIPAL ===== */
@@ -489,6 +515,7 @@ h1 {
   transition: all 0.2s ease;
   text-decoration: none;
   display: inline-block;
+  text-align: center;
 }
 
 .btn-primary {

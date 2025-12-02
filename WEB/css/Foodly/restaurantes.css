@@ -41,6 +41,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-right: 25px;
 }
 
 .logo-box {
@@ -75,8 +76,7 @@ body {
 
 .nav-links a {
   text-decoration: none;
-  font-size: 14px;
-  color: #6b7280;
+  color: #4b5563;
   position: relative;
   transition: color 0.2s ease;
 }
@@ -181,8 +181,8 @@ body {
 }
 
 .icon-btn:hover {
-  background: #ffe4d4;
-  transform: translateY(-1px);
+  background: #fdd1b8;
+  transform: translateY(-1.5px);
 }
 
 /* ===========================
@@ -196,7 +196,7 @@ body {
 }
 
 .notification-btn {
-  background: #fff7f2;
+  background: #ffe8d9;
 }
 
 .badge {
@@ -344,7 +344,7 @@ body {
 }
 
 .cart-btn {
-  background: #fff7f2;
+  background: #ffe8d9;
 }
 
 .cart-badge {
@@ -715,11 +715,26 @@ body {
 }
 
 .restaurant-meta {
-  display: flex;
-  gap: 10px;
   font-size: 12px;
   color: #6b7280;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.restaurant-meta span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.restaurant-meta img {
+  width: 16px;
 }
 
 .restaurant-fee {
@@ -840,8 +855,9 @@ body {
   max-width: 1120px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.4fr;
-  gap: 32px;
+  grid-template-columns: 2fr 1fr;
+  gap: 20rem;
+  align-items: start;
 }
 
 .footer-column h4 {
@@ -892,6 +908,27 @@ body {
 
 .footer-column ul li a:hover {
   text-decoration: underline;
+}
+
+.footer-contact li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.footer-contact li img {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  opacity: 0.9;
+}
+
+.footer-contact-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .footer-contact li span {

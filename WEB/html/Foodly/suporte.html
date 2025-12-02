@@ -26,15 +26,39 @@
     <link rel="manifest" href="../../assets/favicon/site.webmanifest" />
   </head>
   <body>
-    <header class="topbar">
-      <div class="topbar-left">
-        <span class="topbar-icon">🛟</span>
-        <span class="topbar-title">Suporte Técnico</span>
+    <header class="navbar">
+      <div class="navbar-left">
+        <div class="logo-box">
+          <img src="../../assets/logo.png" alt="Logo" />
+        </div>
+        <span class="logo-text">Foodly</span>
       </div>
 
-      <div class="topbar-right">
-        <span class="app-logo">🍽</span>
-        <span class="app-name"><a href="menuPrincipal.html">Volte ao Início</a></span>
+      <nav class="nav-links">
+        <a href="../Foodly/menuPrincipal.html">Início</a>
+        <a href="../Foodly/restaurantes.html">Restaurantes</a>
+        <a href="../Foodly/geradorComidas.html">Prato Surpresa</a>
+        <a href="../Foodly/suporte.html">Suporte</a>
+
+      </nav>
+
+            <div class="cart-total" id="cart-total" style="display: none">
+              <p>Total: <strong id="cart-total-value">R$ 0,00</strong></p>
+            </div>
+
+            <button
+              class="cart-checkout"
+              id="cart-checkout"
+              style="display: none"
+            >
+              Finalizar Pedido
+            </button>
+          </div>
+        </div>
+
+        <a href="../Cliente/perfilCliente.html" class="icon-btn" aria-label="Perfil">
+          <img src="../../assets/silhouette.svg" alt="Person" />
+        </a>
       </div>
     </header>
 
@@ -58,7 +82,9 @@
 
         <div class="info-list">
           <div class="info-card">
-            <div class="info-icon">🕒</div>
+            <div class="info-icon-clock">
+              <img src="../../assets/clock3.svg" alt="Clock-Icon" />
+            </div>
             <div>
               <h3>Horário de Atendimento</h3>
               <p>Segunda a Domingo, 8h às 20h</p>
@@ -66,7 +92,9 @@
           </div>
 
           <div class="info-card">
-            <div class="info-icon">⚡</div>
+            <div class="info-icon-fast">
+              <img src="../../assets/bolt.svg" alt="Bolt-Icon" />
+            </div>
             <div>
               <h3>Resposta Rápida</h3>
               <p>Respondemos em até 2 horas</p>
@@ -78,7 +106,7 @@
       <!-- LADO DIREITO: FORMULÁRIO -->
       <section class="support-form-card">
         <div class="form-header">
-          <h2>Contato Suporte</h2>
+          <h2>Suporte</h2>
           <p>Descreva seu problema e nossa equipe irá te ajudar.</p>
         </div>
 
@@ -114,9 +142,9 @@
               <option value="" disabled selected>
                 Selecione uma categoria
               </option>
+              <option value="app">Bug no aplicativo</option>
               <option value="pedido">Problema com pedido</option>
-              <option value="pagamento">Pagamento</option>
-              <option value="app">Erro no aplicativo</option>
+              <option value="pagamento">Reembolso</option>
               <option value="conta">Minha conta</option>
               <option value="outros">Outros</option>
             </select>
@@ -136,11 +164,6 @@
 
           <button type="submit" class="btn-submit">Enviar Mensagem</button>
         </form>
-
-        <p class="urgent-text">
-          Precisa de ajuda urgente?
-          <a href="#">Chat ao vivo</a>
-        </p>
       </section>
     </main>
 

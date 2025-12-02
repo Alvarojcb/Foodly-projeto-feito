@@ -49,7 +49,7 @@ if (suporteForm) {
     }
 
     event.preventDefault(); // só para não recarregar a página
-    alert("Mensagem enviada com sucesso! Nossa equipe retornará em breve.");
+    alert("Mensagem enviada com sucesso! Nossa equipe\no retornará em breve.");
     suporteForm.reset();
   });
 }

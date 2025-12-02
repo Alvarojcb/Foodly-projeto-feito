@@ -10,12 +10,16 @@
     <!-- NAVBAR -->
     <header class="navbar">
       <div class="navbar-left">
-        <div class="logo-box">🍽</div>
+        <div class="logo-box">
+          <img src="../../assets/logo.png" alt="Logo" />
+        </div>
         <span class="logo-text">Foodly</span>
       </div>
 
-      <div class="navbar-right">
-        <button class="icon-btn active" aria-label="Perfil">👤</button>
+
+        <a href="perfilCliente.html" class="icon-btn" aria-label="Perfil">
+          <!-- Vazio para não quebrar a navbar-->
+        </a>
       </div>
     </header>
 
@@ -63,17 +67,17 @@
         </div>
         <h1><strong>Painel do Restaurante</strong></h1>
         <button class="btn-edit" id="btn-editar-restaurante">
-          ✏️ Editar Dados
+          <p>Editar Perfil</p>
         </button>
       </div>
 
       <!-- INFORMAÇÕES DO RESTAURANTE -->
       <div class="profile-info">
         <h3 style="margin-bottom: 16px; color: #ff8a1f; font-size: 16px">
-          📋 Dados do Restaurante
+          Restaurante
         </h3>
         <div class="info-item">
-          <span class="label">Nome Fantasia:</span>
+          <span class="label">Nome:</span>
           <span class="value" id="restaurante-nome">Carregando...</span>
         </div>
         <div class="info-item">
@@ -93,7 +97,7 @@
       <!-- DADOS DO PROPRIETÁRIO -->
       <div class="profile-info">
         <h3 style="margin-bottom: 16px; color: #ff8a1f; font-size: 16px">
-          👤 Dados do Proprietário
+          Proprietário
         </h3>
         <div class="info-item">
           <span class="label">Nome:</span>
@@ -112,7 +116,9 @@
         <a href="gerenciarCardapio.html">
             <article class="option-card">
           <div class="option-left">
-            <div class="option-icon menu">📝</div>
+            <div class="option-icon menu">
+              <img src="../../assets/menu.svg" alt="Menu_Icon" />
+            </div>
             <div class="option-text">
               <div class="option-title">Gerenciar Cardápio</div>
               <p>Adicione, edite ou remova produtos do cardápio</p>
@@ -125,7 +131,9 @@
         <a href="promocoesRestaurante.html">
         <article class="option-card">
           <div class="option-left">
-            <div class="option-icon promo">🎁</div>
+            <div class="option-icon promo">
+              <img src="../../assets/coupon.svg" alt="Coupon_Icon" />
+            </div>
             <div class="option-text">
               <div class="option-title">Promoções e Ofertas</div>
               <p>Crie promoções para atrair mais clientes</p>
@@ -149,11 +157,11 @@
         </div>
         <form id="form-editar-restaurante">
           <div class="form-group">
-            <label for="edit-nome-fantasia">Nome Fantasia</label>
+            <label for="edit-nome-fantasia">Nome</label>
             <input type="text" id="edit-nome-fantasia" required />
           </div>
           <div class="form-group">
-            <label for="edit-endereco">Endereço Completo</label>
+            <label for="edit-endereco">Endereço</label>
             <input type="text" id="edit-endereco" required />
           </div>
           <div class="form-group">
@@ -161,7 +169,7 @@
             <input type="tel" id="edit-telefone" required />
           </div>
           <div class="form-group">
-            <label for="edit-dados-bancarios">Dados Bancários (opcional)</label>
+            <label for="edit-dados-bancarios">Dados Bancários</label>
             <textarea id="edit-dados-bancarios" rows="3"></textarea>
           </div>
           <div class="form-actions">

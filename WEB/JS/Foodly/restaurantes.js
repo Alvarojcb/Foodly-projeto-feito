@@ -18,7 +18,7 @@ async function verificarUsuarioLogado() {
     // Verificar se é cliente
     if (usuarioAtual.tipoUsuario !== "cliente" || !usuarioAtual.clienteId) {
       alert("⚠️ Acesso Restrito!\n\nEsta página é exclusiva para clientes.");
-      window.location.href = "../../html/Foodly/menuPrincipal.html";
+      window.location.href = "../../html/escolhaPerfil.html";
       return;
     }
 

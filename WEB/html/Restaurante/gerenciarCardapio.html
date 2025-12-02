@@ -10,13 +10,16 @@
     <!-- NAVBAR -->
     <header class="navbar">
       <div class="navbar-left">
-        <div class="logo-box">🍽</div>
+        <div class="logo-box">
+          <img src="../../assets/logo.png" alt="Logo" />
+        </div>
         <span class="logo-text">Foodly</span>
       </div>
 
 
-      <div class="navbar-right">
-        <a href="painelRestaurante.html"><button class="icon-btn" aria-label="Perfil">👤</button></a>
+        <a href="perfilCliente.html" class="icon-btn" aria-label="Perfil">
+          <img src="../../assets/return.svg" alt="Return" />
+        </a>
       </div>
     </header>
 
@@ -24,20 +27,22 @@
       <!-- HEADER -->
       <div class="page-header">
         <div>
-          <h1>📝 Gerenciar Cardápio</h1>
+          <h1>Gerenciar Cardápio</h1>
           <p class="subtitle">
             Adicione, edite ou remova produtos do seu cardápio
           </p>
         </div>
         <button class="btn btn-primary" id="btn-adicionar-produto">
-          ➕ Adicionar Produto
+          <img src="../../assets/add.svg" alt="Add" /> Adicionar Produto
         </button>
       </div>
 
       <!-- FILTROS E BUSCA -->
       <div class="filters-section">
         <div class="search-box">
-          <span class="search-icon">🔍</span>
+          <span class="search-icon">
+            <img src="../../assets/search2.svg" alt="Search" />
+          </span>
           <input
             type="text"
             id="search-input"
@@ -71,7 +76,7 @@
         </div>
         <form id="form-produto">
           <div class="form-group">
-            <label for="produto-nome">Nome do Produto *</label>
+            <label for="produto-nome">Nome do Produto</label>
             <input
               type="text"
               id="produto-nome"
@@ -86,6 +91,7 @@
               id="produto-descricao"
               rows="3"
               placeholder="Descreva os ingredientes e características..."
+              style="resize: none;"
             ></textarea>
           </div>
 
@@ -100,12 +106,12 @@
                   style="display: none"
                 />
                 <span id="preview-placeholder" class="preview-placeholder"
-                  >📷 Nenhuma imagem selecionada</span
+                  ></span>Nenhuma imagem selecionada</span
                 >
               </div>
               <div class="imagem-actions">
                 <label for="input-imagem-produto" class="btn-upload">
-                  📁 Escolher Imagem
+                  <p>Escolher Imagem</p>
                 </label>
                 <button
                   type="button"
@@ -113,7 +119,7 @@
                   class="btn-remove-img"
                   style="display: none"
                 >
-                  🗑️ Remover
+                  ❌ Remover
                 </button>
                 <input
                   type="file"
@@ -163,11 +169,11 @@
           </div>
 
           <div class="form-actions">
-            <button type="button" class="btn btn-secondary" id="btn-cancelar">
-              Cancelar
-            </button>
             <button type="submit" class="btn btn-primary">
               Salvar Produto
+            </button>
+            <button type="button" class="btn btn-secondary" id="btn-cancelar">
+              Cancelar
             </button>
           </div>
         </form>
@@ -176,7 +182,7 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-      <p>© 2024 Foodly. Todos os direitos reservados.</p>
+      <p>&copy; 2025 Foodly. Todos os direitos reservados.</p>
     </footer>
 
     <script src="../../JS/Restaurante/gerenciarCardapio.js"></script>

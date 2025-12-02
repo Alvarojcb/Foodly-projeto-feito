@@ -176,14 +176,14 @@ function exibirResultado(item) {
     <img src="${item.img}" alt="${item.nome}" class="result-image">
     <div class="result-info">
       <h3 class="result-title">${item.nome}</h3>
-      <p class="result-restaurant">📍 ${item.restaurante}</p>
+      <p class="result-restaurant"><img src="../../assets/location.svg" alt="Location"> ${item.restaurante}</p>
       <p class="result-description">${item.descricao}</p>
       <div class="result-price">${item.preco}</div>
     </div>
   `;
 
   // Mostrar botão de adicionar ao carrinho
-  addToCartBtn.style.display = "inline-block";
+  addToCartBtn.style.display = "flex";
 
   // Scroll suave para o resultado
   generatorResult.scrollIntoView({ behavior: "smooth" });

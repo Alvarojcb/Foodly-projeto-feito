@@ -33,15 +33,13 @@ a {
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 10; /* Ajuste o z-index para garantir que fique acima de outros elementos */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 56px;
+  padding: 12px 40px;
   background: #ffffff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
-
+  box-shadow: 0 18px 20px rgba(15, 23, 42, 0.03);
 }
 
 .navbar-left {
@@ -77,13 +75,14 @@ a {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 38px;
+  font-size: 14px;
+  margin-right: 2rem;
 }
 
 .nav-links a {
   text-decoration: none;
-  font-size: 14px;
-  color: #6b7280;
+  color: #4b5563;
   position: relative;
   transition: color 0.2s ease;
 }
@@ -152,7 +151,7 @@ a {
 .icon-btn {
   position: relative;
   border: none;
-  background: #f9fafb;
+  background: #33415517;
   width: 36px;
   height: 36px;
   border-radius: 999px;
@@ -166,8 +165,8 @@ a {
 }
 
 .icon-btn:hover {
-  background: #ffe4d4;
-  transform: translateY(-1px);
+  background: #fdd1b8;
+  transform: translateY(-1.5px);
 }
 
 /* ===========================
@@ -181,7 +180,7 @@ a {
 }
 
 .notification-btn {
-  background: #fff7f2;
+  background: #ffe8d9;
 }
 
 .badge {
@@ -359,7 +358,7 @@ a {
   background: #ffffff;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.2);
   display: flex;
   flex-direction: column;
 }
@@ -397,7 +396,7 @@ a {
 =========================== */
 .why-choose {
   background: #fff7f2;
-  padding: 40px 16px 56px;
+  padding: 30px 16px 100px;
 }
 
 .why-container {
@@ -428,7 +427,7 @@ a {
   background: #ffffff;
   border-radius: 20px;
   padding: 22px 18px;
-  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -471,7 +470,7 @@ a {
   margin: 0 auto;
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 32px;
+  gap: 20rem;
   align-items: start;
 }
 
@@ -570,7 +569,6 @@ a {
 .footer-bottom p {
   font-size: 12px;
 }
-
 
 /* ===========================
    RESPONSIVO

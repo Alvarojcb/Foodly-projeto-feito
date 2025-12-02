@@ -152,12 +152,12 @@ if (window.location.pathname.includes("gerenciarCardapio.html")) {
               <button class="btn-icon edit" onclick="editarProduto(${
                 produto.id
               })" title="Editar">
-                ✏️
+                <img src="../../assets/edit.svg" alt="Edit" />
               </button>
               <button class="btn-icon delete" onclick="deletarProduto(${
                 produto.id
               })" title="Excluir">
-                🗑️
+                <img src="../../assets/delete2.svg" alt="Delete" />
               </button>
             </div>
           </div>

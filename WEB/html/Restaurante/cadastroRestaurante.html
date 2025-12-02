@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="../../css/Restaurante/cadastroRestaurante.css" />
   </head>
   <body>
-    <!-- NAVBAR (mesma dos outros) -->
+    <!-- NAVBAR -->
     <header class="navbar">
       <div class="navbar-left">
-        <div class="logo-box">🍽</div>
+        <div class="logo-box">
+          <img src="../../assets/logo.png" alt="Logo" />
+        </div>
         <span class="logo-text">Foodly</span>
       </div>
 
-      <div class="navbar-right">
-      </div>
     </header>
 
     <!-- CONTEÚDO PRINCIPAL -->
@@ -24,20 +24,19 @@
       <section class="page-header">
         <div>
           <h1>Cadastro de restaurante</h1>
-          <p>
-            Registre um novo restaurante parceiro na plataforma Foodly. Preencha
-            todos os campos obrigatórios para começar.
+          <p class="page-sub-header-1">
+            Registre o seu restaurante na nossa plataforma. 
           </p>
+          <p class="page-sub-header-2">&hairsp;Preencha todos os campos obrigatórios para começar.</p>
         </div>
       </section>
 
       <section class="layout">
         <!-- COLUNA ESQUERDA: PALETA E DETALHES -->
         <aside class="palette-card">
-          <h2>Paleta de cores do Foodly</h2>
+          <h2>Dica: Paleta de Cores</h2>
           <p class="palette-text">
-            Utilize essa paleta para manter a identidade visual do sistema de
-            restaurantes.
+            Utilize essa paleta para manter a identidade visual das fotos parecida com o nosso aplicativo.
           </p>
 
           <div class="palette-list">
@@ -81,15 +80,6 @@
               </div>
             </div>
           </div>
-
-          <div class="tips">
-            <h3>Dicas de uso</h3>
-            <ul>
-              <li>Use o laranja para botões e elementos de ação.</li>
-              <li>Cards brancos com sombra suave para destacar conteúdo.</li>
-              <li>Texto escuro para legibilidade em fundos claros.</li>
-            </ul>
-          </div>
         </aside>
 
         <!-- COLUNA DIREITA: FORMULÁRIO DE CADASTRO -->
@@ -101,7 +91,7 @@
 
           <form class="restaurant-form" id="form-cadastro-restaurante">
             <div class="form-group">
-              <label for="nome">Nome do Restaurante *</label>
+              <label for="nome">Nome do Restaurante<span class="destaque-asterisco">*</span></label>
               <input
                 id="nome"
                 type="text"
@@ -111,7 +101,7 @@
             </div>
 
             <div class="form-group">
-              <label for="proprietario">Nome do Proprietário *</label>
+              <label for="proprietario">Nome do Proprietário<span class="destaque-asterisco">*</span></label>
               <input
                 id="proprietario"
                 type="text"
@@ -122,7 +112,7 @@
 
             <div class="form-row">
               <div class="form-group">
-                <label for="email">Email *</label>
+                <label for="email">Email<span class="destaque-asterisco">*</span></label>
                 <input
                   id="email"
                   type="email"
@@ -132,7 +122,7 @@
               </div>
 
               <div class="form-group">
-                <label for="telefone">Telefone / WhatsApp *</label>
+                <label for="telefone">Telefone<span class="destaque-asterisco">*</span></label>
                 <input
                   id="telefone"
                   type="text"
@@ -144,7 +134,7 @@
 
             <div class="form-row">
               <div class="form-group">
-                <label for="senha">Senha *</label>
+                <label for="senha">Senha<span class="destaque-asterisco">*</span></label>
                 <input
                   id="senha"
                   type="password"
@@ -155,7 +145,7 @@
               </div>
 
               <div class="form-group">
-                <label for="confirmar-senha">Confirmar Senha *</label>
+                <label for="confirmar-senha">Confirmar Senha<span class="destaque-asterisco">*</span></label>
                 <input
                   id="confirmar-senha"
                   type="password"
@@ -168,7 +158,7 @@
 
             <div class="form-row">
               <div class="form-group">
-                <label for="cnpj">CNPJ *</label>
+                <label for="cnpj">CNPJ<span class="destaque-asterisco">*</span></label>
                 <input
                   id="cnpj"
                   type="text"
@@ -178,7 +168,7 @@
               </div>
 
               <div class="form-group">
-                <label for="endereco">Endereço Completo *</label>
+                <label for="endereco">Endereço Completo<span class="destaque-asterisco">*</span></label>
                 <input
                   id="endereco"
                   type="text"
@@ -189,27 +179,28 @@
             </div>
 
             <div class="form-group">
-              <label for="dados-bancarios">Dados Bancários (opcional)</label>
+              <label for="dados-bancarios">Dados Bancários</label>
               <textarea
                 id="dados-bancarios"
                 rows="2"
                 placeholder="Banco, agência, conta..."
+                style="resize: none; padding: 10px 0 30px 9px;"
               ></textarea>
             </div>
 
             <div class="form-footer">
-              <p style="color: #6b7280; font-size: 14px; margin-bottom: 16px">
-                * Campos obrigatórios
+              <p style="color: #6b7280; font-size: 14px; margin-bottom: 16px; color: #FF4B2B">
+               <span class="destaque-asterisco">*</span> Campos obrigatórios
               </p>
 
               <button type="submit" class="btn-submit">
-                🍽 Cadastrar Restaurante
+                Cadastrar Restaurante
               </button>
 
               <p
                 style="
                   text-align: center;
-                  margin-top: 16px;
+                  margin-top: 10px;
                   color: #6b7280;
                   font-size: 14px;
                 "

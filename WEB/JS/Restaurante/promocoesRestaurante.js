@@ -154,8 +154,8 @@ if (window.location.pathname.includes("promocoesRestaurante.html")) {
             promocao.descricao || "Sem descrição"
           }</p>
           <div style="margin: 12px 0; font-size: 13px; color: #6b7280;">
-            <div>📅 Início: ${formatarData(promocao.dataInicio)}</div>
-            <div>📅 Fim: ${formatarData(promocao.dataFim)}</div>
+            <div><strong style="">Início:</strong> ${formatarData(promocao.dataInicio)}</div>
+            <div><strong>Fim:</strong> ${formatarData(promocao.dataFim)}</div>
             ${
               expirou
                 ? '<div style="color: #dc3545; font-weight: 600;">⚠️ Esta promoção expirou</div>'
@@ -168,12 +168,12 @@ if (window.location.pathname.includes("promocoesRestaurante.html")) {
               <button class="btn-icon edit" onclick="editarPromocao(${
                 promocao.id
               })" title="Editar">
-                ✏️
+                <img src="../../assets/edit.svg" alt="Edit" />
               </button>
               <button class="btn-icon delete" onclick="deletarPromocao(${
                 promocao.id
               })" title="Excluir">
-                🗑️
+                <img src="../../assets/delete2.svg" alt="Delete" />
               </button>
             </div>
           </div>
